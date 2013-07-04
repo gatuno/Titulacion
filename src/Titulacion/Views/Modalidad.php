@@ -26,7 +26,7 @@ class Titulacion_Views_Modalidad {
 		
 		$pag->setFromRequest ($request);
 		
-		return Gatuf_Shortcuts_RenderToResponse ('titulacion/modalidades/index.html',
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/modalidad/index.html',
 		                                         array('page_title' => 'Modalidades de titulación',
                                                        'paginador' => $pag),
                                                  $request);

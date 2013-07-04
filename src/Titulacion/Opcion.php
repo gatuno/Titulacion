@@ -14,7 +14,7 @@ class Titulacion_Opcion extends Gatuf_Model {
 		$this->tabla_view = 'Opciones_View';
 	}
 	
-	public function getModalidad ($id) {
+	public function getOpcion ($id) {
 		$req = sprintf ('SELECT * FROM %s WHERE id=%s', $this->getSqlViewTable (), Gatuf_DB_IntegerToDb ($id, $this->_con));
 		
 		if (false === ($rs = $this->_con->select ($req))) {

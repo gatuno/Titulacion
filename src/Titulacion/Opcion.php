@@ -12,6 +12,7 @@ class Titulacion_Opcion extends Gatuf_Model {
 		$this->_getConnection ();
 		$this->tabla = 'Opciones';
 		$this->tabla_view = 'Opciones_View';
+		$this->default_order = 'modalidad ASC';
 	}
 	
 	public function getOpcion ($id) {
@@ -41,5 +42,13 @@ class Titulacion_Opcion extends Gatuf_Model {
 	
 	public function update () {
 		throw new Exception ("No implementado");
+	}
+	
+	public function displayudg ($extra=null) {
+		return $this->articulo.' - '.$this->fraccion;
+	}
+	
+	public function displaycucei ($extra=null) {
+		return $this->articulo_cucei.' - '.$this->fraccion_cucei;
 	}
 }

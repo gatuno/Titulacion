@@ -18,4 +18,11 @@ $ctl[] = array (
 	'method' => 'index',
 );
 
+$ctl[] = array (
+	'regex' => '#^/modalidades/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Modalidad',
+	'method' => 'index',
+);
+
 return $ctl;

@@ -25,4 +25,11 @@ $ctl[] = array (
 	'method' => 'index',
 );
 
+$ctl[] = array (
+	'regex' => '#^/modalidades/add/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Modalidad',
+	'method' => 'agregarOpcion',
+);
+
 return $ctl;

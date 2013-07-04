@@ -1,6 +1,8 @@
 <?php
 
 Gatuf::loadFunction('Gatuf_Shortcuts_RenderToResponse');
+Gatuf::loadFunction('Gatuf_HTTP_URL_urlForView');
+
 class Titulacion_Views_Modalidad {
 	public function index ($request, $match) {
 		$opciones = new Titulacion_Opcion ();
@@ -30,5 +32,25 @@ class Titulacion_Views_Modalidad {
 		                                         array('page_title' => 'Modalidades de titulación',
                                                        'paginador' => $pag),
                                                  $request);
+	}
+	
+	public function agregarOpcion ($request, $match) {
+		if ($request->method == 'POST') {
+			$form = new Titulacion_Form_Opcion_Agregar ($request->POST, array());
+			
+			if ($form->isValid ()) {
+				$modalidad = $form->save ();
+				
+				$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Modalidad::index');
+				return new Gatuf_HTTP_Response_Redirect ($url);
+			}
+		} else {
+			$form = new Titulacion_Form_Opcion_Agregar (null, array ());
+		}
+		
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/modalidad/edit-opcion.html',
+		                                         array ('page_title' => 'Nueva opción de titulación',
+		                                                'form' => $form),
+		                                         $request);
 	}
 }

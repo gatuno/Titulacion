@@ -1,0 +1,5 @@
+Todos los formularios deben ser puestos aquí. Deben heredar de Gatuf_Form
+
+El nombre de la clase debe empezar con Titulacion_Form_ «Modelo» _ «Accion»
+
+Esto para poder distinguir que hace cada formulario.

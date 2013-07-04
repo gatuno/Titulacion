@@ -1,0 +1,3 @@
+Los modelos controladores deben ponerse aquí. Deben heredar de Gatuf_Model
+
+Las clases deben empezar con Titulacion_«Modelo»

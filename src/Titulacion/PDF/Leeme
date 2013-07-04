@@ -1,0 +1,4 @@
+Para poder generar los PDF correspondientes, cada clase debe heredar 
+de External_FPDF.
+
+Cada una de esas clases se debe llamar Titulacion_PDF_ «Objeto que genera»

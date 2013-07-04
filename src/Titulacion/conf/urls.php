@@ -6,9 +6,16 @@ $ctl = array ();
 $ctl[] = array (
 	'regex' => '#^/ /$#',
 	'base' => $base,
-	'model' => 'Calif_',
+	'model' => 'Titulacion_',
 	'method' => '',
 );
 */
+
+$ctl[] = array (
+	'regex' => '#^/carreras/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Carrera',
+	'method' => 'index',
+);
 
 return $ctl;

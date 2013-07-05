@@ -18,4 +18,10 @@ $ctl[] = array (
 	'method' => 'index',
 );
 
+$ctl[] = array (
+	'regex'=>'#^/alumnos/$#',
+	'base'=>$base,
+	'model'=>'Titulacion_Views_Alumno',
+	'method'=>'index',
+);
 return $ctl;

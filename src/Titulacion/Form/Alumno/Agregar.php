@@ -2,13 +2,6 @@
 
 class Titulacion_Form_Alumno_Agregar extends Gatuf_Form{
 	public function initfields($extra=array()){
-		/*$alumnos = Gatuf::factory ('Titulacion_Alumno')->getList ();
-		
-		$choices = array ();
-		foreach ($alumnos as $a){
-				$choices[$a->codigo]= $a->codigo;*/
-		
-		
 		$this->fields['codigo'] = new Gatuf_Form_Field_Varchar (
 			array(
 				'required' => true,
@@ -36,8 +29,7 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form{
 					'maxlength'=> 50,
 					'size' =>30,
 				),
-			)	
-	
+			)
 		);
 		$this->fields['apellidos']= new Gatuf_Form_Field_Varchar(
 			array(
@@ -46,7 +38,7 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form{
 				'initial' => '',
 				'help_text'=> 'Los apellidos del alumno',
 				'max_length' => 100,
-				'min_length' => 5,	
+				'min_length' => 5,
 				'widget_attrs' => array(
 					'maxlenght'=>100,
 					'size'=>30,
@@ -54,9 +46,6 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form{
 
 			)
 		);
-		
-				
-
 	}
 	
 	public function clean_codigo () {
@@ -70,12 +59,11 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form{
 		$l = Gatuf::factory('Titulacion_Alumno')->getList(array ('filter' => $sql->gen(), 'count' => true));
 
 		if ($l > 0) {
-			throw new Gatuf_Form_Invalid (sprintf ('El código \'<a href="%s">%s</a>\' de alumno especificado ya existe', Gatuf_HTTP_URL_urlForView('Titulacion_Views_Alumno::verAlumno', array ($codigo)), $codigo));
+			throw new Gatuf_Form_Invalid (sprintf ('El código %s de alumno especificado ya existe', $codigo));
 		}
 
 		return $codigo;
 	}
-
 	
 	public function save ($commit=true){
 		if(!$this->isValid()){
@@ -83,13 +71,13 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form{
 		}
 		$alumno = new Titulacion_Alumno ();
 		
-	$alumno->nombre= $this->cleaned_data['nombre'];
-	$alumno->apellidos= $this->cleaned_data['apellidos'];
-	$alumno->codigo= $this->cleaned_data['codigo'];
+		$alumno->nombre = $this->cleaned_data['nombre'];
+		$alumno->apellidos = $this->cleaned_data['apellidos'];
+		$alumno->codigo = $this->cleaned_data['codigo'];
 	
-	if($commit) $alumno->create ();
+		if ($commit) $alumno->create ();
 
-	return $alumno;	
+		return $alumno;
 	}
 		
 }

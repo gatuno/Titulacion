@@ -60,4 +60,11 @@ $ctl[] =array (
 	'method' => 'index',
 );
 
+$ctl[] = array (
+	'regex' => '#^/planes/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_PlanEstudio',
+	'method' => 'index',
+);
+
 return $ctl;

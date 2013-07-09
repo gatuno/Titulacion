@@ -3,6 +3,11 @@ $base = Gatuf::config('titulacion_base');
 $ctl = array ();
 
 /* Bloque base:
+<?php
+$base = Gatuf::config('titulacion_base');
+$ctl = array ();
+
+/* Bloque base:
 $ctl[] = array (
 	'regex' => '#^/ /$#',
 	'base' => $base,
@@ -20,9 +25,16 @@ $ctl[] = array (
 
 $ctl[] = array (
 	'regex'=>'#^/alumnos/$#',
-	'base'=>$base,
+	'base'=> $base,
 	'model'=>'Titulacion_Views_Alumno',
 	'method'=>'index',
+);
+
+$ctl[] = array (
+	'regex'=>'#^/alumnos/add/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Alumno',
+	'method' =>'agregarAlumno'
 );
 
 $ctl[] = array (
@@ -37,6 +49,13 @@ $ctl[] = array (
 	'base' => $base,
 	'model' => 'Titulacion_Views_Modalidad',
 	'method' => 'agregarOpcion',
+);
+
+$ctl[] =array (
+	'regex' => '#^/actas/$#',
+	'base' => $base,
+	'model' = 'Titulacion_Views_Acta',
+	'method' => 'index',
 );
 
 return $ctl;

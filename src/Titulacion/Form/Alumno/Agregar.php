@@ -1,7 +1,13 @@
-<?phph
+<?php
 
-class Titulacion_Form_Alumno_Agregar estends Gatuf_Form{
-	public function initFields($extra=array()){
+class Titulacion_Form_Alumno_Agregar extends Gatuf_Form{
+	public function initfields($extra=array()){
+		$alumnos = Gatuf::factory ('Titulacion_Alumno')->getList ();
+		
+		$choices = array ();
+		foreach ($alumnos as $a){
+				$choices[$a->codigo]= $a->codigo;
+		}
 	
 		$this->fields['nombre']= new Gatuf_Form_Field_Varchar(
 			array(
@@ -12,7 +18,7 @@ class Titulacion_Form_Alumno_Agregar estends Gatuf_Form{
 				'min_length' => 3,
 				'widget_attrs' => array(
 					'maxlength'=> 30,
-					'size' =>30,
+					--'size' =>30,
 				),
 			)	
 	
@@ -52,11 +58,13 @@ class Titulacion_Form_Alumno_Agregar estends Gatuf_Form{
 		if(!$this->isValid()){
 			throw new Exception ('El formulario no tiene datos validos');
 		}
+		$alumno = new Titulacion_Alumno ();
+		
 	$alumno->nombre= $this->cleaned_data['nombre'];
 	$alumno->apellido= $this->cleaned_data['apellido'];
 	$alumno->codigo= $this->cleaned_data['codigo'];
 	
-	$alumno->create();
+	if($commit) $alumno->create ();
 
 	return $alumno;	
 	}

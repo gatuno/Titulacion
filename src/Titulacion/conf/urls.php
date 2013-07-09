@@ -12,6 +12,43 @@ $ctl[] = array (
 */
 
 $ctl[] = array (
+	'regex' => '#^/login/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views',
+	'method' => 'login',
+	'name' => 'login_view'
+);
+
+$ctl[] = array (
+	'regex' => '#^/logout/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views',
+	'method' => 'logout',
+);
+
+/* Recuperación de contraseñas */
+$ctl[] = array (
+	'regex' => '#^/password/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views',
+	'method' => 'passwordRecoveryAsk',
+);
+
+$ctl[] = array (
+	'regex' => '#^/password/ik/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views',
+	'method' => 'passwordRecoveryInputCode',
+);
+
+$ctl[] = array (
+	'regex' => '#^/password/k/(.*)/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views',
+	'method' => 'passwordRecovery',
+);
+
+$ctl[] = array (
 	'regex' => '#^/carreras/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Carrera',
@@ -80,5 +117,6 @@ $ctl[] = array (
 	'model' => 'Titulacion_Views_Maestro',
 	'method' => 'agregarMaestro',
 );
+
 
 return $ctl;

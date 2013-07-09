@@ -67,4 +67,18 @@ $ctl[] = array (
 	'method' => 'index',
 );
 
+$ctl[] = array (
+	'regex' => '#^/maestros/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Maestro',
+	'method' => 'index',
+);
+
+$ctl[] = array (
+	'regex' => '#^/maestros/add/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Maestro',
+	'method' => 'agregarMaestro',
+);
+
 return $ctl;

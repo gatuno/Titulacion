@@ -12,6 +12,13 @@ $ctl[] = array (
 */
 
 $ctl[] = array (
+	'regex' => '#^/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views',
+	'method' => 'index',
+);
+
+$ctl[] = array (
 	'regex' => '#^/login/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views',

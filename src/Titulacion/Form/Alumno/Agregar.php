@@ -2,55 +2,78 @@
 
 class Titulacion_Form_Alumno_Agregar extends Gatuf_Form{
 	public function initfields($extra=array()){
-		$alumnos = Gatuf::factory ('Titulacion_Alumno')->getList ();
+		/*$alumnos = Gatuf::factory ('Titulacion_Alumno')->getList ();
 		
 		$choices = array ();
 		foreach ($alumnos as $a){
-				$choices[$a->codigo]= $a->codigo;
-		}
+				$choices[$a->codigo]= $a->codigo;*/
+		
+		
+		$this->fields['codigo'] = new Gatuf_Form_Field_Varchar (
+			array(
+				'required' => true,
+				'label' => 'Código',
+				'initial' => '',
+				'help_text' => 'El código de alumno de 9 caracteres',
+				'max_length' => 9,
+				'min_length' => 9,
+				'widget_attrs' => array(
+					'maxlenght' =>9,
+					'size' =>12,
+				),
+			)
+		);
 	
 		$this->fields['nombre']= new Gatuf_Form_Field_Varchar(
 			array(
 				'required' => true,
 				'label' => 'Nombre',
 				'initial' =>'',
-				'max_length' => 30,
-				'min_length' => 3,
+				'help_text' => 'El nombre o nombres el alumno',
+				'max_length' => 50,
+				'min_length' => 5,
 				'widget_attrs' => array(
-					'maxlength'=> 30,
-					--'size' =>30,
+					'maxlength'=> 50,
+					'size' =>30,
 				),
 			)	
 	
 		);
-		$this->fields['apellido']= new Gatuf_Form_Field_Varchar(
+		$this->fields['apellidos']= new Gatuf_Form_Field_Varchar(
 			array(
 				'required' => true,
 				'label' => 'Apellidos',
 				'initial' => '',
-				'max_length' => 70,
-				'min_length' => 40,	
+				'help_text'=> 'Los apellidos del alumno',
+				'max_length' => 100,
+				'min_length' => 5,	
 				'widget_attrs' => array(
-					'maxlenght'=>70,
+					'maxlenght'=>100,
 					'size'=>30,
 				),
 
 			)
 		);
-		$this->fields['codigo']= new Gatuf_Form_Field_Varchar(
-			array(
-				'required' => true,
-				'label' => 'Codigo',
-				'initial' => '',
-				'max_lenght' => 9,
-				'min_length' => 9,
-				'widget_attrs' => array(
-					'maxlenght' =>9,
-				),
-			)
-		);
+		
 				
 
+	}
+	
+	public function clean_codigo () {
+		$codigo = mb_strtoupper($this->cleaned_data['codigo']);
+
+		if (!preg_match ('/^\w\d{8}$/', $codigo)) {
+			throw new Gatuf_Form_Invalid ('El código del alumno es incorrecto');
+		}
+
+		$sql = new Gatuf_SQL ('codigo=%s', array ($codigo));
+		$l = Gatuf::factory('Titulacion_Alumno')->getList(array ('filter' => $sql->gen(), 'count' => true));
+
+		if ($l > 0) {
+			throw new Gatuf_Form_Invalid (sprintf ('El código \'<a href="%s">%s</a>\' de alumno especificado ya existe', Gatuf_HTTP_URL_urlForView('Titulacion_Views_Alumno::verAlumno', array ($codigo)), $codigo));
+		}
+
+		return $codigo;
 	}
 
 	
@@ -61,7 +84,7 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form{
 		$alumno = new Titulacion_Alumno ();
 		
 	$alumno->nombre= $this->cleaned_data['nombre'];
-	$alumno->apellido= $this->cleaned_data['apellido'];
+	$alumno->apellidos= $this->cleaned_data['apellidos'];
 	$alumno->codigo= $this->cleaned_data['codigo'];
 	
 	if($commit) $alumno->create ();

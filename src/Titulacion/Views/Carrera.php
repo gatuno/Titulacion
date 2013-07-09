@@ -47,7 +47,7 @@ class Titulacion_Views_Carrera {
 				
 				}			
 			}else {
-				$form = new Titulacion_Form_Opcion_Agregar (null, array());
+				$form = new Titulacion_Form_Carrera_Agregar (null, array());
 			}
 			
 			return Gatuf_Shortcuts_RenderToResponse ('titulacion/carrera/edit-opcion.html',

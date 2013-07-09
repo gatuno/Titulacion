@@ -13,8 +13,7 @@ class Titulacion_Views_Alumno {
 				
 				$list_display = array (
 						array ('codigo', 'Gatuf_Paginator_DisplayVal', 'Codigo'),
-						array ('apellido', 'Gatuf_Paginator_DisplayVal', 'Apellidos'),
-						/**preguntar a felix como poder poner nombre (s)**/
+						array ('apellidos', 'Gatuf_Paginator_DisplayVal', 'Apellidos'),
 						array ('nombre', 'Gatuf_Paginator_DisplayVal', 'Nombre'),
 				);
 				
@@ -22,9 +21,9 @@ class Titulacion_Views_Alumno {
 				$pag->no_results_tex = 'No se encontro ningun alumno';
 				$pag->max_number_pages = 3;
 				$pag->configure ($list_display,
-						array('codigo', 'apellido', 'nombre'),
-						array('codigo', 'apellido', 'nombre'),
-						array('codigo', 'apellido', 'nombre')
+						array('codigo', 'apellidos', 'nombre'),
+						array('codigo', 'apellidos', 'nombre')
+					
 				);
 				
 				$pag->setFromRequest($request);
@@ -49,9 +48,9 @@ class Titulacion_Views_Alumno {
 						$form = new Titulacion_Form_Alumno_Agregar (null, array ());
 				 }
 				 
-				 return Gatuf_Shortcuts_RendeToResponse ('titulacion/alumno/edit-alumno.html',
-														array ('page_title'=>'Nuevo alumno',
-																'form' => $form),
-														$request);
+				 return Gatuf_Shortcuts_RenderToResponse ('titulacion/alumno/edit-alumno.html',
+		                                         array ('page_title' => 'Agregar alumno',
+		                                                'form' => $form),
+		                                         $request);
 			}
 }

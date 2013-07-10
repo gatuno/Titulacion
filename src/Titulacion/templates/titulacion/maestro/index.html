@@ -1,0 +1,5 @@
+{extends 'titulacion/base.html'}
+{block body}
+<p><a href="{url 'Titulacion_Views_Maestro::agregarMaestro'}"><img src="{media '/img/list-add.png'}" alt="Agregar maestro" />Agregar un nuevo maestro</a></p>
+{$paginador.render}
+{/block}

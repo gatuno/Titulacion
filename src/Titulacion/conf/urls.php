@@ -67,4 +67,19 @@ $ctl[] = array (
 	'method' => 'index',
 );
 
+$ctl[] = array (
+	'regex' => '#^/actas/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Acta',
+	'method' => 'index',
+);
+
+$ctl[] = array (
+	'regex' => '#^/actas/add/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Acta',
+	'method' => 'agregarActa',
+);
+
+
 return $ctl;

@@ -14,7 +14,7 @@ class Titulacion_Acta extends Gatuf_Model {
 	public $ingreso;
 	public $egreso;
 	
-	function __construc() {
+	function __construct() {
 		$this->_getConnection();
 		$this->tabla = 'Actas';
 		$this->tabla_view= 'Actas_View';

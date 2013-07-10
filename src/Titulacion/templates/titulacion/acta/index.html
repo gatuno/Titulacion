@@ -1,0 +1,5 @@
+{extends 'titulacion/base.html'}
+{block body}
+<a href="{url 'Titulacion_Views_Acta::agregarActa'}"><img src="{media '/img/list-add.png'}" alt="Nueva acta" />Crear nueva acta</a> 
+{$paginador.render}
+{/block}

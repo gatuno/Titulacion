@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 $base = Gatuf::config('titulacion_base');
 $ctl = array ();
 
@@ -112,30 +112,24 @@ $ctl[] = array (
 );
 
 $ctl[] = array (
-<<<<<<< HEAD
-	'regex' => '#^/actas/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Acta',
-=======
 	'regex' => '#^/maestros/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Maestro',
->>>>>>> bd5beff6d9c3ac448943337d6acb7a11c7da2617
 	'method' => 'index',
 );
 
 $ctl[] = array (
-<<<<<<< HEAD
 	'regex' => '#^/actas/add/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Acta',
 	'method' => 'agregarActa',
-=======
+);
+
+$ctl[] = array(
 	'regex' => '#^/maestros/add/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Maestro',
 	'method' => 'agregarMaestro',
->>>>>>> bd5beff6d9c3ac448943337d6acb7a11c7da2617
 );
 
 

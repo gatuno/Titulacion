@@ -10,8 +10,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		}
 		$modalidades = Gatuf::factory ('Titulacion_Opcion')->getList ();
 		
-		$choi
-		ces = array ();
+		$choices = array ();
 		foreach ($modalidades as $o) {
 			$opciones[$o->descripcion] = $o->id;
 
@@ -86,6 +85,17 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				),
 			)
 		);
+		$this->fields['carrera'] = new Gatuf_Form_Field_Varchar (
+			array (
+				'required' => true,
+				'label' => 'Clave carrera',
+				'initial' => '',
+				'help_text' => 'Ejemplo: COM, ICON',
+				'widget_attrs' => array (
+					'choices' => $choices
+				),
+			)
+		);
 		
 		$this->fields['fechaHora'] = new Gatuf_Form_Field_Datetime(
 			array(
@@ -125,6 +135,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				),
 			)
 		);
+		
 			
 		
 	}
@@ -156,6 +167,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		$acta->folio = $this->cleaned_data['folio'];
 		$acta->numeroActa = $this->cleaned_data['numeroActa'];
 		$acta->opcTitulacion= $this->cleaned_data['opcTitulacion'];
+		$acta->carrera = $this->cleaned_data['carrera'];
 		$acta->alumno = $this->cleaned_data['alumno'];
 		$acta->fechaHora = $this->cleaned_data['fechaHora'];
 		$acta->ingreso = $this->cleaned_data['ingreso'];
@@ -163,7 +175,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		
 		if ($commit) $acta->create ();
 		
-		return $actar;
+		return $acta;
 	}
 
 }

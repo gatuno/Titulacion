@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 $base = Gatuf::config('titulacion_base');
 $ctl = array ();
 
@@ -123,6 +123,14 @@ $ctl[] = array (
 	'base' => $base,
 	'model' => 'Titulacion_Views_Acta',
 	'method' => 'agregarActa',
+);
+
+$ctl[] =array(
+	'regex' => '#^/actas/(\d+)/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Acta',
+	'method' => 'verActa',
+	
 );
 
 $ctl[] = array(

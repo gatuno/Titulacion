@@ -14,6 +14,7 @@ class Titulacion_Views_Acta {
 		$list_display = array (
 			array('folio', 'Gatuf_Paginator_DisplayVal', 'Folio'),
 			array('numeroActa','Gatuf_Paginator_DisplayVal', 'Numero de acta'),
+			array('carrera','Gatuf_Paginator_DisplayVal','Carrera'),
 			array('alumno','Gatuf_Paginator_DisplayVal', 'Codigo del alumno'),
 			array('alumno_nombre','Gatuf_Paginator_DisplayVal', 'Nombre'),
 			array('alumno_apellidos','Gatuf_Paginator_DisplayVal', 'Apellidos'),
@@ -28,8 +29,8 @@ class Titulacion_Views_Acta {
 		$pag->no_results_text = 'No hay actas de titulacion disponibles';
 		$pag->max_number_pages = 3;
 		$pag->configure ($list_display,
-				array ('alumno','folio','numeroActa','ingreso','egreso'),
-				array ('alumno','folio','numeroActa','ingreso','egreso')
+				array ('alumno','folio','numeroActa','ingreso','egreso','carrera'),
+				array ('alumno','folio','numeroActa','ingreso','egreso','carrera')
 		        );
 		$pag-> setFromRequest($request);
 		
@@ -52,11 +53,51 @@ class Titulacion_Views_Acta {
 		}else {
 			$form = new Titulacion_Form_Acta_Agregar (null, array ());
 		}
-		return Gatuf_Shortcuts_RenderToResponse ('titulacion/modalidad/edit-opcion.html',
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/edit-opcion.html',
 												array('page_title' => 'Nueva acta de titulacion',
 													   'form' => $form),
 												$request);
 	
+	
+	}
+	public function verActa($request, $match, $params = array ()){
+		$acta = new Titulacion_Acta ();
+		
+		if(false == $acta->getActa ($match[1])) {
+			throw new Gatuf_HTTP_Error404();
+		}
+		
+		$sql = new Gatuf_SQL ('id=%s',$acta->id);
+		
+		$pdf = new Titulacion_PDF_Acta('P','mm','Legal');
+		$pdf->acta = $acta;
+		$pdf->renderBase ();
+		
+		/*$pdf->id = $id;
+		$pdf->planEstudios = $planEstudios;
+		$pdf->folio = $folio;
+		$pdf->numeroActa = $numeroActa;
+		$pdf->opcTitulacion = $opcTitulacion;
+		$pdf->opcTitulacion_descripcion = $opcTitulacion_descripcion;
+		$pdf->alumno_nombre = $alumno_nombre;
+		$pdf->alumno_apellidos = $alumno_apellidos;
+		$pdf->alumno = $alumno; 
+		$pdf->fechaHora = $fechaHora;
+		$pdf->ingreso = $ingreso;
+		$pdf->egreso = $egreso;
+		$pdf->carrera = $carrera;*/
+		
+		$pdf->Close();
+		
+		$nombre_pdf = $acta->nombre;
+		
+		$nombre_pdf .= '.pdf';
+		$pdf->Output('/tmp/'.$nombre_pdf,'F');
+		
+		return new Gatuf_HTTP_Response_File('/tmp/'.$nombre_pdf, $nombre_pdf, 'application/pdf',true);
+		
+		
+		
 	}
 	
 }

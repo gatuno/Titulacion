@@ -1,14 +1,14 @@
 <?php
 
-class Gatuf_Permission {
+class Gatuf_Permission extends Gatuf_Model {
 	public $id;
 	public $name, $code_name;
 	public $description;
 	public $application;
 	
-	public function __construct {
+	public function __construct () {
 		$this->_getConnection ();
-		$this->table = 'permisos';
+		$this->tabla = 'permisos';
 	}
 	
 	public static function getFromString ($perm) {

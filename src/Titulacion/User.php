@@ -132,14 +132,34 @@ class Titulacion_User extends Gatuf_Model {
 		return $ms;
 	}*/
 	
+	function getPermissionList ($p = array ()) {
+		$default = array('view' => null,
+		                 'filter' => null,
+		                 'order' => null,
+		                 'start' => null,
+		                 'nb' => null,
+		                 'count' => false);
+		$p = array_merge($default, $p);
+		
+		$m = new Gatuf_Permission ();
+		$tabla = 'usuarios_permisos';
+		
+		$m->views['__manytomany__'] = array ();
+		$m->views['__manytomany__']['join'] = ' LEFT JOIN '.$this->_con->pfx.$tabla.' ON '.$m->getSqlTable().'.id='.$this->_con->pfx.$tabla.'.permiso';
+		$sql = new Gatuf_SQL ($this->_con->pfx.$tabla.'.usuario=%s', $this->codigo);
+		$m->views['__manytomany__']['where'] = $sql->gen ();
+		
+		$p['view'] = '__manytomany__';
+		return $m->getList ($p);
+	}
+	
 	function getAllPermissions () {
 		if (!is_null($this->_cache_perms)) {
 			return $this->_cache_perms;
 		}
 		
 		$this->_cache_perms = array ();
-		$sql = new Gatuf_SQL ('usuario=%s', $this->codigo);
-		$perms = Gatuf::factory ('Gatuf_Permission')->getList (array ('filter' => $sql->gen ()));
+		$perms = $this->getPermissionList ();
 		
 		/* TODO: Gestionar los grupos aquí */
 		
@@ -151,7 +171,7 @@ class Titulacion_User extends Gatuf_Model {
 		return $this->_cache_perms;
 	}
 	
-	function hastPerm ($perm, $obj = null) {
+	function hasPerm ($perm, $obj = null) {
 		if (!$this->active) return false;
 		if ($this->admin) return true;
 		$perms = $this->getAllPermissions ();

@@ -5,7 +5,7 @@ Gatuf::loadFunction('Gatuf_HTTP_URL_urlForView');
 
 class Titulacion_Views_Acta {
 	
-	public $index_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-titulación'));
+	public $index_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-titulacion'));
 	public function index($request, $match) {
 		$actas=new Titulacion_Acta ();
 		
@@ -64,7 +64,7 @@ class Titulacion_Views_Acta {
 	
 	}
 	
-	public $verActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-titulación'));
+	public $verActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-titulacion'));
 	public function verActa($request, $match, $params = array ()){
 		$acta = new Titulacion_Acta ();
 		

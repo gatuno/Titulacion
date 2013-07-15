@@ -139,6 +139,13 @@ $ctl[] = array(
 	'model' => 'Titulacion_Views_Maestro',
 	'method' => 'agregarMaestro',
 );
+//este es para hacer pruebas con el acta, sera removido
+$ctl[] = array (
+	'regex' => '#^/prueba/$#',
+	'base' => $base,
+	'model' => 'Titulacion_PDF_prueba',
+	'method' => 'index',
+);
 
 
 return $ctl;

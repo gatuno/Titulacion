@@ -8,12 +8,17 @@ class Titulacion_Acta extends Gatuf_Model {
 	public $opcTitulacion;
 	public $opcTitulacion_descripcion;
 	public $alumno_nombre;
-	public $alumno_apellidos;
+	public $jurado1;
+	public $jurado2;
+	public $jurado3;
+	public $alumno_apellido;
 	public $alumno; /*Llave foranea*/
 	public $fechaHora;
 	public $ingreso;
 	public $egreso;
 	public $carrera;
+	
+	
 	
 	function __construct() {
 		$this->_getConnection();
@@ -38,7 +43,7 @@ class Titulacion_Acta extends Gatuf_Model {
 	}
 
 	public function create() {
-		$req = sprintf('INSERT INTO $s(planEstudios, folio, numeroActa,opcTitulacion, alumno, carrera, fechaHora, ingreso, egreso) VALUES($s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', $this->getSqlTable(), Gatuf_DB_IntegerToDb ($this->planEstudios, $this->con),Gatuf_DB_IntegerToDb ($this->folio, $this->con),Gatuf_DB_IntegerToDb ($this->numeroActa, $this->con),Gatuf_DB_IntegerToDb ($this->opcTitulacion, $this->con),Gatuf_DB_IntegerToDb ($this->alumno, $this->con),Gatuf_DB_IntegerToDb ($this->carrera, $this->con),Gatuf_DB_IntegerToDb ($this->opcTitulacion, $this->con),Gatuf_DB_IntegerToDb ($this->alumno, $this->con),Gatuf_DB_IntegerToDb ($this->fechaHora, $this->con),Gatuf_DB_IntegerToDb ($this->ingreso, $this->con),Gatuf_DB_IntegerToDb ($this->egreso, $this->con));	
+		$req = sprintf('INSERT INTO $s(planEstudios, folio, numeroActa, opcTitulacion, alumno, jurado1, jurado2, jurado3, carrera, fechaHora, ingreso, egreso) VALUES($s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', $this->getSqlTable(), Gatuf_DB_IntegerToDb ($this->planEstudios, $this->con),Gatuf_DB_IntegerToDb ($this->folio, $this->con),Gatuf_DB_IntegerToDb ($this->numeroActa, $this->con),Gatuf_DB_IntegerToDb ($this->opcTitulacion, $this->con),Gatuf_DB_IntegerToDb ($this->alumno, $this->con),Gatuf_DB_IntegerToDb ($this->jurado1, $this->con), Gatuf_DB_IntegerToDb ($this->jurado2, $this->con),Gatuf_DB_IntegerToDb ($this->jurado3, $this->con),Gatuf_DB_IntegerToDb ($this->carrera, $this->con),Gatuf_DB_IntegerToDb ($this->opcTitulacion, $this->con),Gatuf_DB_IntegerToDb ($this->alumno, $this->con),Gatuf_DB_IntegerToDb ($this->fechaHora, $this->con),Gatuf_DB_IntegerToDb ($this->ingreso, $this->con),Gatuf_DB_IntegerToDb ($this->egreso, $this->con));	
 		$this->con_->execute ($req);
 		return true;
 	}

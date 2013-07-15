@@ -17,7 +17,7 @@ class Titulacion_Views_Acta {
 			array('carrera','Gatuf_Paginator_DisplayVal','Carrera'),
 			array('alumno','Gatuf_Paginator_DisplayVal', 'Codigo del alumno'),
 			array('alumno_nombre','Gatuf_Paginator_DisplayVal', 'Nombre'),
-			array('alumno_apellidos','Gatuf_Paginator_DisplayVal', 'Apellidos'),
+			array('alumno_apellido','Gatuf_Paginator_DisplayVal', 'Apellidos'),
 			array('planEstudios','Gatuf_Paginator_DisplayVal','Plan de estudios'),
 			array('opcTitulacion_descripcion','Gatuf_Paginator_DisplayVal', 'Opcion de titulacion'),
 			array('fechaHora','Gatuf_Paginator_DisplayVal','Fecha/Hora'),
@@ -69,11 +69,11 @@ class Titulacion_Views_Acta {
 		
 		$sql = new Gatuf_SQL ('id=%s',$acta->id);
 		
-		$pdf = new Titulacion_PDF_Acta('P','mm','Legal');
+		$pdf = new  Titulacion_PDF_Acta('P','mm','Legal');
 		$pdf->acta = $acta;
 		$pdf->renderBase ();
-		
-		/*$pdf->id = $id;
+		/*$pdf->fechaHora = $fechaHora;
+		$pdf->id = $id;
 		$pdf->planEstudios = $planEstudios;
 		$pdf->folio = $folio;
 		$pdf->numeroActa = $numeroActa;
@@ -82,14 +82,14 @@ class Titulacion_Views_Acta {
 		$pdf->alumno_nombre = $alumno_nombre;
 		$pdf->alumno_apellidos = $alumno_apellidos;
 		$pdf->alumno = $alumno; 
-		$pdf->fechaHora = $fechaHora;
+		
 		$pdf->ingreso = $ingreso;
 		$pdf->egreso = $egreso;
 		$pdf->carrera = $carrera;*/
 		
 		$pdf->Close();
 		
-		$nombre_pdf = $acta->nombre;
+		$nombre_pdf = $acta->alumno;
 		
 		$nombre_pdf .= '.pdf';
 		$pdf->Output('/tmp/'.$nombre_pdf,'F');

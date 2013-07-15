@@ -9,6 +9,8 @@ class Titulacion_User extends Gatuf_Model {
 	
 	public $active = true, $last_login = null, $admin = false;
 	
+	public $_cache_perms = null;
+	
 	function getLoginSqlTable () {
 		return $this->_con->pfx.$this->login_tabla;
 	}
@@ -129,4 +131,33 @@ class Titulacion_User extends Gatuf_Model {
 		
 		return $ms;
 	}*/
+	
+	function getAllPermissions () {
+		if (!is_null($this->_cache_perms)) {
+			return $this->_cache_perms;
+		}
+		
+		$this->_cache_perms = array ();
+		$sql = new Gatuf_SQL ('usuario=%s', $this->codigo);
+		$perms = Gatuf::factory ('Gatuf_Permission')->getList (array ('filter' => $sql->gen ()));
+		
+		/* TODO: Gestionar los grupos aquí */
+		
+		foreach ($perms as $perm) {
+			if (!in_array ($perm->application.'.'.$perm->code_name, $this->_cache_perms)) {
+				$this->_cache_perms[] = $perm->application.'.'.$perm->code_name;
+			}
+		}
+		return $this->_cache_perms;
+	}
+	
+	function hastPerm ($perm, $obj = null) {
+		if (!$this->active) return false;
+		if ($this->admin) return true;
+		$perms = $this->getAllPermissions ();
+		
+		if (in_array ($perm, $perms)) return true;
+		
+		return false;
+	}
 }

@@ -30,10 +30,11 @@ class Titulacion_Views_Modalidad {
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/modalidad/index.html',
 		                                         array('page_title' => 'Modalidades de titulación',
-                                                       'paginador' => $pag),
-                                                 $request);
+		                                               'paginador' => $pag),
+		                                         $request);
 	}
 	
+	public $agregarOpcion_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.admin-titulacion'));
 	public function agregarOpcion ($request, $match) {
 		if ($request->method == 'POST') {
 			$form = new Titulacion_Form_Opcion_Agregar ($request->POST, array());

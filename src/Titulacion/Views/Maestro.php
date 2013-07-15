@@ -27,11 +27,11 @@ class Titulacion_Views_Maestro {
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/maestro/index.html',
 		                                         array('page_title' => 'Maestros',
-                                                       'paginador' => $pag),
-                                                 $request);
+		                                               'paginador' => $pag),
+		                                         $request);
 	}
 	
-	//public $agregarMaestro_precond = array ('Gatuf_Precondition::loginRequired');
+	public $agregarMaestro_precond = array (array ('Gatuf_Precondition::hasPerm', 'SIIAU.agregar-maestros'));
 	public function agregarMaestro ($request, $match) {
 		$title = 'Nuevo profesor';
 		

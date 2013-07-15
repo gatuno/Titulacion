@@ -4,6 +4,8 @@ Gatuf::loadFunction('Gatuf_Shortcuts_RenderToResponse');
 Gatuf::loadFunction('Gatuf_HTTP_URL_urlForView');
 
 class Titulacion_Views_Acta {
+	
+	public $index_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-titulación'));
 	public function index($request, $match) {
 		$actas=new Titulacion_Acta ();
 		
@@ -40,6 +42,7 @@ class Titulacion_Views_Acta {
 												$request);
 	}
 	
+	public $agregarActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-actas'));
 	public function agregarActa ($request, $match) {
 		if($request->method == 'POST'){
 			$form = new Titulacion_Form_Acta_Agregar ($request->POST, array());
@@ -60,6 +63,8 @@ class Titulacion_Views_Acta {
 	
 	
 	}
+	
+	public $verActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-titulación'));
 	public function verActa($request, $match, $params = array ()){
 		$acta = new Titulacion_Acta ();
 		

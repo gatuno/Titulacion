@@ -14,8 +14,8 @@ class Titulacion_Views_Carrera {
 		$list_display = array(
 			array ('clave', 'Gatuf_Paginator_DisplayVal', 'Clave'),
 			array ('descripcion',  'Gatuf_Paginator_DisplayVal', 'Opcion')
-		);	
-
+		);
+		
 		$pag->items_per_page =25;
 		$pag->no_results_text = 'No hay carreras disponibles por el momento';
 		$pag->configure ($list_display,
@@ -25,13 +25,14 @@ class Titulacion_Views_Carrera {
 		);
 		
 		$pag->setFromRequest ($request);
-	
+		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/carrera/index.html',
-							  array('page_title' => 'Carreras',
-						          'paginador' => $pag),
-						        $request);
+		                                         array('page_title' => 'Carreras',
+		                                               'paginador' => $pag),
+		                                         $request);
 	}
 	
+	public $index_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.admin-titulacion'));
 	public function agregarCarrera ($request, $match) {
 		$title = 'Crear carrera';
 		$extra = array ();

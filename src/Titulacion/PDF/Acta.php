@@ -71,6 +71,26 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetFont('Arial','',12);
 		$this->Cell(0,0,$this->acta->jurado1,0,0);
 		
+		$this->SetY(84);
+		$this->SetX(71);
+		$this->SetFont('Arial','',12);
+		$this->Cell(0,0,$this->acta->jurado2,0,0);
+		
+		$this->SetY(90);
+		$this->SetX(71);
+		$this->SetFont('Arial','',12);
+		$this->Cell(0,0,$this->acta->jurado3,0,0);
+		
+		$this->SetY(95);
+		$this->SetX(122);
+		$this->SetFont('Arial','',12);
+		$this->Cell(0,0,'MIEMBROS DEL'0,0);
+		
+		$this->SetY(110);
+		$this->SetX(71);
+		$this->SetFont('Arial','',12);
+		$this->Cell(0,0,$this->acta->carrera,0,0);
+		
 		
 		$this->SetY(119);
 		$this->SetX(190);
@@ -125,6 +145,42 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetX(159);
 		$this->SetFont('Arial','',12);
 		$this->Cell(0,0,'"      SI PROTESTO      ".',0,0);
+		
+		
+		$this->SetY(250);
+		$this->SetX(139);
+		$this->SetFont('Arial','',12);
+		$this->Cell(0,0,$this->acta->jurado1,0,0);
+		
+		$this->SetY(281);
+		$this->SetX(60);
+		$this->SetFont('Arial','',12);
+		$this->Cell(0,0,$this->acta->jurado2,0,0);
+		
+		$this->SetY(281);
+		$this->SetX(137);
+		$this->SetFont('Arial','',12);
+		$this->Cell(0,0,$this->acta->jurado3,0,0);
+		
+		$this->SetY(315);
+		$this->SetX(77);
+		$this->SetFont('Arial','',12);
+		$this->Cell(0,0,'DIRECTOR',0,0);
+		
+		$this->SetY(319);
+		$this->SetX(47);
+		$this->SetFont('Arial','',12);
+		$this->Cell(0,0,'DIVISION DE ELECTRONICA Y COMPUTACION',0,0);
+		
+		$this->SetY(315);
+		$this->SetX(156);
+		$this->SetFont('Arial','',12);
+		$this->Cell(0,0,'SECRETARIO',0,0);
+		
+		$this->SetY(319);
+		$this->SetX(128);
+		$this->SetFont('Arial','',12);
+		$this->Cell(0,0,'DIVISION DE ELECTRONICA Y COMPUTACION',0,0);
 		
 		
 		

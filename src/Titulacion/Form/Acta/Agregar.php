@@ -157,7 +157,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				'required' => true,
 				'label' => 'Jurado',
 				'initial' => '',
-				'help_text'=> 'Año mas letra A/B',
+				'help_text'=> 'Nombre del miembro del jurado',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
 				'widget_attrs' => array (
 					'choices' => $choicesmae
@@ -169,7 +169,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				'required' => true,
 				'label' => 'Jurado',
 				'initial' => '',
-				'help_text'=> 'Año mas letra A/B',
+				'help_text'=> 'Nombre del miembro del jurado',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
 				'widget_attrs' => array (
 					'choices' => $choicesmae
@@ -181,7 +181,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				'required' => true,
 				'label' => 'Jurado',
 				'initial' => '',
-				'help_text'=> 'Año mas letra A/B',
+				'help_text'=> 'Nombre del miembro del jurado',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
 				'widget_attrs' => array (
 					'choices' => $choicesmae

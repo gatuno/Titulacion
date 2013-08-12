@@ -24,7 +24,7 @@ class Titulacion_Views_Acta {
 			array('modalidad_descripcion','Gatuf_Paginator_DisplayVal', 'Opcion de titulacion'),
 			array('fechaHora','Gatuf_Paginator_DisplayVal','Fecha/Hora'),
 			array('ingreso','Gatuf_Paginator_DisplayVal','Calendario de ingreso'),
-			array('egreso','Gatuf_Paginator_DisplayVal','Calnedario de egreso')
+			array('egreso','Gatuf_Paginator_DisplayVal','Calendario de egreso')
 		);
 		
 		$pag->items_per_page = 25;
@@ -68,41 +68,39 @@ class Titulacion_Views_Acta {
 	public function verActa($request, $match, $params = array ()){
 		$acta = new Titulacion_Acta ();
 		
-		if(false == $acta->getActa ($match[1])) {
-			throw new Gatuf_HTTP_Error404();
+		if (false == $acta->getActa ($match[1])) {
+			throw new Gatuf_HTTP_Error404 ();
 		}
 		
-		$sql = new Gatuf_SQL ('id=%s',$acta->id);
+		$alumno = new Titulacion_Alumno ();
+		$alumno->getAlumno ($acta->alumno);
 		
-		$pdf = new  Titulacion_PDF_Acta('P','mm','Legal');
-		$pdf->acta = $acta;
-		$pdf->renderBase ();
-		/*$pdf->fechaHora = $fechaHora;
-		$pdf->id = $id;
-		$pdf->planEstudios = $planEstudios;
-		$pdf->folio = $folio;
-		$pdf->numeroActa = $numeroActa;
-		$pdf->opcTitulacion = $opcTitulacion;
-		$pdf->opcTitulacion_descripcion = $opcTitulacion_descripcion;
-		$pdf->alumno_nombre = $alumno_nombre;
-		$pdf->alumno_apellidos = $alumno_apellidos;
-		$pdf->alumno = $alumno; 
+		$opcion = new Titulacion_Opcion ();
+		$opcion->getOpcion ($acta->opcion);
 		
-		$pdf->ingreso = $ingreso;
-		$pdf->egreso = $egreso;
-		$pdf->carrera = $carrera;*/
+		$modalidad = new Titulacion_Modalidad ();
+		$modalidad->getModalidad ($opcion->modalidad);
 		
-		$pdf->Close();
+		$carrera = new Titulacion_Carrera ();
+		$carrera->getCarrera ($acta->carrera);
 		
-		$nombre_pdf = $acta->alumno;
+		$plan = new Titulacion_PlanEstudio ();
+		$plan->getPlan ($acta->plan);
 		
-		$nombre_pdf .= '.pdf';
-		$pdf->Output('/tmp/'.$nombre_pdf,'F');
+		$director = new Titulacion_Maestro ();
+		$director->getMaestro ($acta->director_division);
 		
-		return new Gatuf_HTTP_Response_File('/tmp/'.$nombre_pdf, $nombre_pdf, 'application/pdf',true);
+		$secretario = new Titulacion_Maestro ();
+		$secretario->getMaestro ($acta->secretario_division);
 		
+		$jurado1 = new Titulacion_Maestro ();
+		$jurado1->getMaestro ($acta->jurado1);
 		
+		$jurado2 = new Titulacion_Maestro ();
+		$jurado2->getMaestro ($acta->jurado2);
 		
+		$jurado3 = new Titulacion_Maestro ();
+		$jurado3->getMaestro ($acta->jurado3);
 	}
 	
 }

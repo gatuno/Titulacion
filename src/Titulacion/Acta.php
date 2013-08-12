@@ -8,6 +8,7 @@ class Titulacion_Acta extends Gatuf_Model {
 	public $acta; /* El número de acta */
 	public $modalidad; /* La opción de titulación */
 	public $modalidad_descripcion;
+	public $director_division, $secretario_division;
 	public $jurado1;
 	public $jurado2;
 	public $jurado3;
@@ -42,9 +43,9 @@ class Titulacion_Acta extends Gatuf_Model {
 	}
 
 	public function create() {
-		$req = sprintf('INSERT INTO %s (plan, folio, acta, modalidad, alumno, jurado1, jurado2, jurado3, carrera, fechaHora, ingreso, egreso) VALUES($s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', $this->getSqlTable(), Gatuf_DB_IntegerToDb ($this->plan, $this->con), Gatuf_DB_IntegerToDb ($this->folio, $this->con), Gatuf_DB_IntegerToDb ($this->acta, $this->con), Gatuf_DB_IntegerToDb ($this->modalidad, $this->con), Gatuf_DB_IdentityToDb ($this->alumno, $this->con), Gatuf_DB_IntegerToDb ($this->jurado1, $this->con), Gatuf_DB_IntegerToDb ($this->jurado2, $this->con), Gatuf_DB_IntegerToDb ($this->jurado3, $this->con),Gatuf_DB_IdentityToDb ($this->carrera, $this->con), Gatuf_DB_IdentityToDb ($this->fechaHora, $this->con), Gatuf_DB_IdentityToDb ($this->ingreso, $this->con), Gatuf_DB_IdentityToDb ($this->egreso, $this->con));
+		$req = sprintf('INSERT INTO %s (plan, folio, acta, modalidad, alumno, director_division, secretario_division, jurado1, jurado2, jurado3, carrera, fechaHora, ingreso, egreso) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', $this->getSqlTable(), Gatuf_DB_IntegerToDb ($this->plan, $this->_con), Gatuf_DB_IntegerToDb ($this->folio, $this->_con), Gatuf_DB_IntegerToDb ($this->acta, $this->_con), Gatuf_DB_IntegerToDb ($this->modalidad, $this->_con), Gatuf_DB_IdentityToDb ($this->alumno, $this->_con), Gatuf_DB_IntegerToDb ($this->director_division, $this->_con), Gatuf_DB_IntegerToDb ($this->secretario_division, $this->_con), Gatuf_DB_IntegerToDb ($this->jurado1, $this->_con), Gatuf_DB_IntegerToDb ($this->jurado2, $this->_con), Gatuf_DB_IntegerToDb ($this->jurado3, $this->_con),Gatuf_DB_IdentityToDb ($this->carrera, $this->_con), Gatuf_DB_IdentityToDb ($this->fechaHora, $this->_con), Gatuf_DB_IdentityToDb ($this->ingreso, $this->_con), Gatuf_DB_IdentityToDb ($this->egreso, $this->_con));
 		
-		$this->con_->execute ($req);
+		$this->_con->execute ($req);
 		
 		$this->id = $this->_con->getLastId ();
 		

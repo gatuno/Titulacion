@@ -61,6 +61,18 @@
 		{$form.f.fechaHora|safe}<br />
 		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.fechaHora.help_text}</span> -->
 	</td></tr>
+	
+	<tr><th><strong>{$form.f.secretario.labelTag}:</strong></th>
+	<td>{if $form.f.secretario.errors}{$form.f.secretario.fieldErrors}{/if}
+		{$form.f.secretario|safe}<br />
+		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.secretario.help_text}</span> -->
+	</td></tr>
+	<tr><th><strong>{$form.f.director.labelTag}:</strong></th>
+	<td>{if $form.f.director.errors}{$form.f.director.fieldErrors}{/if}
+		{$form.f.director|safe}<br />
+		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.director.help_text}</span> -->
+	</td></tr>
+	
 	<tr><th><strong>{$form.f.jurado1.labelTag}:</strong></th>
 	<td>{if $form.f.jurado1.errors}{$form.f.jurado1.fieldErrors}{/if}
 		{$form.f.jurado1|safe}<br />

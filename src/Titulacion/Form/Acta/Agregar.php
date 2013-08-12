@@ -103,7 +103,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				)
 		));
 		
-		$this->fields['alumno']= new Gatuf_Form_Field_Varchar(
+		$this->fields['alumno']= new Gatuf_Form_Field_Varchar (
 			array(
 				'required' => true,
 				'label' => 'Alumno',
@@ -117,7 +117,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				),
 		));
 		
-		$this->fields['ingreso']= new Gatuf_Form_Field_Varchar(
+		$this->fields['ingreso']= new Gatuf_Form_Field_Varchar (
 			array(
 				'required' => true,
 				'label' => 'Calendario de ingreso',
@@ -128,7 +128,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				'widget' => 'Gatuf_Form_Widget_DobleInput'
 		));
 		
-		$this->fields['egreso']= new Gatuf_Form_Field_Varchar(
+		$this->fields['egreso']= new Gatuf_Form_Field_Varchar (
 			array(
 				'required' => true,
 				'label' => 'Calendario de egreso',
@@ -139,7 +139,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				'widget' => 'Gatuf_Form_Widget_DobleInput'
 		));
 		
-		$this->fields['fechaHora'] = new Gatuf_Form_Field_Datetime(
+		$this->fields['fechaHora'] = new Gatuf_Form_Field_Datetime (
 			array(
 				'required' => true,
 				'label' => 'Fecha y hora',
@@ -147,10 +147,34 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				'help_text'=>'Fecha y hora de la ceremonia de titulacion'
 		));
 		
-		$this->fields['jurado1']= new Gatuf_Form_Field_Varchar(
-			array(
+		$this->fields['director'] = new Gatuf_Form_Field_Integer (
+			array (
 				'required' => true,
-				'label' => 'Jurado',
+				'label' => 'Director',
+				'initial' => '', /* FIXME: Configuraciones por default */
+				'help_text' => 'Director de la división',
+				'widget' => 'Gatuf_Form_Widget_SelectInput',
+				'widget_attrs' => array (
+					'choices' => $choices_maestros,
+				),
+		));
+		
+		$this->fields['secretario'] = new Gatuf_Form_Field_Integer (
+			array (
+				'required' => true,
+				'label' => 'Secretario',
+				'initial' => '', /* FIXME: Configuraciones por default */
+				'help_text' => 'Secretario de la división',
+				'widget' => 'Gatuf_Form_Widget_SelectInput',
+				'widget_attrs' => array (
+					'choices' => $choices_maestros,
+				),
+		));
+		
+		$this->fields['jurado1'] = new Gatuf_Form_Field_Integer (
+			array (
+				'required' => true,
+				'label' => 'Jurado 1. FIXME, También comité',
 				'initial' => '',
 				'help_text'=> 'Nombre del miembro del jurado',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
@@ -159,10 +183,10 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				),
 		));
 		
-		$this->fields['jurado2']= new Gatuf_Form_Field_Varchar(
+		$this->fields['jurado2']= new Gatuf_Form_Field_Integer (
 			array(
 				'required' => true,
-				'label' => 'Jurado',
+				'label' => 'Jurado 2',
 				'initial' => '',
 				'help_text'=> 'Nombre del miembro del jurado',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
@@ -170,10 +194,10 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 					'choices' => $choices_maestros
 				),
 		));
-		$this->fields['jurado3']= new Gatuf_Form_Field_Varchar(
+		$this->fields['jurado3']= new Gatuf_Form_Field_Integer (
 			array(
 				'required' => true,
-				'label' => 'Jurado',
+				'label' => 'Jurado 3',
 				'initial' => '',
 				'help_text'=> 'Nombre del miembro del jurado',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
@@ -183,8 +207,8 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		));
 	}
 	
-	public function clean_codigo () {
-		$codigo = mb_strtoupper($this->cleaned_data['codigo']);
+	public function clean_alumno () {
+		$codigo = mb_strtoupper($this->cleaned_data['alumno']);
 		
 		if (!preg_match ('/^\w\d{8}$/', $codigo)) {
 			throw new Gatuf_Form_Invalid ('El código del alumno es incorrecto');
@@ -205,17 +229,19 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 			throw new Exception ('El formulario no tiene datos validos');
 		}
 		
-		$acta = new Titulacion_Actas ();
+		$acta = new Titulacion_Acta ();
 		
-		$acta->planEstudios = $this->cleaned_data['plaEstudios'];
+		$acta->plan = $this->cleaned_data['planEstudios'];
 		$acta->folio = $this->cleaned_data['folio'];
-		$acta->numeroActa = $this->cleaned_data['numeroActa'];
-		$acta->opcTitulacion= $this->cleaned_data['opcTitulacion'];
+		$acta->acta = $this->cleaned_data['numeroActa'];
+		$acta->modalidad = $this->cleaned_data['opcTitulacion'];
 		$acta->carrera = $this->cleaned_data['carrera'];
 		$acta->alumno = $this->cleaned_data['alumno'];
 		$acta->fechaHora = $this->cleaned_data['fechaHora'];
 		$acta->ingreso = $this->cleaned_data['ingreso'];
 		$acta->egreso = $this->cleaned_data['egreso'];
+		$acta->secretario_division = $this->cleaned_data['secretario'];
+		$acta->director_division = $this->cleaned_data['director'];
 		$acta->jurado1 = $this->cleaned_data['jurado1'];
 		$acta->jurado2 = $this->cleaned_data['jurado2'];
 		$acta->jurado3 = $this->cleaned_data['jurado3'];

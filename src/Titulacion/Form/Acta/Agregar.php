@@ -175,7 +175,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		$this->fields['jurado1'] = new Gatuf_Form_Field_Integer (
 			array (
 				'required' => true,
-				'label' => 'Jurado 1. FIXME, También comité',
+				'label' => 'Jurado 1/Comité 1',
 				'initial' => '',
 				'help_text'=> 'Nombre del miembro del jurado',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
@@ -187,7 +187,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		$this->fields['jurado2']= new Gatuf_Form_Field_Integer (
 			array(
 				'required' => true,
-				'label' => 'Jurado 2',
+				'label' => 'Jurado 2/Comité 2',
 				'initial' => '',
 				'help_text'=> 'Nombre del miembro del jurado',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
@@ -198,7 +198,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		$this->fields['jurado3']= new Gatuf_Form_Field_Integer (
 			array(
 				'required' => true,
-				'label' => 'Jurado 3',
+				'label' => 'Jurado 3/Comité 3',
 				'initial' => '',
 				'help_text'=> 'Nombre del miembro del jurado',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',

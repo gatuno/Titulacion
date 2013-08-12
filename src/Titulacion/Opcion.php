@@ -7,6 +7,7 @@ class Titulacion_Opcion extends Gatuf_Model {
 	public $descripcion;
 	public $articulo, $fraccion;
 	public $articulo_cucei, $fraccion_cucei;
+	public $tipo;
 	
 	public function __construct () {
 		$this->_getConnection ();

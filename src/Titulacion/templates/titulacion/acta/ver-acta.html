@@ -15,10 +15,13 @@
 <p>Cursado desde: {$acta.ingreso}-{$acta.egreso}</p>
 <p>Se titula por: {$modalidad.descripcion}, opción {$opcion.descripcion}</p>
 <p>Con un promedio de: FIXME: Poner aquí el promedio</p>
-<h3>FIXME: Jurado o Comité</h3>
 <p>Funge como director de la división: {$director.apellido} {$director.nombre}</p>
 <p>Como secretario: {$secretario.apellido} {$secretario.nombre}</p>
-<p>Y como su jurado/comité (FIXME):
+{if $opcion.tipo == 'C'}
+	<p>Y como miembros del comité de titulación:
+{else}
+	<p>Y como su jurado:
+{/if}
 <ul><li>{$jurado1.apellido} {$jurado1.nombre}</li>
 <li>{$jurado2.apellido} {$jurado2.nombre}</li>
 <li>{$jurado3.apellido} {$jurado3.nombre}</li></ul>

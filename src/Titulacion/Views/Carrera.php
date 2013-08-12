@@ -9,7 +9,7 @@ class Titulacion_Views_Carrera {
 		
 		$pag = new Gatuf_Paginator($carrera);
 		$pag->action = array ('Titulacion_Views_Carrera::index');
-		$pag->sumary = 'Lista de carreas';
+		$pag->sumary = 'Lista de carreras';
 		
 		$list_display = array(
 			array ('clave', 'Gatuf_Paginator_DisplayVal', 'Clave'),
@@ -32,7 +32,7 @@ class Titulacion_Views_Carrera {
 		                                         $request);
 	}
 	
-	public $index_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.admin-titulacion'));
+	public $agregarCarrera_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.admin-titulacion'));
 	public function agregarCarrera ($request, $match) {
 		$title = 'Crear carrera';
 		$extra = array ();

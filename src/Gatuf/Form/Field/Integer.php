@@ -38,7 +38,21 @@ class Gatuf_Form_Field_Integer extends Gatuf_Form_Field {
             }
             $this->checkMinMax($value);
             if (isset ($this->widget->choices)) {
-                if (!in_array ($value, $this->widget->choices)) {
+                $found = false;
+                foreach ($this->widget->choices as $val) {
+                    if (is_array ($val)) {
+                        foreach ($val as $subval) {
+                            if ($value === $subval) {
+                                $found = true;
+                                break;
+                            }
+                         }
+                    } else {
+                        $found = true;
+                        break;
+                    }
+                }
+                if (!$found) {
                     throw new Gatuf_Form_Invalid('Selección inválida');
                 }
             }

@@ -52,7 +52,7 @@ $cfg['url_base'] = 'http://alanturing.cucei.udg.mx';
 $cfg['url_media'] = 'http://alanturing.cucei.udg.mx/titulacion/media';
 
 
-$cfg['titualacion_views'] = dirname(__FILE__).'/urls.php';
+$cfg['titulacion_views'] = dirname(__FILE__).'/urls.php';
 
 # ---------------------------------------------------------------------------- #
 #                      Sección de internacionalización                         #

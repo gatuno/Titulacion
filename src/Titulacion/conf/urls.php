@@ -55,6 +55,7 @@ $ctl[] = array (
 	'method' => 'passwordRecovery',
 );
 
+/* Listado de carreras */
 $ctl[] = array (
 	'regex' => '#^/carreras/$#',
 	'base' => $base,
@@ -69,6 +70,7 @@ $ctl[] = array (
 	'method' => 'agregarCarrera',
 );
 
+/* Listado de alumnos */
 $ctl[] = array (
 	'regex'=>'#^/alumnos/$#',
 	'base'=> $base,
@@ -83,6 +85,7 @@ $ctl[] = array (
 	'method' =>'agregarAlumno'
 );
 
+/* Modalidades de titulacion */
 $ctl[] = array (
 	'regex' => '#^/modalidades/$#',
 	'base' => $base,
@@ -97,24 +100,11 @@ $ctl[] = array (
 	'method' => 'agregarOpcion',
 );
 
+/* Listado de actas de titulacion */
 $ctl[] =array (
 	'regex' => '#^/actas/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Acta',
-	'method' => 'index',
-);
-
-$ctl[] = array (
-	'regex' => '#^/planes/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_PlanEstudio',
-	'method' => 'index',
-);
-
-$ctl[] = array (
-	'regex' => '#^/maestros/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Maestro',
 	'method' => 'index',
 );
 
@@ -133,12 +123,29 @@ $ctl[] =array(
 	
 );
 
+/* Listado de los planes de estudio */
+$ctl[] = array (
+	'regex' => '#^/planes/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_PlanEstudio',
+	'method' => 'index',
+);
+
+/* Bloque para los maestros */
+$ctl[] = array (
+	'regex' => '#^/maestros/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Maestro',
+	'method' => 'index',
+);
+
 $ctl[] = array(
 	'regex' => '#^/maestros/add/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Maestro',
 	'method' => 'agregarMaestro',
 );
+
 //este es para hacer pruebas con el acta, sera removido
 $ctl[] = array (
 	'regex' => '#^/prueba/$#',
@@ -146,6 +153,5 @@ $ctl[] = array (
 	'model' => 'Titulacion_PDF_prueba',
 	'method' => 'index',
 );
-
 
 return $ctl;

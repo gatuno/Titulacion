@@ -76,7 +76,7 @@ class Titulacion_Views_Acta {
 		$alumno->getAlumno ($acta->alumno);
 		
 		$opcion = new Titulacion_Opcion ();
-		$opcion->getOpcion ($acta->opcion);
+		$opcion->getOpcion ($acta->modalidad);
 		
 		$modalidad = new Titulacion_Modalidad ();
 		$modalidad->getModalidad ($opcion->modalidad);
@@ -101,6 +101,51 @@ class Titulacion_Views_Acta {
 		
 		$jurado3 = new Titulacion_Maestro ();
 		$jurado3->getMaestro ($acta->jurado3);
+		
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/ver-acta.html',
+		                                         array ('acta' => $acta,
+		                                                'alumno' => $alumno,
+		                                                'opcion' => $opcion,
+		                                                'modalidad' => $modalidad,
+		                                                'carrera' => $carrera,
+		                                                'plan' => $plan,
+		                                                'director' => $director,
+		                                                'secretario' => $secretario,
+		                                                'jurado1' => $jurado1,
+		                                                'jurado2' => $jurado2,
+		                                                'jurado3' => $jurado3,
+		                                                'page_title' => 'Ver Acta'
+		                                         ),
+		                                         $request);
 	}
 	
+	public function imprimirActa ($request, $match) {
+		$acta = new Titulacion_Acta ();
+		
+		if (false == $acta->getActa ($match[1])) {
+			throw new Gatuf_HTTP_Error404 ();
+		}
+		
+		throw new Exception ('No implementado');
+	}
+	
+	public function imprimirPromedio ($request, $match) {
+		$acta = new Titulacion_Acta ();
+		
+		if (false == $acta->getActa ($match[1])) {
+			throw new Gatuf_HTTP_Error404 ();
+		}
+		
+		throw new Exception ('No implementado');
+	}
+	
+	public function actualizarActa ($request, $match) {
+		$acta = new Titulacion_Acta ();
+		
+		if (false == $acta->getActa ($match[1])) {
+			throw new Gatuf_HTTP_Error404 ();
+		}
+		
+		throw new Exception ('No implementado');
+	}
 }

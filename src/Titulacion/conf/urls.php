@@ -123,11 +123,31 @@ $ctl[] = array (
 );
 
 $ctl[] =array(
-	'regex' => '#^/actas/(\d+)/$#',
+	'regex' => '#^/acta/(\d+)/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Acta',
 	'method' => 'verActa',
-	
+);
+
+$ctl[] =array(
+	'regex' => '#^/acta/(\d+)/update/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Acta',
+	'method' => 'actualizarActa',
+);
+
+$ctl[] =array(
+	'regex' => '#^/acta/(\d+)/imprimir/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Acta',
+	'method' => 'imprimirActa',
+);
+
+$ctl[] =array(
+	'regex' => '#^/acta/(\d+)/imprimir/promedio/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Acta',
+	'method' => 'imprimirPromedio',
 );
 
 /* Listado de los planes de estudio */

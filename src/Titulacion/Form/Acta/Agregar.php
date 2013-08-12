@@ -112,8 +112,8 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				'max_length' => 9,
 				'min_length' => 9,
 				'widget_attrs' => array(
-					'maxlenght' =>9,
-					'size' =>12,
+					'maxlenght' => 9,
+					'size' => 12,
 				),
 		));
 		

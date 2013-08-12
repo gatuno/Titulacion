@@ -40,6 +40,12 @@
 		{$form.f.alumno|safe}<br />
 		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.alumno.help_text}</span> -->
 	</td></tr>
+	<tr><th><strong>Nombre del alumno:</strong></th>
+		<td><input type="text" id="id_alumno_nombre" readonly="readonly" /></td>
+	</tr>
+	<tr><th><strong>Apellido del alumno:</strong></th>
+		<td><input type="text" id="id_alumno_apellido" readonly="readonly" /></td>
+	</tr>
 	<tr><th><strong>{$form.f.ingreso.labelTag}:</strong></th>
 	<td>{if $form.f.ingreso.errors}{$form.f.ingreso.fieldErrors}{/if}
 		{$form.f.ingreso|safe}<br />
@@ -73,4 +79,32 @@
 	<tr><td>&nbsp;</td><td><input type="submit" value="Nueva acta" /></td></tr>
 </table>
 </form>
+{/block}
+{block javascript}
+<script type="text/javascript">
+{literal}
+//<![CDATA[
+	function on_change_alumno () {
+		var codigo = document.getElementById ('id_alumno').value;
+		var nombre = document.getElementById ('id_alumno_nombre');
+		var apellido = document.getElementById ('id_alumno_apellido');
+		
+		nombre.value = "";
+		apellido.value = "";
+		
+		var url = "/titulacion/alumno/" + codigo + "/json/";
+		
+		$.getJSON (url, {}, function (data) {
+			nombre.value = data.nombre;
+			apellido.value = data.apellido;
+		});
+	}
+	
+	var alumno = document.getElementById ('id_alumno');
+	alumno.onchange = on_change_alumno;
+	
+	on_change_alumno ();
+// ]]>
+{/literal}
+</script>
 {/block}

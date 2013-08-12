@@ -56,7 +56,7 @@ class Titulacion_Views_Acta {
 		}else {
 			$form = new Titulacion_Form_Acta_Agregar (null, array ());
 		}
-		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/edit-opcion.html',
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/edit-acta.html',
 												array('page_title' => 'Nueva acta de titulacion',
 													   'form' => $form),
 												$request);

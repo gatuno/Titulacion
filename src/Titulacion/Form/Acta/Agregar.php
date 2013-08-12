@@ -2,36 +2,50 @@
 
 class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 	public function initfields ($extra = array ()) {
+		/* Preparar algunos catalogos */
 		$planes = Gatuf::factory ('Titulacion_PlanEstudio')->getList ();
 		
-		$choices = array ();
-		foreach ($planes as $m) {
-			$choices[$m->plan] = $m->id;
+		$choices_planes = array ();
+		foreach ($planes as $plan) {
+			$choices_planes[$plan->plan] = $plan->id;
 		}
 		
-		$modalidaes = Gatuf::factory ('Titulacion_Opcion')->getList ();
+		$modalidaes = Gatuf::factory ('Titulacion_Modalidad')->getList ();
 		
-		$choicesmod =array();
-		foreach ($modalidaes  as $o) {
-			$choicesmod[$o->descripcion] = $o->id;
-
+		$choices_modalidades = array();
+		foreach ($modalidaes as $modalidad) {
+			$sql = new Gatuf_SQL ('modalidad=%s', $modalidad->id);
+			
+			$opciones = Gatuf::factory ('Titulacion_Opcion')->getList (array ('filter' => $sql->gen ()));
+			
+			if (count ($opciones) == 0) continue;
+			
+			$choices_modalidades [$modalidad->descripcion] = array ();
+			
+			foreach ($opciones as $opcion) {
+				$choices_modalidades[$modalidad->descripcion][$opcion->descripcion] = $opcion->id;
+			}
 		}
 		
 		$maestros = Gatuf::factory ('Titulacion_Maestro') ->getList ();
-		$choicesmae = array ();
-		foreach ($maestros as $j){
-			//$choicesmae[$j->apellido] = $j->codigo;
-		$choicesmae[$j->apellido.' '.$j->nombre] = $j->codigo;
+		$choices_maestros = array ();
+		foreach ($maestros as $maestro){
+			$choices_maestros[$maestro->apellido.' '.$maestro->nombre] = $maestro->codigo;
 		}
 		
 		$carreras = Gatuf::factory ('Titulacion_Carrera') ->getList ();
-		$choicescarr = array ();
-		foreach ($carreras as $c){
-			$choicescarr[$c->descripcion] = $c->clave;
+		$choices_carreras = array ();
+		foreach ($carreras as $carrera){
+			$choices_carreras[$carrera->descripcion] = $carrera->clave;
 		}
-	
-	
-	$this->fields['planEstudios'] = new Gatuf_Form_Field_Varchar (
+		
+		$choices_cal = array ();
+		
+		for ($g = date ('Y'); $g > 1968; $g--) {
+			$choices_cal [$g] = array ('A' => $g.'A', 'B' => $g.'B');
+		}
+		
+		$this->fields['planEstudios'] = new Gatuf_Form_Field_Integer (
 			array (
 				'required' => true,
 				'label' => 'Plan de estudios',
@@ -39,66 +53,9 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				'help_text' => 'El plan de estudios',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
 				'widget_attrs' => array (
-					'choices' => $choices
-				),
-			)
-		);
-	$this->fields['folio'] = new Gatuf_Form_Field_Varchar (
-			array (
-				'required' => true,
-				'label' => 'Folio',
-				'initial' => '',
-				'max_length' => 10,
-				'widget_attrs' => array (
-					'maxlength' => 10,
-					'size' => 10,
-				),
-			)
-		);
-		
-		$this->fields['numeroActa']= new Gatuf_Form_Field_Varchar(
-			array(
-				'required' => true,
-				'label' => 'Numero de acta',
-				'initial' => '',
-				'help_text'=> 'El numero de el acta',
-				'max_length' => 10,
-				'min_length' => 1,
-				'widget_attrs' => array(
-					'maxlenght'=>10,
-					'size'=>10,
-				),
-
-			)
-		);
-		
-		$this->fields['opcTitulacion'] = new Gatuf_Form_Field_Varchar (
-			array (
-				'required' => true,
-				'label' => 'Opcion de titulacion',
-				'initial' => '',
-				'help_text' => 'La opcion de titulacion',
-				'widget' => 'Gatuf_Form_Widget_SelectInput',
-				'widget_attrs' => array (
-					'choices' => $choicesmod
+					'choices' => $choices_planes
 				)
-			)
-		);
-		
-		$this->fields['alumno']= new Gatuf_Form_Field_Varchar(
-			array(
-				'required' => true,
-				'label' => 'Codigo',
-				'initial' => '',
-				'help_text'=> 'El codigo del alumno',
-				'max_length' => 9,
-				'min_length' => 9,
-				'widget_attrs' => array(
-					'maxlenght' =>9,
-					'size' =>12,
-				),
-			)
-		);
+		));
 		
 		$this->fields['carrera'] = new Gatuf_Form_Field_Varchar (
 			array (
@@ -108,10 +65,79 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				'help_text' => 'Carrera de la que egresa',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
 				'widget_attrs' => array (
-					'choices' => $choicescarr
+					'choices' => $choices_carreras
 				),
-			)
-		);
+		));
+		
+		$this->fields['folio'] = new Gatuf_Form_Field_Integer (
+			array (
+				'required' => true,
+				'label' => 'Folio',
+				'initial' => '', /* FIXME: Deberiamos calcularlo automáticamente en base a la carrera y el plan de estudios */
+				'widget_attrs' => array (
+					'size' => 10
+				),
+		));
+		
+		$this->fields['numeroActa']= new Gatuf_Form_Field_Integer (
+			array (
+				'required' => true,
+				'label' => 'Numero de acta',
+				'initial' => '',
+				'help_text'=> 'El numero de el acta',
+				'min' => 1,
+				'widget_attrs' => array(
+					'size' => 10
+				)
+		));
+		
+		$this->fields['opcTitulacion'] = new Gatuf_Form_Field_Integer (
+			array (
+				'required' => true,
+				'label' => 'Opcion de titulacion',
+				'initial' => '',
+				'help_text' => 'La opcion de titulacion',
+				'widget' => 'Gatuf_Form_Widget_SelectInput',
+				'widget_attrs' => array (
+					'choices' => $choices_modalidades
+				)
+		));
+		
+		$this->fields['alumno']= new Gatuf_Form_Field_Varchar(
+			array(
+				'required' => true,
+				'label' => 'Alumno',
+				'initial' => '',
+				'help_text'=> 'El codigo del alumno',
+				'max_length' => 9,
+				'min_length' => 9,
+				'widget_attrs' => array(
+					'maxlenght' =>9,
+					'size' =>12,
+				),
+		));
+		
+		$this->fields['ingreso']= new Gatuf_Form_Field_Varchar(
+			array(
+				'required' => true,
+				'label' => 'Calendario de ingreso',
+				'initial' => '',
+				'widget_attrs' => array(
+					'choices' => $choices_cal
+				),
+				'widget' => 'Gatuf_Form_Widget_DobleInput'
+		));
+		
+		$this->fields['egreso']= new Gatuf_Form_Field_Varchar(
+			array(
+				'required' => true,
+				'label' => 'Calendario de egreso',
+				'initial' => date ('Y'). (date ('n') > 6 ? 'B' : 'A'),
+				'widget_attrs' => array(
+					'choices' => $choices_cal
+				),
+				'widget' => 'Gatuf_Form_Widget_DobleInput'
+		));
 		
 		$this->fields['fechaHora'] = new Gatuf_Form_Field_Datetime(
 			array(
@@ -119,38 +145,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				'label' => 'Fecha y hora',
 				'initial' =>'',
 				'help_text'=>'Fecha y hora de la ceremonia de titulacion'
-			)
-		);
-		
-		$this->fields['ingreso']= new Gatuf_Form_Field_Varchar(
-			array(
-				'required' => true,
-				'label' => 'Calendario de ingreso',
-				'initial' => '',
-				'help_text'=> 'Año mas letra A/B',
-				'max_length' => 5,
-				'min_length' => 5,
-				'widget_attrs' => array(
-					'maxlenght' =>5,
-					'size' =>6,
-				),
-			)
-		);
-		
-		$this->fields['egreso']= new Gatuf_Form_Field_Varchar(
-			array(
-				'required' => true,
-				'label' => 'Calendario de egreso',
-				'initial' => '',
-				'help_text'=> 'Año mas letra A/B',
-				'max_length' => 5,
-				'min_length' => 5,
-				'widget_attrs' => array(
-					'maxlenght' =>5,
-					'size' =>6,
-				),
-			)
-		);
+		));
 		
 		$this->fields['jurado1']= new Gatuf_Form_Field_Varchar(
 			array(
@@ -160,10 +155,10 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				'help_text'=> 'Nombre del miembro del jurado',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
 				'widget_attrs' => array (
-					'choices' => $choicesmae
+					'choices' => $choices_maestros
 				),
-			)
-		);
+		));
+		
 		$this->fields['jurado2']= new Gatuf_Form_Field_Varchar(
 			array(
 				'required' => true,
@@ -172,10 +167,9 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				'help_text'=> 'Nombre del miembro del jurado',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
 				'widget_attrs' => array (
-					'choices' => $choicesmae
+					'choices' => $choices_maestros
 				),
-			)
-		);
+		));
 		$this->fields['jurado3']= new Gatuf_Form_Field_Varchar(
 			array(
 				'required' => true,
@@ -184,29 +178,25 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				'help_text'=> 'Nombre del miembro del jurado',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
 				'widget_attrs' => array (
-					'choices' => $choicesmae
+					'choices' => $choices_maestros
 				),
-			)
-		);
-		
-			
-		
+		));
 	}
 	
 	public function clean_codigo () {
 		$codigo = mb_strtoupper($this->cleaned_data['codigo']);
-
+		
 		if (!preg_match ('/^\w\d{8}$/', $codigo)) {
-			throw new Gatuf_Form_Invalid ('El cÃ³digo del alumno es incorrecto');
+			throw new Gatuf_Form_Invalid ('El código del alumno es incorrecto');
 		}
-
+		
 		$sql = new Gatuf_SQL ('codigo=%s', array ($codigo));
 		$l = Gatuf::factory('Titulacion_Alumno')->getList(array ('filter' => $sql->gen(), 'count' => true));
-
-		if ($l > 0) {
-			throw new Gatuf_Form_Invalid (sprintf ('El cÃ³digo \'<a href="%s">%s</a>\' de alumno especificado ya existe', Gatuf_HTTP_URL_urlForView('Titulacion_Views_Acta::verActa', array ($codigo)), $codigo));
+		
+		if ($l == 0) {
+			throw new Gatuf_Form_Invalid ('El alumno especificado no existe');
 		}
-
+		
 		return $codigo;
 	}
 	
@@ -214,6 +204,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		if(!$this->isValid()) {
 			throw new Exception ('El formulario no tiene datos validos');
 		}
+		
 		$acta = new Titulacion_Actas ();
 		
 		$acta->planEstudios = $this->cleaned_data['plaEstudios'];
@@ -228,11 +219,9 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		$acta->jurado1 = $this->cleaned_data['jurado1'];
 		$acta->jurado2 = $this->cleaned_data['jurado2'];
 		$acta->jurado3 = $this->cleaned_data['jurado3'];
-
 		
 		if ($commit) $acta->create ();
 		
 		return $acta;
 	}
-
 }

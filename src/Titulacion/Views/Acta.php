@@ -15,13 +15,13 @@ class Titulacion_Views_Acta {
 		
 		$list_display = array (
 			array('folio', 'Gatuf_Paginator_DisplayVal', 'Folio'),
-			array('numeroActa','Gatuf_Paginator_DisplayVal', 'Numero de acta'),
-			array('carrera','Gatuf_Paginator_DisplayVal','Carrera'),
+			array('acta','Gatuf_Paginator_DisplayVal', 'Numero de acta'),
+			array('carrera','Gatuf_Paginator_FKExtra','Carrera'),
 			array('alumno','Gatuf_Paginator_DisplayVal', 'Codigo del alumno'),
 			array('alumno_nombre','Gatuf_Paginator_DisplayVal', 'Nombre'),
 			array('alumno_apellido','Gatuf_Paginator_DisplayVal', 'Apellidos'),
-			array('planEstudios','Gatuf_Paginator_DisplayVal','Plan de estudios'),
-			array('opcTitulacion_descripcion','Gatuf_Paginator_DisplayVal', 'Opcion de titulacion'),
+			array('plan_descripcion','Gatuf_Paginator_DisplayVal','Plan de estudios'),
+			array('modalidad_descripcion','Gatuf_Paginator_DisplayVal', 'Opcion de titulacion'),
 			array('fechaHora','Gatuf_Paginator_DisplayVal','Fecha/Hora'),
 			array('ingreso','Gatuf_Paginator_DisplayVal','Calendario de ingreso'),
 			array('egreso','Gatuf_Paginator_DisplayVal','Calnedario de egreso')
@@ -31,8 +31,8 @@ class Titulacion_Views_Acta {
 		$pag->no_results_text = 'No hay actas de titulacion disponibles';
 		$pag->max_number_pages = 3;
 		$pag->configure ($list_display,
-				array ('alumno','folio','numeroActa','ingreso','egreso','carrera'),
-				array ('alumno','folio','numeroActa','ingreso','egreso','carrera')
+				array ('alumno','folio','acta','ingreso','egreso','carrera'),
+				array ('alumno','folio','acta','ingreso','egreso','carrera')
 		        );
 		$pag-> setFromRequest($request);
 		

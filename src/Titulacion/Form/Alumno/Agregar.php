@@ -11,8 +11,8 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form{
 				'max_length' => 9,
 				'min_length' => 9,
 				'widget_attrs' => array(
-					'maxlenght' =>9,
-					'size' =>12,
+					'maxlenght' => 9,
+					'size' => 12,
 				),
 			)
 		);
@@ -31,17 +31,17 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form{
 				),
 			)
 		);
-		$this->fields['apellidos']= new Gatuf_Form_Field_Varchar(
+		$this->fields['apellido']= new Gatuf_Form_Field_Varchar(
 			array(
 				'required' => true,
-				'label' => 'Apellidos',
+				'label' => 'Apellido',
 				'initial' => '',
 				'help_text'=> 'Los apellidos del alumno',
 				'max_length' => 100,
 				'min_length' => 5,
 				'widget_attrs' => array(
-					'maxlenght'=>100,
-					'size'=>30,
+					'maxlenght' => 100,
+					'size' => 30,
 				),
 
 			)
@@ -72,7 +72,7 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form{
 		$alumno = new Titulacion_Alumno ();
 		
 		$alumno->nombre = $this->cleaned_data['nombre'];
-		$alumno->apellidos = $this->cleaned_data['apellidos'];
+		$alumno->apellido = $this->cleaned_data['apellido'];
 		$alumno->codigo = $this->cleaned_data['codigo'];
 	
 		if ($commit) $alumno->create ();

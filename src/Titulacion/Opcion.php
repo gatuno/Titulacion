@@ -37,6 +37,9 @@ class Titulacion_Opcion extends Gatuf_Model {
 		$req = sprintf ('INSERT INTO %s (modalidad, descripcion, articulo, fraccion, articulo_cucei, fraccion_cucei) VALUES (%s, %s, %s, %s, %s, %s)', $this->getSqlTable (), Gatuf_DB_IntegerToDb ($this->modalidad, $this->_con), Gatuf_DB_IdentityToDb ($this->descripcion, $this->_con), Gatuf_DB_IntegerToDb ($this->articulo, $this->_con), Gatuf_DB_IdentityToDb ($this->fraccion, $this->_con), Gatuf_DB_IntegerToDb ($this->articulo_cucei, $this->_con), Gatuf_DB_IdentityToDb ($this->fraccion_cucei, $this->_con));
 		
 		$this->_con->execute ($req);
+		
+		$this->id = $this->_con->getLastId ();
+		
 		return true;
 	}
 	

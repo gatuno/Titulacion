@@ -14,7 +14,7 @@ class Titulacion_Views_Alumno {
 		
 		$list_display = array (
 			array ('codigo', 'Gatuf_Paginator_DisplayVal', 'Codigo'),
-			array ('apellidos', 'Gatuf_Paginator_DisplayVal', 'Apellidos'),
+			array ('apellido', 'Gatuf_Paginator_DisplayVal', 'Apellido'),
 			array ('nombre', 'Gatuf_Paginator_DisplayVal', 'Nombre'),
 		);
 		
@@ -22,8 +22,8 @@ class Titulacion_Views_Alumno {
 		$pag->no_results_tex = 'No se encontro ningun alumno';
 		$pag->max_number_pages = 3;
 		$pag->configure ($list_display,
-			array('codigo', 'apellidos', 'nombre'),
-			array('codigo', 'apellidos', 'nombre')
+			array('codigo', 'apellido', 'nombre'),
+			array('codigo', 'apellido', 'nombre')
 		);
 		
 		$pag->setFromRequest($request);
@@ -53,5 +53,15 @@ class Titulacion_Views_Alumno {
 		                                         array ('page_title' => 'Agregar alumno',
 		                                                'form' => $form),
 		                                         $request);
+	}
+	
+	public function jsonAlumno ($request, $match) {
+		$alumno = new Titulacion_Alumno ();
+		if (false === ($alumno->getAlumno ($match[1]))) {
+			return new Gatuf_HTTP_Response_Json (array ());
+		}
+		$alumno_json = array ('codigo' => $alumno->codigo, 'nombre' => $alumno->nombre, 'apellido' => $alumno->apellido);
+		
+		return new Gatuf_HTTP_Response_Json ($alumno_json);
 	}
 }

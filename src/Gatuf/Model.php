@@ -10,7 +10,7 @@ class Gatuf_Model {
 	public $tabla, $tabla_view;
 	public $default_order = '';
 	public $views;
-		
+	
 	function _getConnection () {
 		static $con = null;
 		if ($this->_con !== null) {
@@ -45,9 +45,8 @@ class Gatuf_Model {
 		if (!is_null($p['view']) && !isset($this->views[$p['view']])) {
 			throw new Exception(sprintf('The view "%s" is not defined.', $p['view']));
 		}
-		
 		$query = array(
-		               'select' => '*',
+		               'select' => $this->getSqlViewTable().'.*',
 		               'from' => $this->getSqlViewTable(),
 		               'join' => '',
 		               'where' => '',
@@ -55,7 +54,7 @@ class Gatuf_Model {
 		               'having' => '',
 		               'order' => $this->default_order,
 		               'limit' => '',
-		);
+		               );
 		
 		if (!is_null($p['view'])) {
 			$query = array_merge($query, $this->views[$p['view']]);

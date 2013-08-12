@@ -144,7 +144,8 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				'required' => true,
 				'label' => 'Fecha y hora',
 				'initial' =>'',
-				'help_text'=>'Fecha y hora de la ceremonia de titulacion'
+				'help_text'=>'Fecha y hora de la ceremonia de titulacion',
+				'widget' => 'Gatuf_Form_Widget_DatetimeJSInput',
 		));
 		
 		$this->fields['director'] = new Gatuf_Form_Field_Integer (

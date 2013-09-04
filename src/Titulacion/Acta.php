@@ -55,4 +55,9 @@ class Titulacion_Acta extends Gatuf_Model {
 	public function displaycarrera ($extra=null) {
 		return '<abbr title="'.$this->carrera_descripcion.'">'.$this->carrera.'</abbr>';
 	}
+	
+	public function displaylinkedfolio ($extra = null) {
+		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $this->id);
+		return '<a href="'.$url.'">'.$this->folio.'</a>';
+	}
 }

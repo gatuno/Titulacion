@@ -7,17 +7,24 @@ class Titulacion_PDF_Acta extends External_FPDF{
 	
 	
 	
-
-	
 	function renderBase(){
-	
-		
-		
 		
 		$nombre = $this->acta->alumno_nombre;
 		$apellidos = $this->acta->alumno_apellido;
 		$nombreCompleto = $nombre  .' '.  $apellidos;
+	
+		$jurado1 = $this->jurado1->nombre;
+		$apej1 = $this->jurado1->apellido;
+		$nombreCompletoj1 = $jurado1 .' '.$apej1;
 		
+		$jurado2 = $this->jurado2->nombre;
+		$apej2 = $this->jurado2->apellido;
+		$nombreCompletoj2 = $jurado2 .' '.$apej2;
+		
+		$jurado3 = $this->jurado3->nombre;
+		$apej3 = $this->jurado3->apellido;
+		$nombreCompletoj3 = $jurado3 .' '.$apej3;
+			
 		$this->AliasNbPages();
 		$this->SetMargins(20, 5);
 		
@@ -27,7 +34,7 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetY(85);
 		$this->SetX(35);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,$this->acta->numeroActa,0,0);
+		$this->Cell(0,0,$this->acta->folio,0,0);
 		
 		$this->SetY(91);
 		$this->SetX(35);
@@ -60,7 +67,6 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->Cell(0,0,4,$this->acta->carrera,0,0);
 		
 		
-		//throw new Exception($this->acta->alumno_apellido);
 		$this->SetY(110);
 		$this->SetX(70);
 		$this->SetFont('Arial','',12);
@@ -69,27 +75,29 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetY(77);
 		$this->SetX(71);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,$this->acta->jurado1,0,0);
+		$this->Cell(0,0,$nombreCompletoj1,0,0);
+		
 		
 		$this->SetY(84);
 		$this->SetX(71);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,$this->acta->jurado2,0,0);
+		$this->Cell(0,0,$nombreCompletoj2,0,0);
 		
 		$this->SetY(90);
 		$this->SetX(71);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,$this->acta->jurado3,0,0);
+		$this->Cell(0,0,$nombreCompletoj3,0,0);
 		
 		$this->SetY(95);
 		$this->SetX(122);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,'MIEMBROS DEL'0,0);
+		$this->Cell(0, 0, 'MIEMBROS DEL', 0,0);
+
 		
-		$this->SetY(110);
+		$this->SetY(100);
 		$this->SetX(71);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,$this->acta->carrera,0,0);
+		$this->Cell(0,0,$this->carrera->descripcion,0,0);
 		
 		
 		$this->SetY(119);

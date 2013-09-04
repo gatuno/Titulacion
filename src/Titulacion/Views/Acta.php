@@ -14,7 +14,7 @@ class Titulacion_Views_Acta {
 		$pag->sumary = 'Lista de actas registradas';
 		
 		$list_display = array (
-			array('folio', 'Gatuf_Paginator_DisplayVal', 'Folio'),
+			array('folio', 'Gatuf_Paginator_FKLink', 'Folio'),
 			array('acta','Gatuf_Paginator_DisplayVal', 'Numero de acta'),
 			array('carrera','Gatuf_Paginator_FKExtra','Carrera'),
 			array('alumno','Gatuf_Paginator_DisplayVal', 'Codigo del alumno'),
@@ -119,18 +119,71 @@ class Titulacion_Views_Acta {
 		                                         $request);
 	}
 	
-	public function imprimirActa ($request, $match) {
+	
+	
+	
+	/*Aqui se hace la prueba para generar el PDF*/
+	//queda pendiente hacer que cuando se descargue el pdf tenga por nombre: codigo.pdf
+	public function imprimirActa ($request, $match){
 		$acta = new Titulacion_Acta ();
-		
+		$match[1];
 		if (false == $acta->getActa ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();
 		}
 		
-		throw new Exception ('No implementado');
+		$alumno = new Titulacion_Alumno ();
+		$alumno->getAlumno ($acta->alumno);
+		
+		$opcion = new Titulacion_Opcion ();
+		$opcion->getOpcion ($acta->modalidad);
+		
+		$modalidad = new Titulacion_Modalidad ();
+		$modalidad->getModalidad ($opcion->modalidad);
+		
+		$carrera = new Titulacion_Carrera ();
+		$carrera->getCarrera ($acta->carrera);
+		
+		$plan = new Titulacion_PlanEstudio ();
+		$plan->getPlan ($acta->plan);
+		
+		$director = new Titulacion_Maestro ();
+		$director->getMaestro ($acta->director_division);
+		
+		$secretario = new Titulacion_Maestro ();
+		$secretario->getMaestro ($acta->secretario_division);
+		
+		$jurado1 = new Titulacion_Maestro ();
+		$jurado1->getMaestro ($acta->jurado1);
+		
+		$jurado2 = new Titulacion_Maestro ();
+		$jurado2->getMaestro ($acta->jurado2);
+		
+		$jurado3 = new Titulacion_Maestro ();
+		$jurado3->getMaestro ($acta->jurado3);
+		
+		$pdf = new Titulacion_PDF_Acta ('P', 'mm', 'Letter');
+		
+		$pdf->acta = $acta;
+		
+		$pdf->jurado1 = $jurado1;
+		$pdf->jurado2 = $jurado2;
+		$pdf->jurado3 = $jurado3;
+		$pdf->carrera = $carrera;
+		$pdf->renderBase ();
+		
+		$pdf->Close ();
+		$nombre_pdf = $acta->alumno;
+ 		
+		$nombre_pdf .= '.pdf';
+		$pdf->Output ('/tmp/'.$nombre_pdf, 'F');
+		
+		return new Gatuf_HTTP_Response_File ('/tmp/'.$nombre_pdf, $nombre_pdf, 'application/pdf', true);
+		
 	}
+
 	
 	public function imprimirPromedio ($request, $match) {
-		$acta = new Titulacion_Acta ();
+		
 		
 		if (false == $acta->getActa ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();

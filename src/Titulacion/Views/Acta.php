@@ -161,7 +161,10 @@ class Titulacion_Views_Acta {
 		$jurado3 = new Titulacion_Maestro ();
 		$jurado3->getMaestro ($acta->jurado3);
 		
-		$pdf = new Titulacion_PDF_Acta ('P', 'mm', 'Letter');
+		$grado = new Titulacion_Grado ();
+		$grado->getGrado($acta->grado);
+		
+		$pdf = new Titulacion_PDF_Acta ('P', 'mm', 'Legal');
 		
 		$pdf->acta = $acta;
 		
@@ -169,6 +172,9 @@ class Titulacion_Views_Acta {
 		$pdf->jurado2 = $jurado2;
 		$pdf->jurado3 = $jurado3;
 		$pdf->carrera = $carrera;
+		$pdf->opcion = $opcion;
+		$pdf->modalidad = $modalidad;
+		$pdf->grado = $grado;
 		$pdf->renderBase ();
 		
 		$pdf->Close ();

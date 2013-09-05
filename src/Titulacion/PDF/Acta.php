@@ -14,16 +14,20 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$nombreCompleto = $nombre  .' '.  $apellidos;
 	
 		$jurado1 = $this->jurado1->nombre;
+		$grado = $this->grado->descripcion;
 		$apej1 = $this->jurado1->apellido;
-		$nombreCompletoj1 = $jurado1 .' '.$apej1;
+		$complete1= $jurado1 .' '.$apej1;
+		$nombreCompletoj1 = $grado .' '.$complete1;
 		
 		$jurado2 = $this->jurado2->nombre;
+		$grado = $this->grado->descripcion;
 		$apej2 = $this->jurado2->apellido;
-		$nombreCompletoj2 = $jurado2 .' '.$apej2;
+		$nombreCompletoj2 =$grado .' '.$jurado2 .' '.$apej2;
 		
 		$jurado3 = $this->jurado3->nombre;
+		$grado = $this->grado->descripcion;
 		$apej3 = $this->jurado3->apellido;
-		$nombreCompletoj3 = $jurado3 .' '.$apej3;
+		$nombreCompletoj3 =$grado .' '.$jurado3 .' '.$apej3;
 			
 		$this->AliasNbPages();
 		$this->SetMargins(20, 5);
@@ -97,39 +101,39 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetY(100);
 		$this->SetX(71);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,$this->carrera->descripcion,0,0);
+		$this->Cell(0,0,$this->carrera->nombre_largo,0,0);
 		
 		
 		$this->SetY(119);
 		$this->SetX(190);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,'artudg',0,0);
+		$this->Cell(0,0,$this->opcion->articulo,0,0);
 		
 		$this->SetY(124);
 		$this->SetX(85);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,'frcudg',0,0);
+		$this->Cell(0,0,$this->opcion->fraccion,0,0);
 	
 	
 		$this->SetY(124);
 		$this->SetX(146);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,'artcuc',0,0);
+		$this->Cell(0,0,$this->opcion->articulo_cucei,0,0);
 		
 		$this->SetY(124);
 		$this->SetX(182);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,'frcuc',0,0);
+		$this->Cell(0,0,$this->opcion->fraccion_cucei,0,0);
 		
 		$this->SetY(134);
 		$this->SetX(71);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,'Modalidad',0,0);
+		$this->Cell(0,0,$this->modalidad->descripcion,0,0);
 		
 		$this->SetY(146);
 		$this->SetX(71);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,'opcion',0,0);
+		$this->Cell(0,0,$this->opcion->descripcion,0,0);
 		
 		$this->SetY(169);
 		$this->SetX(71);
@@ -157,18 +161,18 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		
 		$this->SetY(250);
 		$this->SetX(139);
+		$this->Cell(0,0,$nombreCompletoj1,0,0);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,$this->acta->jurado1,0,0);
 		
 		$this->SetY(281);
 		$this->SetX(60);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,$this->acta->jurado2,0,0);
+		$this->Cell(0,0,$nombreCompletoj2,0,0);
 		
 		$this->SetY(281);
 		$this->SetX(137);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,$this->acta->jurado3,0,0);
+		$this->Cell(0,0,$nombreCompletoj3,0,0);
 		
 		$this->SetY(315);
 		$this->SetX(77);

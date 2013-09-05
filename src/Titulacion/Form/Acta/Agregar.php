@@ -3,11 +3,11 @@
 class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 	public function initfields ($extra = array ()) {
 		/* Preparar algunos catalogos */
-		$planes = Gatuf::factory ('Titulacion_PlanEstudio')->getList ();
+		$planes = Gatuf::factory ('Titulacion_Grado')->getList ();
 		
-		$choices_planes = array ();
-		foreach ($planes as $plan) {
-			$choices_planes[$plan->plan] = $plan->id;
+		$choices_grados = array ();
+		foreach ($grados as $grado) {
+			$choices_planes[$grado->grado] = $grado->id;
 		}
 		
 		$modalidaes = Gatuf::factory ('Titulacion_Modalidad')->getList ();

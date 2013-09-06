@@ -3,13 +3,17 @@
 class Titulacion_Form_Maestro_Agregar extends Gatuf_Form {
 	public function initFields ($extra = array ()) {
 	
-	$grados = Gatuf::factory ('Titulacion_Grado')->getList ();
 		
-		$choices_grados = array ();
-		foreach ($grados as $descripcion) {
-			$choices_grados[$descripcion->descripcion] = $descripcion->id;
-		}
-	
+		$choices_grados = array ('Ing.'=>'I', 'Lic.' => 'L', 'Dr./Dra.'=>'D', 'Mtro./Mtra'=>'M');
+		
+		
+		//codigo agregado
+		$choices_sex = array ('Masculino'=>'M', 'Femenino'=>'F');
+		
+		
+			
+		
+		//
 	
 		$this->fields['codigo'] = new Gatuf_Form_Field_Integer (
 			array (
@@ -53,24 +57,31 @@ class Titulacion_Form_Maestro_Agregar extends Gatuf_Form {
 				),
 		));
 		
-		$this->fields['grado'] = new Gatuf_Form_Field_Integer (
+		
+		
+		$this->fields['grado'] = new Gatuf_Form_Field_Varchar (
 			array (
 				'required' => true,
 				'label' => 'Grado de estudios',
 				'initial' => '',
-				'help_text' => 'El plan de estudios',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
-				'widget_attrs' => array (
+				'widget_attrs' => array(
 					'choices' => $choices_grados
-				)
+				),
 		));
+		
 	
-		$this->fields['sexo'] = new Gatuf_Form_Field_Email (
+		$this->fields['sexo'] = new Gatuf_Form_Field_Varchar (
 			array (
 				'required' => true,
 				'label' => 'Sexo',
 				'initial' => '',
-				'help_text' => 'M masculino, F femenino',
+				'widget' => 'Gatuf_Form_Widget_SelectInput',
+				'widget_attrs' => array(
+					'choices' => $choices_sex
+				),
+				
+				
 		));
 	
 		$this->fields['correo'] = new Gatuf_Form_Field_Email (

@@ -102,6 +102,10 @@ class Titulacion_Views_Acta {
 		$jurado3 = new Titulacion_Maestro ();
 		$jurado3->getMaestro ($acta->jurado3);
 		
+		$grado = new Titulacion_Grado ();
+		$grado->getGrado ($acta->grado);
+		 
+		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/ver-acta.html',
 		                                         array ('acta' => $acta,
 		                                                'alumno' => $alumno,
@@ -161,8 +165,12 @@ class Titulacion_Views_Acta {
 		$jurado3 = new Titulacion_Maestro ();
 		$jurado3->getMaestro ($acta->jurado3);
 		
-		$grado = new Titulacion_Grado ();
+		$grado = new Titulacion_Maestro ();
 		$grado->getGrado($acta->grado);
+		
+		$dGrado = new Titulacion_Grado ();
+		$dGrado->getDescripcion($grado->grado);
+	
 		
 		$pdf = new Titulacion_PDF_Acta ('P', 'mm', 'Legal');
 		
@@ -175,6 +183,7 @@ class Titulacion_Views_Acta {
 		$pdf->opcion = $opcion;
 		$pdf->modalidad = $modalidad;
 		$pdf->grado = $grado;
+		$pdf->dGrado = $dGrado;
 		$pdf->renderBase ();
 		
 		$pdf->Close ();

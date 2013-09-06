@@ -9,7 +9,7 @@ class Titulacion_Grado extends Gatuf_Model {
 		$this->tabla = 'Grados';
 	}
 	
-	public function getGrado ($id) {
+	public function getDescripcion ($id) {
 		$req = sprintf ('SELECT * FROM %s WHERE id=%s', $this->getSqlTable (), Gatuf_DB_IntegerToDb ($id, $this->_con));
 		
 		if (false === ($rs = $this->_con->select($req))) {

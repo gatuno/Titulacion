@@ -9,6 +9,15 @@ public function Titulacion_Utils_grado ($sexo, $grado) {
 			return 'Lic.';
 			break;
 		case 'D':
-			if ($sexo == 'M') {
-				
+			if ($sexo == 'M') { 
+				return 'Dra.';}
+			else return 'Dr.';
+			break;
+		case 'M':
+			 if ($sexo == 'M'){
+				return 'Mtra.';}
+			else return 'Mtro.';
+			break;
+		default: return 'No implementado';
+	}
 }

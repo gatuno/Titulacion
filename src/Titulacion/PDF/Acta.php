@@ -17,21 +17,23 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$apellidos = $this->acta->alumno_apellido;
 		$nombreCompleto = $nombre  .' '.  $apellidos;
 	
-		/*$jurado1 = $this->jurado1->nombre;
-		$grado = $this->grado->descripcion;
+		$jurado1 = $this->jurado1->nombre;
+		$grado1 = Titulacion_Utils_grado ($this->jurado1->sexo, $this->jurado1->grado);
 		$apej1 = $this->jurado1->apellido;
 		$complete1= $jurado1 .' '.$apej1;
-		$nombreCompletoj1 = $grado .' '.$complete1;
-		*/
-		/*$jurado2 = $this->jurado2->nombre;
-		$grado = $this->grado->descripcion;
+		$nombreCompletoj1 = $grado1 .' '.$complete1;
+		
+		$jurado2 = $this->jurado2->nombre;
+		$grado2 = Titulacion_Utils_grado ($this->jurado2->sexo, $this->jurado2->grado);
 		$apej2 = $this->jurado2->apellido;
-		$nombreCompletoj2 =$grado .' '.$jurado2 .' '.$apej2;
+		$complete2= $jurado2 .' '.$apej2;
+		$nombreCompletoj2 =$grado2 .' '.$jurado2 .' '.$apej2;
 		
 		$jurado3 = $this->jurado3->nombre;
-		$grado = $this->grado->descripcion;
+		$grado3 = Titulacion_Utils_grado ($this->jurado3->sexo, $this->jurado3->grado);$this->grado->descripcion;
 		$apej3 = $this->jurado3->apellido;
-		$nombreCompletoj3 =$grado .' '.$jurado3 .' '.$apej3;
+		$complete3= $jurado3 .' '.$apej3;
+		$nombreCompletoj3 =$grado3 .' '.$jurado3 .' '.$apej3;
 			*/
 		$this->AliasNbPages();
 		$this->SetMargins(20, 5);
@@ -83,9 +85,9 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetY(77);
 		$this->SetX(71);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,Titulacion_Utils_grado ($this->jurado1->sexo, $this->jurado1->grado),0,0);
+		$this->Cell(0,0,$nombreCompletoj1,0,0);
 		
-		/*
+		
 		$this->SetY(84);
 		$this->SetX(71);
 		$this->SetFont('Arial','',12);
@@ -94,7 +96,7 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetY(90);
 		$this->SetX(71);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,$nombreCompletoj3,0,0);*/
+		$this->Cell(0,0,$nombreCompletoj3,0,0);
 		
 		$this->SetY(95);
 		$this->SetX(122);
@@ -162,7 +164,7 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetFont('Arial','',12);
 		$this->Cell(0,0,'"      SI PROTESTO      ".',0,0);
 		
-		/*
+		
 		$this->SetY(250);
 		$this->SetX(139);
 		$this->Cell(0,0,$nombreCompletoj1,0,0);
@@ -176,7 +178,7 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetY(281);
 		$this->SetX(137);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,$nombreCompletoj3,0,0);*/
+		$this->Cell(0,0,$nombreCompletoj3,0,0);
 		
 		$this->SetY(315);
 		$this->SetX(77);

@@ -19,7 +19,6 @@ class Titulacion_Acta extends Gatuf_Model {
 	public $ingreso; /* Calendario de ingreso */
 	public $egreso; /* Calendario de egreso */
 	public $carrera;
-	public $grado;
 	public $carrera_descripcion;
 	
 	function __construct() {

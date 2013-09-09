@@ -9,7 +9,7 @@ class Titulacion_Views_Acta {
 	public function index($request, $match) {
 		$actas=new Titulacion_Acta ();
 		
-		$pag = new Gatuf_Paginator ($actas);
+		$pag = new Gatuf_Paginator($actas);
 		$pag->action = array ('Titulacion_Views_Acta::index');
 		$pag->sumary = 'Lista de actas registradas';
 		
@@ -102,9 +102,6 @@ class Titulacion_Views_Acta {
 		$jurado3 = new Titulacion_Maestro ();
 		$jurado3->getMaestro ($acta->jurado3);
 		
-		$grado = new Titulacion_Grado ();
-		$grado->getGrado ($acta->grado);
-		 
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/ver-acta.html',
 		                                         array ('acta' => $acta,
@@ -165,13 +162,6 @@ class Titulacion_Views_Acta {
 		$jurado3 = new Titulacion_Maestro ();
 		$jurado3->getMaestro ($acta->jurado3);
 		
-		$grado = new Titulacion_Maestro ();
-		$grado->getGrado($acta->grado);
-		
-		$dGrado = new Titulacion_Grado ();
-		$dGrado->getDescripcion($grado->grado);
-	
-		
 		$pdf = new Titulacion_PDF_Acta ('P', 'mm', 'Legal');
 		
 		$pdf->acta = $acta;
@@ -182,8 +172,6 @@ class Titulacion_Views_Acta {
 		$pdf->carrera = $carrera;
 		$pdf->opcion = $opcion;
 		$pdf->modalidad = $modalidad;
-		$pdf->grado = $grado;
-		$pdf->dGrado = $dGrado;
 		$pdf->renderBase ();
 		
 		$pdf->Close ();

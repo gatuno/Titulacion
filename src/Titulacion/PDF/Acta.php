@@ -30,11 +30,11 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$nombreCompletoj2 =$grado2 .' '.$jurado2 .' '.$apej2;
 		
 		$jurado3 = $this->jurado3->nombre;
-		$grado3 = Titulacion_Utils_grado ($this->jurado3->sexo, $this->jurado3->grado);$this->grado->descripcion;
+		$grado3 = Titulacion_Utils_grado ($this->jurado3->sexo, $this->jurado3->grado);
 		$apej3 = $this->jurado3->apellido;
 		$complete3= $jurado3 .' '.$apej3;
 		$nombreCompletoj3 =$grado3 .' '.$jurado3 .' '.$apej3;
-			*/
+			
 		$this->AliasNbPages();
 		$this->SetMargins(20, 5);
 		
@@ -52,9 +52,10 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->Cell(0,0,$this->acta->alumno,0,0);
 		
 		/*throw new exception($this->acta->fechaHora);*/
-		$dia = date_format(date_create ($this->acta->fechaHora),'d');
-		$mes = date_format(date_create ($this->acta->fechaHora),'F');
-		$anio = date_format(date_create ($this->acta->fechaHora),'Y');
+		setLocale(LC_ALL, 'es_MX.UTF-8');
+		$dia = strftime("%d",strtotime ($this->acta->fechaHora));
+		$mes = strftime("%B",strtotime ($this->acta->fechaHora));
+		$anio = strftime("%Y",strtotime ($this->acta->fechaHora));
 		
 		$this->SetY(54);
 		$this->SetX(150);

@@ -1,39 +1,24 @@
 <?php
 
 class Titulacion_PDF_Acta extends External_FPDF{
-	public $acta;
-	public $fechaHora;
-	public $numeroActa;
-	
-/*$descG->
-		
-		$grado*/
-	
-	
+	public $acta, $carrera;
+	public $jurado1, $jurado2, $jurado3;
+	public $opcion, $modalidad;
+	public $director, $secretario;
 	
 	function renderBase(){
 		Gatuf::loadFunction ('Titulacion_Utils_grado');
-		$nombre = $this->acta->alumno_nombre;
-		$apellidos = $this->acta->alumno_apellido;
-		$nombreCompleto = $nombre  .' '.  $apellidos;
-	
-		$jurado1 = $this->jurado1->nombre;
-		$grado1 = Titulacion_Utils_grado ($this->jurado1->sexo, $this->jurado1->grado);
-		$apej1 = $this->jurado1->apellido;
-		$complete1= $jurado1 .' '.$apej1;
-		$nombreCompletoj1 = $grado1 .' '.$complete1;
 		
-		$jurado2 = $this->jurado2->nombre;
-		$grado2 = Titulacion_Utils_grado ($this->jurado2->sexo, $this->jurado2->grado);
-		$apej2 = $this->jurado2->apellido;
-		$complete2= $jurado2 .' '.$apej2;
-		$nombreCompletoj2 =$grado2 .' '.$jurado2 .' '.$apej2;
+		$nombreCompleto = $this->acta->alumno_nombre.' '.$this->acta->alumno_apellido;
 		
-		$jurado3 = $this->jurado3->nombre;
-		$grado3 = Titulacion_Utils_grado ($this->jurado3->sexo, $this->jurado3->grado);
-		$apej3 = $this->jurado3->apellido;
-		$complete3= $jurado3 .' '.$apej3;
-		$nombreCompletoj3 =$grado3 .' '.$jurado3 .' '.$apej3;
+		$grado = Titulacion_Utils_grado ($this->jurado1->sexo, $this->jurado1->grado);
+		$nombreCompletoj1 = $grado.' '.$this->jurado1->apellido.' '.$this->jurado1->nombre;
+		
+		$grado = Titulacion_Utils_grado ($this->jurado2->sexo, $this->jurado2->grado);
+		$nombreCompletoj2 = $grado.' '.$this->jurado2->apellido.' '.$this->jurado2->nombre;
+		
+		$grado = Titulacion_Utils_grado ($this->jurado3->sexo, $this->jurado3->grado);
+		$nombreCompletoj3 = $grado.' '.$this->jurado3->apellido.' '.$this->jurado3->nombre;
 			
 		$this->AliasNbPages();
 		$this->SetMargins(20, 5);
@@ -53,9 +38,9 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		
 		/*throw new exception($this->acta->fechaHora);*/
 		setLocale(LC_ALL, 'es_MX.UTF-8');
-		$dia = strftime("%d",strtotime ($this->acta->fechaHora));
-		$mes = strftime("%B",strtotime ($this->acta->fechaHora));
-		$anio = strftime("%Y",strtotime ($this->acta->fechaHora));
+		$dia = strftime("%d", strtotime ($this->acta->fechaHora)); /* Extraer el día */
+		$mes = strftime("%B", strtotime ($this->acta->fechaHora)); /* El nombre del mes */
+		$anio = strftime("%Y", strtotime ($this->acta->fechaHora)); /* El año */
 		
 		$this->SetY(54);
 		$this->SetX(150);
@@ -102,14 +87,16 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetY(95);
 		$this->SetX(122);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0, 0, 'MIEMBROS DEL', 0,0);
+		if ($this->opcion->tipo == 'C') {
+			$this->Cell(0, 0, 'MIEMBROS DEL COMITÉ', 0,0);
+		} else if ($this->opcion->tipo == 'J') {
+			$this->Cell(0, 0, 'MIEMBROS DEL JURADO', 0, 0);
+		}
 
-		
 		$this->SetY(100);
 		$this->SetX(71);
 		$this->SetFont('Arial','',12);
 		$this->Cell(0,0,$this->carrera->nombre_largo,0,0);
-		
 		
 		$this->SetY(119);
 		$this->SetX(190);
@@ -157,14 +144,10 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetFont('Arial','',12);
 		$this->Cell(0,0,'califiacion letra',0,0);
 		
-		
-		
-		
 		$this->SetY(218);
 		$this->SetX(159);
 		$this->SetFont('Arial','',12);
 		$this->Cell(0,0,'"      SI PROTESTO      ".',0,0);
-		
 		
 		$this->SetY(250);
 		$this->SetX(139);
@@ -200,10 +183,5 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetX(128);
 		$this->SetFont('Arial','',12);
 		$this->Cell(0,0,'DIVISION DE ELECTRONICA Y COMPUTACION',0,0);
-		
-		
-		
-		
 	}
-
 }

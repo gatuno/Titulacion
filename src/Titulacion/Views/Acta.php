@@ -172,6 +172,8 @@ class Titulacion_Views_Acta {
 		$pdf->carrera = $carrera;
 		$pdf->opcion = $opcion;
 		$pdf->modalidad = $modalidad;
+		$pdf->director = $director;
+		$pdf->secretario = $secretario;
 		$pdf->renderBase ();
 		
 		$pdf->Close ();
@@ -181,12 +183,11 @@ class Titulacion_Views_Acta {
 		$pdf->Output ('/tmp/'.$nombre_pdf, 'F');
 		
 		return new Gatuf_HTTP_Response_File ('/tmp/'.$nombre_pdf, $nombre_pdf, 'application/pdf', true);
-		
 	}
 
 	
 	public function imprimirPromedio ($request, $match) {
-		
+		$acta = new Titulacion_Acta ();
 		
 		if (false == $acta->getActa ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();

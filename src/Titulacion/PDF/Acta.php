@@ -20,6 +20,10 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$grado = Titulacion_Utils_grado ($this->jurado3->sexo, $this->jurado3->grado);
 		$nombreCompletoj3 = $grado.' '.$this->jurado3->apellido.' '.$this->jurado3->nombre;
 			
+			
+		
+		
+		
 		$this->AliasNbPages();
 		$this->SetMargins(20, 5);
 		
@@ -38,14 +42,18 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		
 		/*throw new exception($this->acta->fechaHora);*/
 		setLocale(LC_ALL, 'es_MX.UTF-8');
-		$dia = strftime("%d", strtotime ($this->acta->fechaHora)); /* Extraer el día */
+		$dia = strftime("%e", strtotime ($this->acta->fechaHora)); /* Extraer el día */
 		$mes = strftime("%B", strtotime ($this->acta->fechaHora)); /* El nombre del mes */
 		$anio = strftime("%Y", strtotime ($this->acta->fechaHora)); /* El año */
+		$v = (int)$dia;
+		$diaLetra = Titulacion_Utils_numeroLetra($v);
+		
+		$diaCompleto = $dia.' '.'('.' '.$diaLetra.' '.')';
 		
 		$this->SetY(54);
 		$this->SetX(150);
 		$this->SetFont('Arial','',12);
-		$this->Cell (0,0 ,$dia,0,0,'C');
+		$this->Cell (0,0 ,$diaCompleto,0,0,'C');
 		
 		$this->SetY(60);
 		$this->SetX(90);

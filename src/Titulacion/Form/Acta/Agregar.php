@@ -3,11 +3,16 @@
 class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 	public function initfields ($extra = array ()) {
 		/* Preparar algunos catalogos */
-		$planes = Gatuf::factory ('Titulacion_Grado')->getList ();
 		
-		$choices_grados = array ();
-		foreach ($grados as $grado) {
-			$choices_planes[$grado->grado] = $grado->id;
+		$planes = Gatuf::factory('Titulacion_PlanEstudio')->getList();
+		
+		$choices = array();
+		foreach($planes as $m){
+			$choices[$m->plan] = $m ->id;
+			$choices_planes = array();
+			foreach ($planes as $plan){
+				$choices_planes[$plan->plan] = $plan->id;
+			}
 		}
 		
 		$modalidaes = Gatuf::factory ('Titulacion_Modalidad')->getList ();
@@ -44,6 +49,19 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		for ($g = date ('Y'); $g > 1968; $g--) {
 			$choices_cal [$g] = array ('A' => $g.'A', 'B' => $g.'B');
 		}
+		
+		
+		$this->fields['calificacion']= new Gatuf_Form_Field_Integer(
+			array (
+				'required' => true,
+				'label' => 'Calificacion',
+				'initial' => '',
+				'help_text'=> 'Calificacion con la que se titula',
+				'min' => 1,
+				'widget_attrs' => array(
+					'size' => 10
+				)
+		));
 		
 		$this->fields['planEstudios'] = new Gatuf_Form_Field_Integer (
 			array (
@@ -138,6 +156,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				),
 				'widget' => 'Gatuf_Form_Widget_DobleInput'
 		));
+		
 		
 		$this->fields['fechaHora'] = new Gatuf_Form_Field_Datetime (
 			array(
@@ -234,6 +253,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		
 		$acta->plan = $this->cleaned_data['planEstudios'];
 		$acta->folio = $this->cleaned_data['folio'];
+		$acta->calificacion = $this->cleaned_data['calificacion'];
 		$acta->acta = $this->cleaned_data['numeroActa'];
 		$acta->modalidad = $this->cleaned_data['opcTitulacion'];
 		$acta->carrera = $this->cleaned_data['carrera'];
@@ -246,6 +266,8 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		$acta->jurado1 = $this->cleaned_data['jurado1'];
 		$acta->jurado2 = $this->cleaned_data['jurado2'];
 		$acta->jurado3 = $this->cleaned_data['jurado3'];
+		
+		
 		
 		if ($commit) $acta->create ();
 		

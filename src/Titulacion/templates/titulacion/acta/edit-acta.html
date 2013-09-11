@@ -46,6 +46,12 @@
 	<tr><th><strong>Apellido del alumno:</strong></th>
 		<td><input type="text" id="id_alumno_apellido" readonly="readonly" /></td>
 	</tr>
+	
+		<tr><th><strong>{$form.f.calificacion.labelTag}:</strong></th>
+	<td>{if $form.f.calificacion.errors}{$form.f.calificacion.fieldErrors}{/if}
+		{$form.f.calificacion|safe}<br />
+	
+	
 	<tr><th><strong>{$form.f.ingreso.labelTag}:</strong></th>
 	<td>{if $form.f.ingreso.errors}{$form.f.ingreso.fieldErrors}{/if}
 		{$form.f.ingreso|safe}<br />

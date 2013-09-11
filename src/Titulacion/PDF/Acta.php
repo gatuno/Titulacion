@@ -19,10 +19,12 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		
 		$grado = Titulacion_Utils_grado ($this->jurado3->sexo, $this->jurado3->grado);
 		$nombreCompletoj3 = $grado.' '.$this->jurado3->apellido.' '.$this->jurado3->nombre;
+		
+		$calif = $this->acta->calificacion;
+		$cali = number_format($calif,1);
+		$calificacionLetra = Titulacion_Utils_numeroLetra($cali);
 			
 			
-		
-		
 		
 		$this->AliasNbPages();
 		$this->SetMargins(20, 5);
@@ -145,12 +147,12 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetY(203);
 		$this->SetX(185);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,'calificacion',0,0);
+		$this->Cell(0,0,$this->acta->calificacion,0,0);
 		
 		$this->SetY(207);
 		$this->SetX(71);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,'califiacion letra',0,0);
+		$this->Cell(0,0,'('.''.$calificacionLetra.''.')',0,0);
 		
 		$this->SetY(218);
 		$this->SetX(159);

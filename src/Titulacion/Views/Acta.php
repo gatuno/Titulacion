@@ -165,7 +165,6 @@ class Titulacion_Views_Acta {
 		$pdf = new Titulacion_PDF_Acta ('P', 'mm', 'Legal');
 		
 		$pdf->acta = $acta;
-		
 		$pdf->jurado1 = $jurado1;
 		$pdf->jurado2 = $jurado2;
 		$pdf->jurado3 = $jurado3;

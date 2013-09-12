@@ -162,7 +162,7 @@ class Titulacion_Views_Acta {
 		$jurado3 = new Titulacion_Maestro ();
 		$jurado3->getMaestro ($acta->jurado3);
 		
-		$pdf = new Titulacion_PDF_Acta ('P', 'mm', 'Legal');
+		$pdf = new Titulacion_PDF_Acta ('P', 'mm','Legal');
 		
 		$pdf->acta = $acta;
 		$pdf->jurado1 = $jurado1;

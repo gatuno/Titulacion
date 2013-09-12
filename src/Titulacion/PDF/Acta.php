@@ -20,11 +20,18 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$grado = Titulacion_Utils_grado ($this->jurado3->sexo, $this->jurado3->grado);
 		$nombreCompletoj3 = $grado.' '.$this->jurado3->apellido.' '.$this->jurado3->nombre;
 		
-		$calif = $this->acta->calificacion;
-		$cali = number_format($calif,1);
-		$calificacionLetra = Titulacion_Utils_numeroLetra($cali);
+		$grado = Titulacion_Utils_grado ($this->secretario->sexo, $this->secretario->grado);
+		$secretario = $grado.' '.$this->secretario->apellido.' '.$this->secretario->nombre;
+		
+		$grado = Titulacion_Utils_grado ($this->director->sexo, $this->director->grado);
+		$director = $grado.' '.$this->director->apellido.' '.$this->director->nombre;
+		
+		
+		$evalua = $this->opcion->articulo;
+		if($evalua == 10) {
 			
-			
+		}
+		
 		
 		$this->AliasNbPages();
 		$this->SetMargins(20, 5);
@@ -142,22 +149,41 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetY(169);
 		$this->SetX(71);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,'por haber aprobado............',0,0);
+		$this->MultiCell(0,5,$this->opcion->leyenda,0,'L');
 		
-		$this->SetY(203);
-		$this->SetX(185);
-		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,$this->acta->calificacion,0,0);
 		
-		$this->SetY(207);
-		$this->SetX(71);
-		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,'('.''.$calificacionLetra.''.')',0,0);
+		$cali = $this->acta->calificacion;
+		if(!$cali == null){
+		
+				$this->SetY(203);
+				$this->SetX(185);
+				$this->SetFont('Arial','',12);
+				$this->Cell(0,0,$this->acta->calificacion,0,0);
+				
+				$calificacionLetra = Titulacion_Utils_numeroLetra($cali);
+				$this->SetY(207);
+				$this->SetX(71);
+				$this->SetFont('Arial','',12);
+				$this->Cell(0,0,'('.''.$calificacionLetra.''.')',0,0);
+			}else{
+					$calificacionLetra = null;
+					
+					$this->SetY(203);
+					$this->SetX(185);
+					$this->SetFont('Arial','',12);
+					$this->Cell(0,0,'',0,0);
+					
+					$this->SetY(207);
+					$this->SetX(71);
+					$this->SetFont('Arial','',12);
+					$this->Cell(0,0,'',0,0);
+				}	
+		
 		
 		$this->SetY(218);
 		$this->SetX(159);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,'"      SI PROTESTO      ".',0,0);
+		$this->Cell(0,0,'"     SI PROTESTO     ".',0,0);
 		
 		$this->SetY(250);
 		$this->SetX(139);
@@ -174,6 +200,16 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetFont('Arial','',12);
 		$this->Cell(0,0,$nombreCompletoj3,0,0);
 		
+		$this->SetY(311);
+		$this->SetX(58);
+		$this->SetFont('Arial','',12);
+		$this->Cell(0,0,$director,0,0);
+		
+		$this->SetY(311);
+		$this->SetX(129);
+		$this->SetFont('Arial','',12);
+		$this->Cell(0,0,$secretario,0,0,'C');
+		
 		$this->SetY(315);
 		$this->SetX(77);
 		$this->SetFont('Arial','',12);
@@ -182,16 +218,16 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetY(319);
 		$this->SetX(47);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,'DIVISION DE ELECTRONICA Y COMPUTACION',0,0);
+		$this->Cell(76,0,'DIVISION DE ELECTRONICA Y COMPUTACION',0,0,'C');
 		
 		$this->SetY(315);
-		$this->SetX(156);
+		$this->SetX(150);
 		$this->SetFont('Arial','',12);
 		$this->Cell(0,0,'SECRETARIO',0,0);
 		
 		$this->SetY(319);
 		$this->SetX(128);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,'DIVISION DE ELECTRONICA Y COMPUTACION',0,0);
+		$this->Cell(76,0,'DIVISION DE ELECTRONICA Y COMPUTACION',0,0);
 	}
 }

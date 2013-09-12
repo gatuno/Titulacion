@@ -53,7 +53,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		
 		$this->fields['calificacion']= new Gatuf_Form_Field_Integer(
 			array (
-				'required' => true,
+				'required' => false,
 				'label' => 'Calificacion',
 				'initial' => '',
 				'help_text'=> 'Calificacion con la que se titula',

@@ -121,6 +121,51 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				)
 		));
 		
+		
+		//aqui ponemos los campos donde se capuraran diferentes datos 
+		//sgun la opcion de titulacion, estos estaran con required =>false
+		
+		
+		$this->fields['desempeño'] = new Gatuf_Form_Field_Varchar (
+				array (
+				'required' => false,
+				'label' => 'Desempeño',
+				'initial' => '',
+
+		));
+		
+		$this->fields['cantidad_materias'] = new Gatuf_Form_Field_Varchar (
+				array (
+				'required' => false,
+				'label' => 'Cantidad de materias',
+				'initial' => '',
+
+		));
+	
+		$this->fields['nombre_maestria'] = new Gatuf_Form_Field_Varchar (
+				array (
+				'required' => false,
+				'label' => 'Nombre del posgrado',
+				'initial' => '',
+
+		));
+		
+		$this->fields['universidad'] = new Gatuf_Form_Field_Varchar (
+				array (
+				'required' => false,
+				'label' => 'Nombre de la universidad donde se encuentra cursandola',
+				'initial' => '',
+
+		));
+		
+		$this->fields['titulo_trabajo'] = new Gatuf_Form_Field_Varchar (
+				array (
+				'required' => false,
+				'label' => 'Titulo del trabajo',
+				'initial' => '',
+
+		));
+		
 		$this->fields['alumno']= new Gatuf_Form_Field_Varchar (
 			array(
 				'required' => true,

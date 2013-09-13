@@ -1,5 +1,9 @@
 {extends 'titulacion/base.html'}
 {block body}
-<a href="{url 'Titulacion_Views_Acta::agregarActa'}"><img src="{media '/img/list-add.png'}" alt="Nueva acta" />Crear nueva acta</a> 
+<h2>Generar nueva acta:</h2>
+<form action="." method="POST">
+{$form.render_p}
+<input type="submit" value="Enviar" />
+</form>
 {$paginador.render}
 {/block}

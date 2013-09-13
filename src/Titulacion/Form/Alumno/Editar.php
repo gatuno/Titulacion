@@ -19,7 +19,7 @@ class Titulacion_Form_Alumno_Editar extends Gatuf_Form {
 				'widget_attrs' => array (
 					'maxlength' => 9,
 					'size' => 12,
-					'readonly' => true,
+					'readonly' => 'readonly',
 				),
 			)
 		);

@@ -9,12 +9,117 @@
 </div>
 {/if}
 <form action="." method="post">
+{$form.f.acta|safe}
 <table>
-{$form.render_table}
-<tr>
-<td>&nbsp;</td>
-<td><input type="submit" value="Agregar alumno" /></td>
-</tr>
+	<tbody>
+	<tr><th><strong>{$form.f.codigo.labelTag}:</strong></th>
+	<td>{if $form.f.codigo.errors}{$form.f.codigo.fieldErrors}{/if}
+		{$form.f.codigo|safe}<br />
+		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.codigo.help_text}</span> -->
+	</td></tr>
+	<tr><th><strong>{$form.f.apellido.labelTag}:</strong></th>
+	<td>{if $form.f.apellido.errors}{$form.f.apellido.fieldErrors}{/if}
+		{$form.f.apellido|safe}<br />
+		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.apellido.help_text}</span> -->
+	</td></tr>
+	<tr><th><strong>{$form.f.nombre.labelTag}:</strong></th>
+	<td>{if $form.f.nombre.errors}{$form.f.nombre.fieldErrors}{/if}
+		{$form.f.nombre|safe}<br />
+		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.nombre.help_text}</span> -->
+	</td></tr>
+	<tr><th><strong>{$form.f.domicilios.labelTag}:</strong></th>
+	<td>{if $form.f.domicilios.errors}{$form.f.domicilios.fieldErrors}{/if}
+		{$form.f.domicilios|safe}<br />
+		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.domicilios.help_text}</span> -->
+	</td></tr>
+	</tbody>
+	<tbody id="div_domicilio">
+	<tr><th><strong>{$form.f.calle.labelTag}:</strong></th>
+	<td>{if $form.f.calle.errors}{$form.f.calle.fieldErrors}{/if}
+		{$form.f.calle|safe}<br />
+		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.calle.help_text}</span> -->
+	</td></tr>
+	<tr><th><strong>{$form.f.numero_ext.labelTag}:</strong></th>
+	<td>{if $form.f.numero_ext.errors}{$form.f.numero_ext.fieldErrors}{/if}
+		{$form.f.numero_ext|safe}<br />
+		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.numero_ext.help_text}</span> -->
+	</td></tr>
+	<tr><th><strong>{$form.f.numero_int.labelTag}:</strong></th>
+	<td>{if $form.f.numero_int.errors}{$form.f.numero_int.fieldErrors}{/if}
+		{$form.f.numero_int|safe}<br />
+		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.numero_int.help_text}</span> -->
+	</td></tr>
+	<tr><th><strong>{$form.f.colonia.labelTag}:</strong></th>
+	<td>{if $form.f.colonia.errors}{$form.f.colonia.fieldErrors}{/if}
+		{$form.f.colonia|safe}<br />
+		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.colonia.help_text}</span> -->
+	</td></tr>
+	<tr><th><strong>{$form.f.ciudad.labelTag}:</strong></th>
+	<td>{if $form.f.ciudad.errors}{$form.f.ciudad.fieldErrors}{/if}
+		{$form.f.ciudad|safe}<br />
+		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.ciudad.help_text}</span> -->
+	</td></tr>
+	<tr><th><strong>{$form.f.cp.labelTag}:</strong></th>
+	<td>{if $form.f.cp.errors}{$form.f.cp.fieldErrors}{/if}
+		{$form.f.cp|safe}<br />
+		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.cp.help_text}</span> -->
+	</td></tr>
+	<tr><th><strong>{$form.f.tel_casa.labelTag}:</strong></th>
+	<td>{if $form.f.tel_casa.errors}{$form.f.tel_casa.fieldErrors}{/if}
+		{$form.f.tel_casa|safe}<br />
+		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.tel_casa.help_text}</span> -->
+	</td></tr>
+	<tr><th><strong>{$form.f.tel_cel.labelTag}:</strong></th>
+	<td>{if $form.f.tel_cel.errors}{$form.f.tel_cel.fieldErrors}{/if}
+		{$form.f.tel_cel|safe}<br />
+		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.tel_cel.help_text}</span> -->
+	</td></tr>
+	</tbody>
+	<tbody>
+		<tr><td>&nbsp;</td>
+			<td><input type="submit" value="Agregar alumno" /></td>
+		</tr>
+	</tbody>
 </table>
 </form>
+{/block}
+{block javascript}
+<script type="text/javascript">
+{literal}
+//<![CDATA[
+	function on_change_domicilio () {
+		
+		var radios = document.getElementsByName ('domicilios');
+		
+		for (var g = 0; g < radios.length; g++) {
+			if (radios[g].checked) {
+				if (radios[g].value == -1) {
+					$('#div_domicilio').fadeIn(1000);
+				} else {
+					$('#div_domicilio').fadeOut(1000);
+				}
+				break;
+			}
+		}
+	}
+	
+	var radios = document.getElementsByName ('domicilios');
+	for (var g = 0; g < radios.length; g++) {
+		radios[g].onchange = on_change_domicilio;
+		if (radios[g].checked) {
+			if (radios[g].value == -1) {
+				$('#div_domicilio').fadeIn(0);
+			} else {
+				$('#div_domicilio').fadeOut(0);
+			}
+		}
+	}
+// ]]>
+{/literal}
+</script>
+{/block}
+{block extrahead}
+<link rel="stylesheet" media="all" type="text/css" href="{media '/css/smoothness/jquery-ui-1.8.16.custom.css'}" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
 {/block}

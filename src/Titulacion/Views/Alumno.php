@@ -54,7 +54,7 @@ class Titulacion_Views_Alumno {
 				return new Gatuf_HTTP_Response_Redirect ($url);
 			}
 		} else {
-				$form = new Titulacion_Form_Alumno_Agregar (null, array ());
+				$form = new Titulacion_Form_Alumno_Agregar (null, $extra);
 		}
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/alumno/edit-alumno.html',

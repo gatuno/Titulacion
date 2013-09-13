@@ -7,6 +7,23 @@ class Titulacion_Views_Acta {
 	
 	public $index_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-titulacion'));
 	public function index($request, $match) {
+		if ($request->method == 'POST') {
+			$form = new Titulacion_Form_Alumno_Seleccionar ($request->POST, array ());
+			if ($form->isValid ()) {
+				$codigo = $form->save ();
+				
+				$alumno = new Titulacion_Alumno ();
+				if (false === ($alumno->getAlumno ($codigo))) {
+					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::agregarAlumno', array (), array ('acta' => 1));
+				} else {
+					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::editarAlumno', array ($alumno->codigo), array ('acta' => 1));
+				}
+				
+				return new Gatuf_HTTP_Response_Redirect ($url);
+			}
+		} else {
+			$form = new Titulacion_Form_Alumno_Seleccionar (null, array ());
+		}
 		$actas=new Titulacion_Acta ();
 		
 		$pag = new Gatuf_Paginator($actas);
@@ -34,10 +51,11 @@ class Titulacion_Views_Acta {
 				array ('alumno','folio','acta','ingreso','egreso','carrera'),
 				array ('alumno','folio','acta','ingreso','egreso','carrera')
 		        );
-		$pag-> setFromRequest($request);
+		$pag->setFromRequest($request);
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/index.html',
 												array('page_title' => 'Actas de titulacion',
+												'form' => $form,
 												'paginador'  => $pag),
 												$request);
 	}

@@ -34,4 +34,12 @@ class Titulacion_Alumno extends Gatuf_Model {
 		
 		return true;
 	}
+	
+	function update() {
+		$req = sprintf ('UPDATE %s SET nombre=%s, apellido=%s WHERE codigo=%s', $this->getSqlTable (), Gatuf_DB_IdentityToDB ($this->nombre, $this->_con), Gatuf_DB_IdentityToDB ($this->apellido, $this->_con), Gatuf_DB_IdentityToDB ($this->codigo, $this->_con));
+		
+		$this->_con->execute ($req);
+		
+		return true;
+	}
 }

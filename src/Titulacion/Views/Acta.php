@@ -44,16 +44,16 @@ class Titulacion_Views_Acta {
 	
 	public $agregarActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-actas'));
 	public function agregarActa ($request, $match) {
-		if($request->method == 'POST'){
+		if ($request->method == 'POST') {
 			$form = new Titulacion_Form_Acta_Agregar ($request->POST, array());
 			
-			if($form-> isValid ()){
+			if ($form-> isValid ()) {
 				$acta = $form->save ();
 				
 				$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::index');
 				return new Gatuf_HTTP_Response_Redirect($url);
 			}
-		}else {
+		} else {
 			$form = new Titulacion_Form_Acta_Agregar (null, array ());
 		}
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/edit-acta.html',

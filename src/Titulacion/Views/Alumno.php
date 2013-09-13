@@ -36,21 +36,64 @@ class Titulacion_Views_Alumno {
 	
 	public $agregarAlumno_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-acta'));
 	public function agregarAlumno ($request, $match) {
+		if (isset ($request->REQUEST['acta']) && $request->REQUEST['acta'] == 1) {
+			$extra = array ('acta' => 1);
+		} else {
+			$extra = array ('acta' => 0);
+		}
 		if($request->method == 'POST') {
-			$form = new Titulacion_Form_Alumno_Agregar ($request->POST, array());
+			$form = new Titulacion_Form_Alumno_Agregar ($request->POST, $extra);
 			
 			if($form->isValid ()){
 				$alumno = $form->save ();
-				
-				$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::index');
+				if (isset ($request->REQUEST['acta']) && $request->REQUEST['acta'] == 1) {
+					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::agregarActa');
+				} else {
+					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::index');
+				}
 				return new Gatuf_HTTP_Response_Redirect ($url);
 			}
-		}else {
+		} else {
 				$form = new Titulacion_Form_Alumno_Agregar (null, array ());
 		}
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/alumno/edit-alumno.html',
 		                                         array ('page_title' => 'Agregar alumno',
+		                                                'form' => $form),
+		                                         $request);
+	}
+	
+	public $editarAlumno_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-acta'));
+	public function editarAlumno ($request, $match) {
+		$alumno = new Titulacion_Alumno ();
+		if (false === ($alumno->getAlumno ($match[1]))) {
+			return new Gatuf_HTTP_Response_Json (array ());
+		}
+		$extra = array ('alumno' => $alumno);
+		
+		if (isset ($request->REQUEST['acta']) && $request->REQUEST['acta'] == 1) {
+			$extra['acta'] = 1;
+		} else {
+			$extra['acta'] = 0;
+		}
+		if($request->method == 'POST') {
+			$form = new Titulacion_Form_Alumno_Editar ($request->POST, $extra);
+			
+			if($form->isValid ()){
+				$alumno = $form->save ();
+				if (isset ($request->REQUEST['acta']) && $request->REQUEST['acta'] == 1) {
+					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::agregarActa');
+				} else {
+					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::index');
+				}
+				return new Gatuf_HTTP_Response_Redirect ($url);
+			}
+		} else {
+				$form = new Titulacion_Form_Alumno_Editar (null, $extra);
+		}
+		
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/alumno/edit-alumno.html',
+		                                         array ('page_title' => 'Actualizar alumno',
 		                                                'form' => $form),
 		                                         $request);
 	}
@@ -63,5 +106,31 @@ class Titulacion_Views_Alumno {
 		$alumno_json = array ('codigo' => $alumno->codigo, 'nombre' => $alumno->nombre, 'apellido' => $alumno->apellido);
 		
 		return new Gatuf_HTTP_Response_Json ($alumno_json);
+	}
+	
+	public function seleccionar_alumno ($request, $match) {
+		if ($request->method == 'POST') {
+			$form = new Titulacion_Form_Alumno_Seleccionar ($request->POST, array ());
+			
+			if ($form->isValid ()) {
+				$codigo = $form->save ();
+				
+				$alumno = new Titulacion_Alumno ();
+				if (false === ($alumno->getAlumno ($codigo))) {
+					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::agregarAlumno', array (), array ('acta' => 1));
+				} else {
+					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::editarAlumno', array ($alumno->codigo), array ('acta' => 1));
+				}
+				
+				return new Gatuf_HTTP_Response_Redirect ($url);
+			}
+		} else {
+			$form = new Titulacion_Form_Alumno_Seleccionar (null, array ());
+		}
+		
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/alumno/seleccionar-alumno.html',
+		                                        array ('page_title' => 'Ingresar código de alumno',
+		                                               'form' => $form),
+		                                        $request);
 	}
 }

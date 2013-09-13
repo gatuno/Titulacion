@@ -1,18 +1,25 @@
 <?php
 
-class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
+class Titulacion_Form_Alumno_Editar extends Gatuf_Form {
+	public $alumno;
+	
 	public function initfields($extra=array()){
+		Gatuf::loadFunction ('Titulacion_Utils_formatearTelefono');
+		
+		$this->alumno = $extra['alumno'];
+		
 		$this->fields['codigo'] = new Gatuf_Form_Field_Varchar (
 			array (
-				'required' => true,
+				'required' => false,
 				'label' => 'Código',
-				'initial' => '',
+				'initial' => $this->alumno->codigo,
 				'help_text' => 'El código de alumno de 9 caracteres',
 				'max_length' => 9,
 				'min_length' => 9,
 				'widget_attrs' => array (
 					'maxlength' => 9,
 					'size' => 12,
+					'readonly' => true,
 				),
 			)
 		);
@@ -21,7 +28,7 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 			array (
 				'required' => true,
 				'label' => 'Nombre',
-				'initial' =>'',
+				'initial' => $this->alumno->nombre,
 				'help_text' => 'El nombre o nombres el alumno',
 				'max_length' => 50,
 				'min_length' => 5,
@@ -35,7 +42,7 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 			array (
 				'required' => true,
 				'label' => 'Apellido',
-				'initial' => '',
+				'initial' => $this->alumno->apellido,
 				'help_text'=> 'Los apellidos del alumno',
 				'max_length' => 100,
 				'min_length' => 5,
@@ -46,10 +53,36 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 			)
 		);
 		
+		/* Recoger todos los domicilios existentes, dar a elegir entre alguno */
+		$sql = new Gatuf_SQL ('codigo=%s', $this->alumno->codigo);
+		$domicilios = Gatuf::factory ('Titulacion_Domicilio')->getList (array ('where' => $sql->gen()));
+		
+		$choices_dom = array ();
+		$last_id = -1;
+		foreach ($domicilios as $dom) {
+			/* Generar una cadena de resumen del domicilio */
+			$cad = $dom->calle.' #'.$dom->numero_exterior.(($dom->numero_interior != '') ? ' Int '.$dom->numero_interior : '').', colonia '.$dom->colonia.' C.P. '.$dom->codigo_postal.'.'.(($dom->telefono_casa != '') ? ' Tel. '.Titulacion_Utils_formatearTelefono($dom->telefono_casa) : '').(($dom->telefono_celular != '') ? ' Cel. '.Titulacion_Utils_formatearTelefono ($dom->telefono_celular) : '');
+			$choices_dom[$cad] = $dom->id;
+			$last_id = $dom->id;
+		}
+		
+		$choices_dom['Nuevo'] = -1;
+		
+		$this->fields['domicilios'] = new Gatuf_Form_Field_Integer (
+			array (
+				'required' => true,
+				'label' => 'Domicilios',
+				'initial' => $last_id,
+				'widget_attrs' => array (
+					'choices' => $choices_dom,
+				),
+				'widget' => 'Gatuf_Form_Widget_RadioInput',
+			)
+		);
 		/* Los datos correspondientes al domicilio */
 		$this->fields['calle'] = new Gatuf_Form_Field_Varchar (
 			array (
-				'required' => true,
+				'required' => false,
 				'label' => 'Calle',
 				'initial' => '',
 				'help_text' => 'La calle de su domicilio actual',
@@ -63,7 +96,7 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 		
 		$this->fields['numero_ext'] = new Gatuf_Form_Field_Varchar (
 			array (
-				'required' => true,
+				'required' => false,
 				'label' => 'Número exterior',
 				'initial' => '',
 				'help_text' => 'Número exterior',
@@ -89,7 +122,7 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 		
 		$this->fields['colonia'] = new Gatuf_Form_Field_Varchar (
 			array (
-				'required' => true,
+				'required' => false,
 				'label' => 'Colonia',
 				'initial' => '',
 				'help_text' => 'Colonia o delegación',
@@ -103,7 +136,7 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 		
 		$this->fields['ciudad'] = new Gatuf_Form_Field_Varchar (
 			array (
-				'required' => true,
+				'required' => false,
 				'label' => 'Ciudad',
 				'initial' => '',
 				'help_text' => 'Ciudad',
@@ -117,7 +150,7 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 		
 		$this->fields['cp'] = new Gatuf_Form_Field_Varchar ( /* Código Postal */
 			array (
-				'required' => true,
+				'required' => false,
 				'label' => 'C.P.',
 				'initial' => '',
 				'help_text' => 'Código Postal',
@@ -163,23 +196,6 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 		);
 	}
 	
-	public function clean_codigo () {
-		$codigo = mb_strtoupper($this->cleaned_data['codigo']);
-
-		if (!preg_match ('/^\w\d{8}$/', $codigo)) {
-			throw new Gatuf_Form_Invalid ('El código del alumno es incorrecto');
-		}
-
-		$sql = new Gatuf_SQL ('codigo=%s', array ($codigo));
-		$l = Gatuf::factory('Titulacion_Alumno')->getList(array ('filter' => $sql->gen(), 'count' => true));
-
-		if ($l > 0) {
-			throw new Gatuf_Form_Invalid (sprintf ('El código %s de alumno especificado ya existe', $codigo));
-		}
-
-		return $codigo;
-	}
-	
 	public function clean_tel_casa () {
 		$tel_casa = $this->cleaned_data ['tel_casa'];
 		
@@ -204,19 +220,61 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 		return $limpio;
 	}
 	
+	public function clean () {
+		$dom_nue = $this->cleaned_data['domicilios'];
+		
+		if ($dom_nue == -1) {
+			if ($this->cleaned_data['numero_ext'] == '' ||
+			    $this->cleaned_data['calle'] == '' ||
+			    $this->cleaned_data['ciudad'] == '' ||
+			    $this->cleaned_data['cp'] == '' ||
+			    $this->cleaned_data['colonia'] == '') { /* Los campos obligatorios NO tan obligatorios */
+				throw new Gatuf_Form_Invalid ('Faltan campos en el formulario');
+			}
+		}
+		
+		return $this->cleaned_data;
+	}
+	
 	public function save ($commit=true){
 		if(!$this->isValid()){
-			throw new Exception ('El formulario no tiene datos validos');
+			throw new Exception ('El formulario contiene datos inválidos');
 		}
-		$alumno = new Titulacion_Alumno ();
 		
-		$alumno->nombre = $this->cleaned_data['nombre'];
-		$alumno->apellido = $this->cleaned_data['apellido'];
-		$alumno->codigo = $this->cleaned_data['codigo'];
-	
-		if ($commit) $alumno->create ();
+		$this->alumno->nombre = $this->cleaned_data['nombre'];
+		$this->alumno->apellido = $this->cleaned_data['apellido'];
+		
+		if ($commit) $this->alumno->update ();
+		
+		if ($this->cleaned_data['domicilios'] == -1) {
+			/* Crear el nuevo domicilio */
+			$domicilio = new Titulacion_Domicilio ();
+			
+			$domicilio->numero_exterior = $this->cleaned_data['numero_ext'];
+			$domicilio->numero_interior = $this->cleaned_data['numero_int'];
+			$domicilio->calle = $this->cleaned_data['calle'];
+			$domicilio->ciudad = $this->cleaned_data['ciudad'];
+			$domicilio->codigo_postal = $this->cleaned_data['cp'];
+			$domicilio->colonia = $this->cleaned_data['colonia'];
+			$domicilio->telefono_casa = $this->cleaned_data['tel_casa'];
+			$domicilio->telefono_celular = $this->cleaned_data['tel_cel'];
+			
+			$domicilio->alumno = $this->alumno->codigo;
+			
+			$domicilio->create ();
+		} else {
+			$sql = new Gatuf_SQL ('codigo=%s', $this->alumno->codigo);
+			$domicilios = Gatuf::factory ('Titulacion_Domicilio')->getList (array ('where' => $sql->gen ()));
+			
+			$domicilio = null;
+			foreach ($domicilios as $dom) {
+				if ($dom->id == $this->cleaned_data['domicilios']) {
+					$domicilio = $dom;
+				}
+			}
+		}
 
-		return $alumno;
+		return $domicilio;
 	}
 		
 }

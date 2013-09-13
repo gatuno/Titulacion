@@ -72,10 +72,10 @@ $ctl[] = array (
 
 /* Listado de alumnos */
 $ctl[] = array (
-	'regex'=>'#^/alumnos/$#',
-	'base'=> $base,
-	'model'=>'Titulacion_Views_Alumno',
-	'method'=>'index',
+	'regex' => '#^/alumnos/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Alumno',
+	'method' => 'index',
 );
 
 $ctl[] = array (
@@ -83,6 +83,20 @@ $ctl[] = array (
 	'base' => $base,
 	'model' => 'Titulacion_Views_Alumno',
 	'method' =>'agregarAlumno'
+);
+
+$ctl[] = array (
+	'regex' => '#^/alumnos/seleccionar/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Alumno',
+	'method' => 'seleccionar_alumno',
+);
+
+$ctl[] = array (
+	'regex' => '#^/alumno/(\w\d{8})/update/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Alumno',
+	'method' => 'editarAlumno',
 );
 
 $ctl[] = array (

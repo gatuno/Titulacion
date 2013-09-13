@@ -79,7 +79,6 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetFont('Arial','',12);
 		$this->Cell(0,0,4,$this->acta->carrera,0,0);
 		
-		
 		$this->SetY(110);
 		$this->SetX(70);
 		$this->SetFont('Arial','',12);
@@ -151,34 +150,18 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetFont('Arial','',12);
 		$this->MultiCell(0,5,$this->opcion->leyenda,0,'L');
 		
-		
-		$cali = $this->acta->calificacion;
-		if(!$cali == null){
-		
-				$this->SetY(203);
-				$this->SetX(185);
-				$this->SetFont('Arial','',12);
-				$this->Cell(0,0,$this->acta->calificacion,0,0);
-				
-				$calificacionLetra = Titulacion_Utils_numeroLetra($cali);
-				$this->SetY(207);
-				$this->SetX(71);
-				$this->SetFont('Arial','',12);
-				$this->Cell(0,0,'('.''.$calificacionLetra.''.')',0,0);
-			}else{
-					$calificacionLetra = null;
-					
-					$this->SetY(203);
-					$this->SetX(185);
-					$this->SetFont('Arial','',12);
-					$this->Cell(0,0,'',0,0);
-					
-					$this->SetY(207);
-					$this->SetX(71);
-					$this->SetFont('Arial','',12);
-					$this->Cell(0,0,'',0,0);
-				}	
-		
+		if (!is_null ($this->acta->calificacion)) {
+			$this->SetY(203);
+			$this->SetX(185);
+			$this->SetFont('Arial','',12);
+			$this->Cell(0,0,$this->acta->calificacion,0,0);
+			
+			$calificacionLetra = Titulacion_Utils_numeroLetra($cali);
+			$this->SetY(207);
+			$this->SetX(71);
+			$this->SetFont('Arial','',12);
+			$this->Cell(0,0,'('.$calificacionLetra.')',0,0);
+		}
 		
 		$this->SetY(218);
 		$this->SetX(159);

@@ -9,8 +9,6 @@ class Titulacion_Opcion extends Gatuf_Model {
 	public $articulo_cucei, $fraccion_cucei;
 	public $tipo;
 	public $leyenda;
-	public $leyenda2;
-	public $leyenda3;
 	
 	public function __construct () {
 		$this->_getConnection ();
@@ -38,7 +36,7 @@ class Titulacion_Opcion extends Gatuf_Model {
 	}
 	
 	public function create () {
-		$req = sprintf ('INSERT INTO %s (modalidad, descripcion, articulo, fraccion, articulo_cucei, fraccion_cucei, leyenda, leyenda2, leyenda3) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)', $this->getSqlTable (), Gatuf_DB_IntegerToDb ($this->modalidad, $this->_con), Gatuf_DB_IdentityToDb ($this->descripcion, $this->_con), Gatuf_DB_IntegerToDb ($this->articulo, $this->_con), Gatuf_DB_IdentityToDb ($this->fraccion, $this->_con), Gatuf_DB_IntegerToDb ($this->articulo_cucei, $this->_con), Gatuf_DB_IdentityToDb ($this->fraccion_cucei, $this->_con), Gatuf_DB_IntegerToDb ($this->leyenda, $this->_con), Gatuf_DB_IntegerToDb ($this->leyenda2, $this->_con), Gatuf_DB_IntegerToDb ($this->leyenda3, $this->_con));
+		$req = sprintf ('INSERT INTO %s (modalidad, descripcion, articulo, fraccion, articulo_cucei, fraccion_cucei, leyenda) VALUES (%s, %s, %s, %s, %s, %s, %s)', $this->getSqlTable (), Gatuf_DB_IntegerToDb ($this->modalidad, $this->_con), Gatuf_DB_IdentityToDb ($this->descripcion, $this->_con), Gatuf_DB_IntegerToDb ($this->articulo, $this->_con), Gatuf_DB_IdentityToDb ($this->fraccion, $this->_con), Gatuf_DB_IntegerToDb ($this->articulo_cucei, $this->_con), Gatuf_DB_IdentityToDb ($this->fraccion_cucei, $this->_con), Gatuf_DB_IntegerToDb ($this->leyenda, $this->_con));
 		
 		$this->_con->execute ($req);
 		

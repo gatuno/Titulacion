@@ -30,7 +30,11 @@ class Gatuf_Form_Field_Varchar extends Gatuf_Form_Field
     public function clean($value) {
         parent::clean($value);
         if (in_array($value, $this->empty_values)) {
-            $value = '';
+            if ($this->multiple) {
+                return array ();
+            } else {
+                $value = '';
+            }
         }
         if ($this->multiple) {
             return $this->multiClean($value);
@@ -47,14 +51,16 @@ class Gatuf_Form_Field_Varchar extends Gatuf_Form_Field
                 foreach ($this->widget->choices as $val) {
                     if (is_array ($val)) {
                         foreach ($val as $subval) {
-                            if ($value === $subval) {
+                            if ($value == $subval) {
                                 $found = true;
                                 break;
                             }
                          }
                     } else {
-                        $found = true;
-                        break;
+                        if ($value == $val) {
+                            $found = true;
+                            break;
+                        }
                     }
                 }
                 if (!$found) {

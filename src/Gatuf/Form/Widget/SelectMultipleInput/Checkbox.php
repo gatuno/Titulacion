@@ -49,7 +49,7 @@ class Gatuf_Form_Widget_SelectMultipleInput_Checkbox extends Gatuf_Form_Widget_S
 
             $final_attrs['id'] = $base_id.'_'.$i;
             $final_attrs['value'] = htmlspecialchars($option_value, ENT_COMPAT, 'UTF-8');
-            if (in_array($option_value, $value)) {
+            if ($value == $option_value) {
                 $final_attrs['checked'] = 'checked';
             } else {
                 unset ($final_attrs['checked']);
@@ -68,7 +68,7 @@ class Gatuf_Form_Widget_SelectMultipleInput_Checkbox extends Gatuf_Form_Widget_S
 
     public function idForLabel($id) {
         if ($id) {
-            $id += '_0';
+            $id .= '_0';
         }
         return $id;
     }

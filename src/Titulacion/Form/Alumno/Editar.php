@@ -5,6 +5,7 @@ class Titulacion_Form_Alumno_Editar extends Gatuf_Form {
 	
 	public function initfields($extra=array()){
 		Gatuf::loadFunction ('Titulacion_Utils_formatearTelefono');
+		Gatuf::loadFunction ('Titulacion_Utils_formatearDomicilio');
 		
 		$this->alumno = $extra['alumno'];
 		
@@ -31,7 +32,6 @@ class Titulacion_Form_Alumno_Editar extends Gatuf_Form {
 				'initial' => $this->alumno->nombre,
 				'help_text' => 'El nombre o nombres el alumno',
 				'max_length' => 50,
-				'min_length' => 5,
 				'widget_attrs' => array (
 					'maxlength'=> 50,
 					'size' =>30,
@@ -45,7 +45,6 @@ class Titulacion_Form_Alumno_Editar extends Gatuf_Form {
 				'initial' => $this->alumno->apellido,
 				'help_text'=> 'Los apellidos del alumno',
 				'max_length' => 100,
-				'min_length' => 5,
 				'widget_attrs' => array (
 					'maxlength' => 100,
 					'size' => 30,
@@ -54,14 +53,14 @@ class Titulacion_Form_Alumno_Editar extends Gatuf_Form {
 		);
 		
 		/* Recoger todos los domicilios existentes, dar a elegir entre alguno */
-		$sql = new Gatuf_SQL ('codigo=%s', $this->alumno->codigo);
-		$domicilios = Gatuf::factory ('Titulacion_Domicilio')->getList (array ('where' => $sql->gen()));
+		$sql = new Gatuf_SQL ('alumno=%s', $this->alumno->codigo);
+		$domicilios = Gatuf::factory ('Titulacion_Domicilio')->getList (array ('filter' => $sql->gen()));
 		
 		$choices_dom = array ();
 		$last_id = -1;
 		foreach ($domicilios as $dom) {
 			/* Generar una cadena de resumen del domicilio */
-			$cad = $dom->calle.' #'.$dom->numero_exterior.(($dom->numero_interior != '') ? ' Int '.$dom->numero_interior : '').', colonia '.$dom->colonia.' C.P. '.$dom->codigo_postal.'.'.(($dom->telefono_casa != '') ? ' Tel. '.Titulacion_Utils_formatearTelefono($dom->telefono_casa) : '').(($dom->telefono_celular != '') ? ' Cel. '.Titulacion_Utils_formatearTelefono ($dom->telefono_celular) : '');
+			$cad = Titulacion_Utils_formatearDomicilio ($dom);
 			$choices_dom[$cad] = $dom->id;
 			$last_id = $dom->id;
 		}
@@ -263,8 +262,8 @@ class Titulacion_Form_Alumno_Editar extends Gatuf_Form {
 			
 			$domicilio->create ();
 		} else {
-			$sql = new Gatuf_SQL ('codigo=%s', $this->alumno->codigo);
-			$domicilios = Gatuf::factory ('Titulacion_Domicilio')->getList (array ('where' => $sql->gen ()));
+			$sql = new Gatuf_SQL ('alumno=%s', $this->alumno->codigo);
+			$domicilios = Gatuf::factory ('Titulacion_Domicilio')->getList (array ('filter' => $sql->gen ()));
 			
 			$domicilio = null;
 			foreach ($domicilios as $dom) {

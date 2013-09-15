@@ -45,9 +45,9 @@ class Titulacion_Views_Alumno {
 			$form = new Titulacion_Form_Alumno_Agregar ($request->POST, $extra);
 			
 			if($form->isValid ()){
-				$alumno = $form->save ();
+				$domicilio = $form->save ();
 				if (isset ($request->REQUEST['acta']) && $request->REQUEST['acta'] == 1) {
-					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::agregarActa');
+					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::agregarActa', array ($domicilio->alumno, $domicilio->id));
 				} else {
 					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::index');
 				}
@@ -57,7 +57,7 @@ class Titulacion_Views_Alumno {
 				$form = new Titulacion_Form_Alumno_Agregar (null, $extra);
 		}
 		
-		return Gatuf_Shortcuts_RenderToResponse ('titulacion/alumno/edit-alumno.html',
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/alumno/agregar-alumno.html',
 		                                         array ('page_title' => 'Agregar alumno',
 		                                                'form' => $form),
 		                                         $request);
@@ -80,9 +80,9 @@ class Titulacion_Views_Alumno {
 			$form = new Titulacion_Form_Alumno_Editar ($request->POST, $extra);
 			
 			if($form->isValid ()){
-				$alumno = $form->save ();
+				$domicilio = $form->save ();
 				if (isset ($request->REQUEST['acta']) && $request->REQUEST['acta'] == 1) {
-					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::agregarActa');
+					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::agregarActa', array ($domicilio->alumno, $domicilio->id));
 				} else {
 					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::index');
 				}
@@ -106,31 +106,5 @@ class Titulacion_Views_Alumno {
 		$alumno_json = array ('codigo' => $alumno->codigo, 'nombre' => $alumno->nombre, 'apellido' => $alumno->apellido);
 		
 		return new Gatuf_HTTP_Response_Json ($alumno_json);
-	}
-	
-	public function seleccionar_alumno ($request, $match) {
-		if ($request->method == 'POST') {
-			$form = new Titulacion_Form_Alumno_Seleccionar ($request->POST, array ());
-			
-			if ($form->isValid ()) {
-				$codigo = $form->save ();
-				
-				$alumno = new Titulacion_Alumno ();
-				if (false === ($alumno->getAlumno ($codigo))) {
-					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::agregarAlumno', array (), array ('acta' => 1));
-				} else {
-					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::editarAlumno', array ($alumno->codigo), array ('acta' => 1));
-				}
-				
-				return new Gatuf_HTTP_Response_Redirect ($url);
-			}
-		} else {
-			$form = new Titulacion_Form_Alumno_Seleccionar (null, array ());
-		}
-		
-		return Gatuf_Shortcuts_RenderToResponse ('titulacion/alumno/seleccionar-alumno.html',
-		                                        array ('page_title' => 'Ingresar código de alumno',
-		                                               'form' => $form),
-		                                        $request);
 	}
 }

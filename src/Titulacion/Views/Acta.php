@@ -62,8 +62,26 @@ class Titulacion_Views_Acta {
 	
 	public $agregarActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-actas'));
 	public function agregarActa ($request, $match) {
+		$alumno = new Titulacion_Alumno ();
+		
+		if (false === ($alumno->getAlumno ($match[1]))) {
+			throw new Gatuf_HTTP_Error404 ();
+		}
+		
+		$domicilio = new Titulacion_Domicilio ();
+		
+		if (false === ($domicilio->getDomicilio ($match[2]))) {
+			throw new Gatuf_HTTP_Error404 ();
+		}
+		
+		if ($alumno->codigo != $domicilio->alumno) {
+			throw new Gatuf_HTTP_Error404 ();
+		}
+		
+		$extra = array ('alumno' => $alumno, 'domicilio' => $domicilio);
+		
 		if ($request->method == 'POST') {
-			$form = new Titulacion_Form_Acta_Agregar ($request->POST, array());
+			$form = new Titulacion_Form_Acta_Agregar ($request->POST, $extra);
 			
 			if ($form-> isValid ()) {
 				$acta = $form->save ();
@@ -72,7 +90,7 @@ class Titulacion_Views_Acta {
 				return new Gatuf_HTTP_Response_Redirect($url);
 			}
 		} else {
-			$form = new Titulacion_Form_Acta_Agregar (null, array ());
+			$form = new Titulacion_Form_Acta_Agregar (null, $extra);
 		}
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/edit-acta.html',
 												array('page_title' => 'Nueva acta de titulacion',
@@ -137,9 +155,6 @@ class Titulacion_Views_Acta {
 		                                         ),
 		                                         $request);
 	}
-	
-	
-	
 	
 	/*Aqui se hace la prueba para generar el PDF*/
 	//queda pendiente hacer que cuando se descargue el pdf tenga por nombre: codigo.pdf

@@ -2,19 +2,10 @@
 
 class Titulacion_Form_Maestro_Agregar extends Gatuf_Form {
 	public function initFields ($extra = array ()) {
-	
+		/* Preparar catalogos */
+		$choices_grados = array ('Ing.' => 'I', 'Lic.' => 'L', 'Dr./Dra.' => 'D', 'Mtro./Mtra' => 'M');
+		$choices_sex = array ('Masculino' => 'M', 'Femenino' => 'F');
 		
-		$choices_grados = array ('Ing.'=>'I', 'Lic.' => 'L', 'Dr./Dra.'=>'D', 'Mtro./Mtra'=>'M');
-		
-		
-		//codigo agregado
-		$choices_sex = array ('Masculino'=>'M', 'Femenino'=>'F');
-		
-		
-			
-		
-		//
-	
 		$this->fields['codigo'] = new Gatuf_Form_Field_Integer (
 			array (
 				'required' => true,
@@ -36,7 +27,6 @@ class Titulacion_Form_Maestro_Agregar extends Gatuf_Form {
 				'initial' => '',
 				'help_text' => 'El nombre o nombres del maestro',
 				'max_length' => 50,
-				'min_length' => 5,
 				'widget_attrs' => array (
 					'maxlength' => 50,
 					'size' => 30,
@@ -50,14 +40,11 @@ class Titulacion_Form_Maestro_Agregar extends Gatuf_Form {
 				'initial' => '',
 				'help_text' => 'Los apellidos del maestro',
 				'max_length' => 100,
-				'min_length' => 5,
 				'widget_attrs' => array (
 					'maxlength' => 100,
 					'size' => 30,
 				),
 		));
-		
-		
 		
 		$this->fields['grado'] = new Gatuf_Form_Field_Varchar (
 			array (
@@ -70,7 +57,6 @@ class Titulacion_Form_Maestro_Agregar extends Gatuf_Form {
 				),
 		));
 		
-	
 		$this->fields['sexo'] = new Gatuf_Form_Field_Varchar (
 			array (
 				'required' => true,
@@ -80,8 +66,6 @@ class Titulacion_Form_Maestro_Agregar extends Gatuf_Form {
 				'widget_attrs' => array(
 					'choices' => $choices_sex
 				),
-				
-				
 		));
 	
 		$this->fields['correo'] = new Gatuf_Form_Field_Email (

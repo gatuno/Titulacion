@@ -10,121 +10,136 @@
 {/if}
 <form action="." method="post">
 <table>
-	<tr><th><strong>{$form.f.planEstudios.labelTag}:</strong></th>
-	<td>{if $form.f.planEstudios.errors}{$form.f.planEstudios.fieldErrors}{/if}
-		{$form.f.planEstudios|safe}<br />
-		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.planEstudios.help_text}</span> -->
-	</td></tr>
-	<tr><th><strong>{$form.f.carrera.labelTag}:</strong></th>
-	<td>{if $form.f.carrera.errors}{$form.f.carrera.fieldErrors}{/if}
-		{$form.f.carrera|safe}<br />
-		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.carrera.help_text}</span> -->
-	</td></tr>
-	<tr><th><strong>{$form.f.folio.labelTag}:</strong></th>
-	<td>{if $form.f.folio.errors}{$form.f.folio.fieldErrors}{/if}
-		{$form.f.folio|safe}<br />
-		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.folio.help_text}</span> -->
-	</td></tr>
-	<tr><th><strong>{$form.f.numeroActa.labelTag}:</strong></th>
-	<td>{if $form.f.numeroActa.errors}{$form.f.numeroActa.fieldErrors}{/if}
-		{$form.f.numeroActa|safe}<br />
-		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.numeroActa.help_text}</span> -->
-	</td></tr>
-	<tr><th><strong>{$form.f.opcTitulacion.labelTag}:</strong></th>
-	<td>{if $form.f.opcTitulacion.errors}{$form.f.opcTitulacion.fieldErrors}{/if}
-		{$form.f.opcTitulacion|safe}<br />
-		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.opcTitulacion.help_text}</span> -->
-	</td></tr>
-	<tr><th><strong>{$form.f.alumno.labelTag}:</strong></th>
-	<td>{if $form.f.alumno.errors}{$form.f.alumno.fieldErrors}{/if}
-		{$form.f.alumno|safe}<br />
-		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.alumno.help_text}</span> -->
-	</td></tr>
-	<tr><th><strong>Nombre del alumno:</strong></th>
-		<td><input type="text" id="id_alumno_nombre" readonly="readonly" /></td>
-	</tr>
-	<tr><th><strong>Apellido del alumno:</strong></th>
-		<td><input type="text" id="id_alumno_apellido" readonly="readonly" /></td>
-	</tr>
-	
+	<tbody id="div_principal">
+		<tr><th><strong>{$form.f.planEstudios.labelTag}:</strong></th>
+		<td>{if $form.f.planEstudios.errors}{$form.f.planEstudios.fieldErrors}{/if}
+			{$form.f.planEstudios|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.planEstudios.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.carrera.labelTag}:</strong></th>
+		<td>{if $form.f.carrera.errors}{$form.f.carrera.fieldErrors}{/if}
+			{$form.f.carrera|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.carrera.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.folio.labelTag}:</strong></th>
+		<td>{if $form.f.folio.errors}{$form.f.folio.fieldErrors}{/if}
+			{$form.f.folio|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.folio.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.numeroActa.labelTag}:</strong></th>
+		<td>{if $form.f.numeroActa.errors}{$form.f.numeroActa.fieldErrors}{/if}
+			{$form.f.numeroActa|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.numeroActa.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.opcTitulacion.labelTag}:</strong></th>
+		<td>{if $form.f.opcTitulacion.errors}{$form.f.opcTitulacion.fieldErrors}{/if}
+			{$form.f.opcTitulacion|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.opcTitulacion.help_text}</span> -->
+		</td></tr>
 		<tr><th><strong>{$form.f.calificacion.labelTag}:</strong></th>
-	<td>{if $form.f.calificacion.errors}{$form.f.calificacion.fieldErrors}{/if}
-		{$form.f.calificacion|safe}<br />
+		<td>{if $form.f.calificacion.errors}{$form.f.calificacion.fieldErrors}{/if}
+			{$form.f.calificacion|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.calificacion.help_text}</span> -->
+		</td></tr>
+	</tbody>
 	
+	<tbody id="div_alumno">
+		<!-- Campos de sólo lectura -->
+		<tr><th><strong>{$form.f.alumno.labelTag}:</strong></th>
+			<td>{$form.f.alumno|safe}</td>
+		</tr>
+		<tr><th><strong>{$form.f.alumno_nombre.labelTag}:</strong></th>
+			<td>{$form.f.alumno_nombre|safe}</td>
+		</tr>
+		<tr><th><strong>{$form.f.alumno_apellido.labelTag}:</strong></th>
+			<td>{$form.f.alumno_apellido|safe}</td>
+		</tr>
+		<tr><th><strong>{$form.f.domicilio.labelTag}:</strong></th>
+			<td>{$form.f.domicilio|safe}</td>
+		</tr>
+	</tbody>
 	
-	<tr><th><strong>{$form.f.ingreso.labelTag}:</strong></th>
-	<td>{if $form.f.ingreso.errors}{$form.f.ingreso.fieldErrors}{/if}
-		{$form.f.ingreso|safe}<br />
-		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.ingreso.help_text}</span> -->
-	</td></tr>
-	<tr><th><strong>{$form.f.egreso.labelTag}:</strong></th>
-	<td>{if $form.f.egreso.errors}{$form.f.egreso.fieldErrors}{/if}
-		{$form.f.egreso|safe}<br />
-		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.egreso.help_text}</span> -->
-	</td></tr>
-	<tr><th><strong>{$form.f.fechaHora.labelTag}:</strong></th>
-	<td>{if $form.f.fechaHora.errors}{$form.f.fechaHora.fieldErrors}{/if}
-		{$form.f.fechaHora|safe}<br />
-		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.fechaHora.help_text}</span> -->
-	</td></tr>
+	<tbody id="div_maestria">
+		<tr><th><strong>{$form.f.cantidad_materias.labelTag}:</strong></th>
+		<td>{if $form.f.cantidad_materias.errors}{$form.f.cantidad_materias.fieldErrors}{/if}
+			{$form.f.cantidad_materias|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.cantidad_materias.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.nombre_maestria.labelTag}:</strong></th>
+		<td>{if $form.f.nombre_maestria.errors}{$form.f.nombre_maestria.fieldErrors}{/if}
+			{$form.f.nombre_maestria|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.nombre_maestria.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.escuela_maestria.labelTag}:</strong></th>
+		<td>{if $form.f.escuela_maestria.errors}{$form.f.escuela_maestria.fieldErrors}{/if}
+			{$form.f.escuela_maestria|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.escuela_maestria.help_text}</span> -->
+		</td></tr>
+	</tbody>
 	
-	<tr><th><strong>{$form.f.secretario.labelTag}:</strong></th>
-	<td>{if $form.f.secretario.errors}{$form.f.secretario.fieldErrors}{/if}
-		{$form.f.secretario|safe}<br />
-		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.secretario.help_text}</span> -->
-	</td></tr>
-	<tr><th><strong>{$form.f.director.labelTag}:</strong></th>
-	<td>{if $form.f.director.errors}{$form.f.director.fieldErrors}{/if}
-		{$form.f.director|safe}<br />
-		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.director.help_text}</span> -->
-	</td></tr>
+	<tbody id="div_trabajo">
+		<tr><th><strong>{$form.f.nombre_trabajo.labelTag}:</strong></th>
+		<td>{if $form.f.nombre_trabajo.errors}{$form.f.nombre_trabajo.fieldErrors}{/if}
+			{$form.f.nombre_trabajo|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.nombre_trabajo.help_text}</span> -->
+		</td></tr>
+	</tbody>
 	
-	<tr><th><strong>{$form.f.jurado1.labelTag}:</strong></th>
-	<td>{if $form.f.jurado1.errors}{$form.f.jurado1.fieldErrors}{/if}
-		{$form.f.jurado1|safe}<br />
-		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.jurado1.help_text}</span> -->
-	</td></tr>
-	<tr><th><strong>{$form.f.jurado2.labelTag}:</strong></th>
-	<td>{if $form.f.jurado2.errors}{$form.f.jurado2.fieldErrors}{/if}
-		{$form.f.jurado2|safe}<br />
-		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.jurado2.help_text}</span> -->
-	</td></tr>
-	<tr><th><strong>{$form.f.jurado3.labelTag}:</strong></th>
-	<td>{if $form.f.jurado3.errors}{$form.f.jurado3.fieldErrors}{/if}
-		{$form.f.jurado3|safe}<br />
-		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.jurado3.help_text}</span> -->
-	</td></tr>
-	<tr><td>&nbsp;</td><td><input type="submit" value="Nueva acta" /></td></tr>
+	<tbody id="div_desempeno">
+		<tr><th><strong>{$form.f.desempeno.labelTag}:</strong></th>
+		<td>{if $form.f.desempeno.errors}{$form.f.desempeno.fieldErrors}{/if}
+			{$form.f.desempeno|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.desempeno.help_text}</span> -->
+		</td></tr>
+	</tbody>
+	
+	<tbody id="div_datos">
+		<tr><th><strong>{$form.f.ingreso.labelTag}:</strong></th>
+		<td>{if $form.f.ingreso.errors}{$form.f.ingreso.fieldErrors}{/if}
+			{$form.f.ingreso|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.ingreso.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.egreso.labelTag}:</strong></th>
+		<td>{if $form.f.egreso.errors}{$form.f.egreso.fieldErrors}{/if}
+			{$form.f.egreso|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.egreso.help_text}</span> -->
+		</td></tr>
+	
+		<tr><th><strong>{$form.f.fechaHora.labelTag}:</strong></th>
+		<td>{if $form.f.fechaHora.errors}{$form.f.fechaHora.fieldErrors}{/if}
+			{$form.f.fechaHora|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.fechaHora.help_text}</span> -->
+		</td></tr>
+	
+		<tr><th><strong>{$form.f.secretario.labelTag}:</strong></th>
+		<td>{if $form.f.secretario.errors}{$form.f.secretario.fieldErrors}{/if}
+			{$form.f.secretario|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.secretario.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.director.labelTag}:</strong></th>
+		<td>{if $form.f.director.errors}{$form.f.director.fieldErrors}{/if}
+			{$form.f.director|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.director.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.jurado1.labelTag}:</strong></th>
+		<td>{if $form.f.jurado1.errors}{$form.f.jurado1.fieldErrors}{/if}
+			{$form.f.jurado1|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.jurado1.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.jurado2.labelTag}:</strong></th>
+		<td>{if $form.f.jurado2.errors}{$form.f.jurado2.fieldErrors}{/if}
+			{$form.f.jurado2|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.jurado2.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.jurado3.labelTag}:</strong></th>
+		<td>{if $form.f.jurado3.errors}{$form.f.jurado3.fieldErrors}{/if}
+			{$form.f.jurado3|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.jurado3.help_text}</span> -->
+		</td></tr>
+		<tr><td>&nbsp;</td><td><input type="submit" value="Nueva acta" /></td></tr>
+	</tbody>
 </table>
 </form>
-{/block}
-{block javascript}
-<script type="text/javascript">
-{literal}
-//<![CDATA[
-	function on_change_alumno () {
-		var codigo = document.getElementById ('id_alumno').value;
-		var nombre = document.getElementById ('id_alumno_nombre');
-		var apellido = document.getElementById ('id_alumno_apellido');
-		
-		nombre.value = "";
-		apellido.value = "";
-		
-		var url = "/titulacion/alumno/" + codigo + "/json/";
-		
-		$.getJSON (url, {}, function (data) {
-			nombre.value = data.nombre;
-			apellido.value = data.apellido;
-		});
-	}
-	
-	var alumno = document.getElementById ('id_alumno');
-	alumno.onchange = on_change_alumno;
-	
-	on_change_alumno ();
-// ]]>
-{/literal}
-</script>
 {/block}
 {block extrahead}
 <link rel="stylesheet" media="all" type="text/css" href="{media '/css/smoothness/jquery-ui-1.8.16.custom.css'}" />

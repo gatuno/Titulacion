@@ -78,3 +78,7 @@ function Titulacion_Utils_formatearTelefono ($numero) {
 		return '('.substr ($numero, 0, 3).') '.substr ($numero, 3, 3).'-'.substr ($numero, 6);
 	}
 }
+
+function Titulacion_Utils_formatearDomicilio ($dom) {
+	return $dom->calle.' #'.$dom->numero_exterior.(($dom->numero_interior != '') ? ' Int '.$dom->numero_interior : '').', colonia '.$dom->colonia.' C.P. '.$dom->codigo_postal.'.'.(($dom->telefono_casa != '') ? ' Tel. '.Titulacion_Utils_formatearTelefono($dom->telefono_casa) : '').(($dom->telefono_celular != '') ? ' Cel. '.Titulacion_Utils_formatearTelefono ($dom->telefono_celular) : '');
+}

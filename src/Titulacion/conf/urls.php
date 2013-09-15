@@ -86,13 +86,6 @@ $ctl[] = array (
 );
 
 $ctl[] = array (
-	'regex' => '#^/alumnos/seleccionar/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Alumno',
-	'method' => 'seleccionar_alumno',
-);
-
-$ctl[] = array (
 	'regex' => '#^/alumno/(\w\d{8})/update/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Alumno',
@@ -130,7 +123,7 @@ $ctl[] =array (
 );
 
 $ctl[] = array (
-	'regex' => '#^/actas/add/$#',
+	'regex' => '#^/actas/add/(\w\d{8})/(\d+)/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Acta',
 	'method' => 'agregarActa',

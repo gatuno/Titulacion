@@ -24,7 +24,6 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 				'initial' =>'',
 				'help_text' => 'El nombre o nombres el alumno',
 				'max_length' => 50,
-				'min_length' => 5,
 				'widget_attrs' => array (
 					'maxlength'=> 50,
 					'size' =>30,
@@ -38,7 +37,6 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 				'initial' => '',
 				'help_text'=> 'Los apellidos del alumno',
 				'max_length' => 100,
-				'min_length' => 5,
 				'widget_attrs' => array (
 					'maxlength' => 100,
 					'size' => 30,
@@ -215,8 +213,23 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 		$alumno->codigo = $this->cleaned_data['codigo'];
 	
 		if ($commit) $alumno->create ();
-
-		return $alumno;
+		
+		$domicilio = new Titulacion_Domicilio ();
+		
+		$domicilio->numero_exterior = $this->cleaned_data['numero_ext'];
+		$domicilio->numero_interior = $this->cleaned_data['numero_int'];
+		$domicilio->calle = $this->cleaned_data['calle'];
+		$domicilio->ciudad = $this->cleaned_data['ciudad'];
+		$domicilio->codigo_postal = $this->cleaned_data['cp'];
+		$domicilio->colonia = $this->cleaned_data['colonia'];
+		$domicilio->telefono_casa = $this->cleaned_data['tel_casa'];
+		$domicilio->telefono_celular = $this->cleaned_data['tel_cel'];
+		
+		$domicilio->alumno = $alumno->codigo;
+		
+		$domicilio->create ();
+		
+		return $domicilio;
 	}
 		
 }

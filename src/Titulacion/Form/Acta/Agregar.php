@@ -1,9 +1,13 @@
 <?php
 
 class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
+	private $alumno, $domicilio;
+	
 	public function initfields ($extra = array ()) {
-		/* Preparar algunos catalogos */
+		$this->alumno = $extra['alumno'];
+		$this->domicilio = $extra['domicilio'];
 		
+		/* Preparar algunos catalogos */
 		$planes = Gatuf::factory('Titulacion_PlanEstudio')->getList();
 		
 		$choices = array();
@@ -51,7 +55,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		}
 		
 		
-		$this->fields['calificacion']= new Gatuf_Form_Field_Integer(
+		$this->fields['calificacion'] = new Gatuf_Form_Field_Integer (
 			array (
 				'required' => false,
 				'label' => 'Calificacion',
@@ -121,25 +125,27 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				)
 		));
 		
-		
 		//aqui ponemos los campos donde se capuraran diferentes datos 
 		//sgun la opcion de titulacion, estos estaran con required =>false
-		
-		
-		$this->fields['desempeño'] = new Gatuf_Form_Field_Varchar (
+		$this->fields['desempeno'] = new Gatuf_Form_Field_Varchar (
 				array (
 				'required' => false,
 				'label' => 'Desempeño',
 				'initial' => '',
-
+				'max_length' => 50,
+				'widget_attrs' => array (
+					/* TODO: Poner opciones 'choices' => */
+					'maxlength' => 50,
+					'size' => 30,
+				),
 		));
 		
-		$this->fields['cantidad_materias'] = new Gatuf_Form_Field_Varchar (
+		$this->fields['cantidad_materias'] = new Gatuf_Form_Field_Integer (
 				array (
 				'required' => false,
 				'label' => 'Cantidad de materias',
 				'initial' => '',
-
+				'min' => 1,
 		));
 	
 		$this->fields['nombre_maestria'] = new Gatuf_Form_Field_Varchar (
@@ -147,40 +153,84 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				'required' => false,
 				'label' => 'Nombre del posgrado',
 				'initial' => '',
-
+				'max_length' => 200,
+				'widget_attrs' => array (
+					'maxlength' => 200,
+					'size' => 30,
+				),
 		));
 		
-		$this->fields['universidad'] = new Gatuf_Form_Field_Varchar (
+		$this->fields['escuela_maestria'] = new Gatuf_Form_Field_Varchar (
 				array (
 				'required' => false,
 				'label' => 'Nombre de la universidad donde se encuentra cursandola',
 				'initial' => '',
-
+				'max_length' => 200,
+				'widget_attrs' => array (
+					'maxlength' => 200,
+					'size' => 30,
+				),
 		));
 		
-		$this->fields['titulo_trabajo'] = new Gatuf_Form_Field_Varchar (
+		$this->fields['nombre_trabajo'] = new Gatuf_Form_Field_Varchar (
 				array (
 				'required' => false,
 				'label' => 'Titulo del trabajo',
 				'initial' => '',
-
+				'max_length' => 300,
+				'widget_attrs' => array (
+					'maxlength' => 300,
+					'size' => 30,
+				),
 		));
 		
-		$this->fields['alumno']= new Gatuf_Form_Field_Varchar (
+		$this->fields['alumno'] = new Gatuf_Form_Field_Varchar (
 			array(
-				'required' => true,
+				'required' => false,
 				'label' => 'Alumno',
-				'initial' => '',
-				'help_text'=> 'El codigo del alumno',
-				'max_length' => 9,
-				'min_length' => 9,
+				'initial' => $this->alumno->codigo,
 				'widget_attrs' => array(
-					'maxlenght' => 9,
+					'readonly' => 'readonly',
 					'size' => 12,
 				),
 		));
 		
-		$this->fields['ingreso']= new Gatuf_Form_Field_Varchar (
+		$this->fields['alumno_nombre'] = new Gatuf_Form_Field_Varchar (
+			array(
+				'required' => false,
+				'label' => 'Nombre',
+				'initial' => $this->alumno->nombre,
+				'widget_attrs' => array(
+					'readonly' => 'readonly',
+					'size' => 40,
+				),
+		));
+		
+		$this->fields['alumno_apellido'] = new Gatuf_Form_Field_Varchar (
+			array(
+				'required' => false,
+				'label' => 'Alumno',
+				'initial' => $this->alumno->apellido,
+				'widget_attrs' => array(
+					'readonly' => 'readonly',
+					'size' => 40,
+				),
+		));
+		Gatuf::loadFunction ('Titulacion_Utils_formatearDomicilio');
+		$cadena_domicilio = Titulacion_Utils_formatearDomicilio ($this->domicilio);
+		
+		$this->fields['domicilio'] = new Gatuf_Form_Field_Varchar (
+			array (
+				'required' => false,
+				'label' => 'Domicilio',
+				'initial' => $cadena_domicilio,
+				'widget_attrs' => array (
+					'readonly' => 'readonly',
+					'size' => 50,
+				),
+		));
+		
+		$this->fields['ingreso'] = new Gatuf_Form_Field_Varchar (
 			array(
 				'required' => true,
 				'label' => 'Calendario de ingreso',
@@ -191,7 +241,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				'widget' => 'Gatuf_Form_Widget_DobleInput'
 		));
 		
-		$this->fields['egreso']= new Gatuf_Form_Field_Varchar (
+		$this->fields['egreso'] = new Gatuf_Form_Field_Varchar (
 			array(
 				'required' => true,
 				'label' => 'Calendario de egreso',
@@ -291,7 +341,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 	
 	public function save ($commit=true){
 		if(!$this->isValid()) {
-			throw new Exception ('El formulario no tiene datos validos');
+			throw new Exception ('El formulario contiene datos inválidos');
 		}
 		
 		$acta = new Titulacion_Acta ();
@@ -302,7 +352,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		$acta->acta = $this->cleaned_data['numeroActa'];
 		$acta->modalidad = $this->cleaned_data['opcTitulacion'];
 		$acta->carrera = $this->cleaned_data['carrera'];
-		$acta->alumno = $this->cleaned_data['alumno'];
+		$acta->alumno = $this->alumno->codigo;
 		$acta->fechaHora = $this->cleaned_data['fechaHora'];
 		$acta->ingreso = $this->cleaned_data['ingreso'];
 		$acta->egreso = $this->cleaned_data['egreso'];
@@ -312,7 +362,12 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		$acta->jurado2 = $this->cleaned_data['jurado2'];
 		$acta->jurado3 = $this->cleaned_data['jurado3'];
 		
-		
+		/* Campos extras */
+		$acta->desempeno = $this->cleaned_data['desempeno'];
+		$acta->nombre_trabajo = $this->cleaned_data['nombre_trabajo'];
+		$acta->materias_maestria = $this->cleaned_data['cantidad_materias'];
+		$acta->nombre_maestria = $this->cleaned_data['nombre_maestria'];
+		$acta->escuela_maestria = $this->cleaned_data['escuela_maestria'];
 		
 		if ($commit) $acta->create ();
 		

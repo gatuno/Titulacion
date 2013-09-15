@@ -54,4 +54,16 @@ class Titulacion_Views_Modalidad {
 		                                                'form' => $form),
 		                                         $request);
 	}
+	
+	public function jsonOpcion ($request, $match) {
+		$opcion = new Titulacion_Opcion ();
+		
+		if (false === ($opcion->getOpcion ($match[1]))) {
+			return new Gatuf_HTTP_Response_Json (array ());
+		}
+		
+		$opcion_json = array ('id' => $opcion->id, 'descripcion' => $opcion->descripcion, 'modalidad' => $opcion->modalidad, 'maestria' => $opcion->maestria, 'trabajo' => $opcion->trabajo, 'desempeno' => $opcion->desempeno);
+		
+		return new Gatuf_HTTP_Response_Json ($opcion_json);
+	}
 }

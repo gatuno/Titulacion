@@ -361,24 +361,25 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		 * verificar que ambos sean trimestres */
 		
 		/* Las opciones de titulación que requieren desempeño, verificar que pongan un desempeño */
-		$opcion = $this->cleaned_data['opcTitulacion'];
+		$opcion = new Titulacion_Opcion ();
+		$opcion->getOpcion ($this->cleaned_data['opcTitulacion']);
 		
 		/* FIXME: No debería estar códificado manualmente */
-		if (in_array ($opcion, array (3, 4, 5, 6))) {
+		if ($opcion->desempeno) {
 			/* Estos requiren desempeño */
 			if ($this->cleaned_data['desempeno'] == '') {
 				throw new Gatuf_Form_Invalid ('Se requiere poner un desempeño');
 			}
 		}
 		
-		if (in_array ($opcion, array (7, 8, 10, 11, 12, 13, 14, 15, 16))) {
+		if ($opcion->trabajo) {
 			/* Estos requiren Nombre del trabajo */
 			if ($this->cleaned_data['nombre_trabajo'] == '') {
 				throw new Gatuf_Form_Invalid ('Se requiere un nombre de trabajo');
 			}
 		}
 		
-		if ($opcion == 9) {
+		if ($opcion->maestria) {
 			/* Se requieren los 3 campos extras de la maestria */
 			if ($this->cleaned_data['cantidad_materias'] == '' || $this->cleaned_data['nombre_maestria'] == '' || $this->cleaned_data['escuela_maestria'] == '') {
 				throw new Gatuf_Form_Invalid ('Algunos campos sobre la maestria se encuentran vacios');

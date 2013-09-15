@@ -114,6 +114,13 @@ $ctl[] = array (
 	'method' => 'agregarOpcion',
 );
 
+$ctl[] = array (
+	'regex' => '#^/modalidad/(\d+)/json/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Modalidad',
+	'method' => 'jsonOpcion',
+);
+
 /* Listado de actas de titulacion */
 $ctl[] =array (
 	'regex' => '#^/actas/$#',

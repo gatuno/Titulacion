@@ -9,6 +9,7 @@ class Titulacion_Opcion extends Gatuf_Model {
 	public $articulo_cucei, $fraccion_cucei;
 	public $tipo;
 	public $leyenda;
+	public $desempeno, $trabajo, $maestria;
 	
 	public function __construct () {
 		$this->_getConnection ();
@@ -17,6 +18,7 @@ class Titulacion_Opcion extends Gatuf_Model {
 		$this->default_order = 'modalidad ASC';
 		
 		$this->leyenda = '';
+		$this->desempeno = $this->trabajo = $this->maestria = 0;
 	}
 	
 	public function getOpcion ($id) {
@@ -38,7 +40,7 @@ class Titulacion_Opcion extends Gatuf_Model {
 	}
 	
 	public function create () {
-		$req = sprintf ('INSERT INTO %s (modalidad, descripcion, articulo, fraccion, articulo_cucei, fraccion_cucei, leyenda) VALUES (%s, %s, %s, %s, %s, %s, %s)', $this->getSqlTable (), Gatuf_DB_IntegerToDb ($this->modalidad, $this->_con), Gatuf_DB_IdentityToDb ($this->descripcion, $this->_con), Gatuf_DB_IntegerToDb ($this->articulo, $this->_con), Gatuf_DB_IdentityToDb ($this->fraccion, $this->_con), Gatuf_DB_IntegerToDb ($this->articulo_cucei, $this->_con), Gatuf_DB_IdentityToDb ($this->fraccion_cucei, $this->_con), Gatuf_DB_IdentityToDb ($this->leyenda, $this->_con));
+		$req = sprintf ('INSERT INTO %s (modalidad, descripcion, articulo, fraccion, articulo_cucei, fraccion_cucei, leyenda, desempeno, trabajo, maestria) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', $this->getSqlTable (), Gatuf_DB_IntegerToDb ($this->modalidad, $this->_con), Gatuf_DB_IdentityToDb ($this->descripcion, $this->_con), Gatuf_DB_IntegerToDb ($this->articulo, $this->_con), Gatuf_DB_IdentityToDb ($this->fraccion, $this->_con), Gatuf_DB_IntegerToDb ($this->articulo_cucei, $this->_con), Gatuf_DB_IdentityToDb ($this->fraccion_cucei, $this->_con), Gatuf_DB_IdentityToDb ($this->leyenda, $this->_con), Gatuf_DB_BooleanToDb ($this->desempeno, $this->_con), Gatuf_DB_BooleanToDb ($this->trabajo, $this->_con), Gatuf_DB_BooleanToDb ($this->maestria, $this->_con));
 		
 		$this->_con->execute ($req);
 		
@@ -49,6 +51,12 @@ class Titulacion_Opcion extends Gatuf_Model {
 	
 	public function update () {
 		throw new Exception ("No implementado");
+	}
+	
+	public function restore () {
+		$this->maestria = Gatuf_DB_BooleanFromDb ($this->maestria);
+		$this->trabajo = Gatuf_DB_BooleanFromDb ($this->trabajo);
+		$this->desempeno = Gatuf_DB_BooleanFromDb ($this->desempeno);
 	}
 	
 	public function displayudg ($extra=null) {

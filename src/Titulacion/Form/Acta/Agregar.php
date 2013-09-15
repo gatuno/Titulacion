@@ -339,6 +339,55 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		return $codigo;
 	}
 	
+	public function clean () {
+		/* Hay varias validaciones pendientes */
+		/* La primera es sobre el calendario de ingreso y egreso */
+		$cal_in = $this->cleaned_data['ingreso'];
+		$cal_out = $this->cleaned_data['egreso'];
+		
+		if ($cal_in == $cal_out) {
+			throw new Gatuf_Form_Invalid ('El calendario de ingreso debe ser diferente al de egreso');
+		}
+		
+		$cal_a = substr ($cal_in, 0, 4);
+		$cal_b = substr ($cal_out, 0, 4);
+		
+		if ($cal_a > $cal_b) {
+			throw new Gatuf_Form_Invalid ('El calendario de egreso debe ser posterior al de ingreso');
+		} else if ($cal_a == $cal_b && substr ($cal_in, 4) == 'B') {
+			throw new Gatuf_Form_Invalid ('El calendario de egreso debe ser posterior al de ingreso');
+		}
+		/* TODO: Cuando agreguemos los calendarios C, D y E,
+		 * verificar que ambos sean trimestres */
+		
+		/* Las opciones de titulación que requieren desempeño, verificar que pongan un desempeño */
+		$opcion = $this->cleaned_data['opcTitulacion'];
+		
+		/* FIXME: No debería estar códificado manualmente */
+		if (in_array ($opcion, array (3, 4, 5, 6))) {
+			/* Estos requiren desempeño */
+			if ($this->cleaned_data['desempeno'] == '') {
+				throw new Gatuf_Form_Invalid ('Se requiere poner un desempeño');
+			}
+		}
+		
+		if (in_array ($opcion, array (7, 8, 10, 11, 12, 13, 14, 15, 16))) {
+			/* Estos requiren Nombre del trabajo */
+			if ($this->cleaned_data['nombre_trabajo'] == '') {
+				throw new Gatuf_Form_Invalid ('Se requiere un nombre de trabajo');
+			}
+		}
+		
+		if ($opcion == 9) {
+			/* Se requieren los 3 campos extras de la maestria */
+			if ($this->cleaned_data['cantidad_materias'] == '' || $this->cleaned_data['nombre_maestria'] == '' || $this->cleaned_data['escuela_maestria'] == '') {
+				throw new Gatuf_Form_Invalid ('Algunos campos sobre la maestria se encuentran vacios');
+			}
+		}
+		
+		return $this->cleaned_data;
+	}
+	
 	public function save ($commit=true){
 		if(!$this->isValid()) {
 			throw new Exception ('El formulario contiene datos inválidos');

@@ -174,7 +174,27 @@
 	var opcion = document.getElementById ('id_opcTitulacion');
 	
 	opcion.onchange = on_change_opcion;
-	on_change_opcion ();
+	var url = "/titulacion/modalidad/" + opcion.value + "/json/";
+	
+	$.getJSON (url, {}, function (data) {
+		if (data.desempeno == 1) {
+			$('#div_maestria').fadeOut(0);
+			$('#div_trabajo').fadeOut(0);
+			$('#div_desempeno').fadeIn(0);
+		} else if (data.trabajo == 1) {
+			$('#div_maestria').fadeOut(0);
+			$('#div_desempeno').fadeOut(0);
+			$('#div_trabajo').fadeIn(0);
+		} else if (data.maestria == 1) {
+			$('#div_desempeno').fadeOut(0);
+			$('#div_trabajo').fadeOut(0);
+			$('#div_maestria').fadeIn(0);
+		} else {
+			$('#div_desempeno').fadeOut(0);
+			$('#div_trabajo').fadeOut(0);
+			$('#div_maestria').fadeOut(0);
+		}
+	});
 // ]]>
 {/literal}
 </script>

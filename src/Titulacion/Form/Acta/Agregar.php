@@ -261,12 +261,13 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				'help_text'=>'Fecha y hora de la ceremonia de titulacion',
 				'widget' => 'Gatuf_Form_Widget_DatetimeJSInput',
 		));
+		$gconf = new Gatuf_GSetting ('Titulacion');
 		
 		$this->fields['director'] = new Gatuf_Form_Field_Integer (
 			array (
 				'required' => true,
 				'label' => 'Director',
-				'initial' => '', /* FIXME: Configuraciones por default */
+				'initial' => $gconf->getVal ('director', ''),
 				'help_text' => 'Director de la división',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
 				'widget_attrs' => array (
@@ -278,7 +279,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 			array (
 				'required' => true,
 				'label' => 'Secretario',
-				'initial' => '', /* FIXME: Configuraciones por default */
+				'initial' => $gconf->getVal ('secretario', ''),
 				'help_text' => 'Secretario de la división',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
 				'widget_attrs' => array (

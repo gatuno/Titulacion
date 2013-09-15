@@ -55,6 +55,13 @@ $ctl[] = array (
 	'method' => 'passwordRecovery',
 );
 
+$ctl[] = array (
+	'regex' => '#^/preferences/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views',
+	'method' => 'preferences',
+);
+
 /* Listado de carreras */
 $ctl[] = array (
 	'regex' => '#^/carreras/$#',

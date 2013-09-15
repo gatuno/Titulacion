@@ -106,7 +106,7 @@ class Titulacion_User extends Gatuf_Model {
 		return (0 === (int) $this->codigo);
 	}
 	
-	/*function setMessage ($message, $type) {
+	function setMessage ($type, $message) {
 		if ($this->isAnonymous ()) {
 			return false;
 		}
@@ -130,7 +130,7 @@ class Titulacion_User extends Gatuf_Model {
 		}
 		
 		return $ms;
-	}*/
+	}
 	
 	function getPermissionList ($p = array ()) {
 		$default = array('view' => null,

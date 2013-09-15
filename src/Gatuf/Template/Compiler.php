@@ -132,8 +132,8 @@ class Gatuf_Template_Compiler {
                                     'aurl' => 'Gatuf_Template_Tag_Rurl',
                                     'media' => 'Gatuf_Template_Tag_MediaUrl',
                                     'amedia' => 'Gatuf_Template_Tag_RmediaUrl',
-                                    /*'aperm' => 'Pluf_Template_Tag_APerm',
-                                    'getmsgs' => 'Pluf_Template_Tag_Messages',*/
+                                    /*'aperm' => 'Pluf_Template_Tag_APerm',*/
+                                    'getmsgs' => 'Gatuf_Template_Tag_Messages',
                                     );
     /**
      * During compilation, all the tags are created once so to query
@@ -218,9 +218,9 @@ class Gatuf_Template_Compiler {
                         'modifiers' => array());
         /*Pluf_Signal::send('Pluf_Template_Compiler::construct_template_tags_modifiers', 
                           'Pluf_Template_Compiler', $params);*/
-        /*$this->_allowedTags = array_merge($this->_allowedTags,
+        $this->_allowedTags = array_merge($this->_allowedTags,
                                           $params['tags'],
-                                          Gatuf::config('template_tags', array()));*/
+                                          Gatuf::config('template_tags', array()));
         $this->_modifier = array_merge($this->_modifier,
                                        $params['modifiers'],
                                        Gatuf::config('template_modifiers', array()));

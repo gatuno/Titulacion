@@ -141,6 +141,41 @@
 </table>
 </form>
 {/block}
+{block javascript}
+<script type="text/javascript">
+{literal}
+//<![CDATA[
+	function on_change_opcion () {
+		var opcion = document.getElementById ('id_opcTitulacion');
+		
+		/* FIXME: Arreglar esto, no deberían estar los IDs directamente */
+		if (opcion.value == 3 || opcion.value == 4 || opcion.value == 5 || opcion.value == 6) {
+			$('#div_maestria').fadeOut(0);
+			$('#div_trabajo').fadeOut(0);
+			$('#div_desempeno').fadeIn(1000);
+		} else if (opcion.value == 7 || opcion.value == 8 || opcion.value == 10 || opcion.value == 11 || opcion.value == 12 || opcion.value == 13 || opcion.value == 14 || opcion.value == 15 || opcion.value == 16) {
+			$('#div_maestria').fadeOut(0);
+			$('#div_desempeno').fadeOut(0);
+			$('#div_trabajo').fadeIn(1000);
+		} else if (opcion.value == 9) {
+			$('#div_desempeno').fadeOut(0);
+			$('#div_trabajo').fadeOut(0);
+			$('#div_maestria').fadeIn(1000);
+		} else {
+			$('#div_desempeno').fadeOut(1000);
+			$('#div_trabajo').fadeOut(1000);
+			$('#div_maestria').fadeOut(1000);
+		}
+	}
+	
+	var opcion = document.getElementById ('id_opcTitulacion');
+	
+	opcion.onchange = on_change_opcion;
+	on_change_opcion ();
+// ]]>
+{/literal}
+</script>
+{/block}
 {block extrahead}
 <link rel="stylesheet" media="all" type="text/css" href="{media '/css/smoothness/jquery-ui-1.8.16.custom.css'}" />
 <link rel="stylesheet" media="all" type="text/css" href="{media '/css/timepicker.css'}" />

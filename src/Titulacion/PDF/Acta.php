@@ -26,12 +26,22 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$grado = Titulacion_Utils_grado ($this->director->sexo, $this->director->grado);
 		$director = $grado.' '.$this->director->apellido.' '.$this->director->nombre;
 		
-		
 		$evalua = $this->opcion->articulo;
-		if($evalua == 10) {
-			
+		/* FIXME: Utilizar $this->opcion->desempeno
+		// En todos los casos, los datos extras se encuentran disponibles en $this->acta
+		if ($this->opcion->desempeno) {
+			// Esta modalidad de titulación utiliza desempeño
 		}
 		
+		if ($this->opcion->trabajo) {
+			// Esta modalidad de titulación requiere un nombre de trabajo.
+		}
+		
+		if ($this->opcion->maestria) {
+			// Esta opción requiere los 3 campos extras de la maestria:
+			// Cantidad de materias, nombre de la maestria y universidad
+		}
+		*/
 		
 		$this->AliasNbPages();
 		$this->SetMargins(20, 5);
@@ -49,7 +59,6 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetFont('Arial','',12);
 		$this->Cell(0,0,$this->acta->alumno,0,0);
 		
-		/*throw new exception($this->acta->fechaHora);*/
 		setLocale(LC_ALL, 'es_MX.UTF-8');
 		$dia = strftime("%e", strtotime ($this->acta->fechaHora)); /* Extraer el día */
 		$mes = strftime("%B", strtotime ($this->acta->fechaHora)); /* El nombre del mes */
@@ -123,8 +132,7 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetX(85);
 		$this->SetFont('Arial','',12);
 		$this->Cell(0,0,$this->opcion->fraccion,0,0);
-	
-	
+		
 		$this->SetY(124);
 		$this->SetX(146);
 		$this->SetFont('Arial','',12);
@@ -156,7 +164,7 @@ class Titulacion_PDF_Acta extends External_FPDF{
 			$this->SetFont('Arial','',12);
 			$this->Cell(0,0,$this->acta->calificacion,0,0);
 			
-			$calificacionLetra = Titulacion_Utils_numeroLetra($cali);
+			$calificacionLetra = Titulacion_Utils_numeroLetra($this->acta->calificacion);
 			$this->SetY(207);
 			$this->SetX(71);
 			$this->SetFont('Arial','',12);

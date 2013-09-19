@@ -201,19 +201,19 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->Cell(0,0,$nombreCompletoj3,0,0);
 		
 		$this->SetY(311);
-		$this->SetX(58);
+		$this->SetX(47);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,$director,0,0);
+		$this->Cell(76,0,$director,0,0,'C');
 		
 		$this->SetY(311);
-		$this->SetX(129);
+		$this->SetX(128);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,$secretario,0,0,'C');
+		$this->Cell(76,0,$secretario,0,0,'C');
 		
 		$this->SetY(315);
-		$this->SetX(77);
+		$this->SetX(47);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,'DIRECTOR',0,0);
+		$this->Cell(76,0,'DIRECTOR',0,0,'C');
 		
 		$this->SetY(319);
 		$this->SetX(47);
@@ -221,13 +221,13 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->Cell(76,0,'DIVISION DE ELECTRONICA Y COMPUTACION',0,0,'C');
 		
 		$this->SetY(315);
-		$this->SetX(150);
+		$this->SetX(128);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,'SECRETARIO',0,0);
+		$this->Cell(76,0,'SECRETARIO',0,0,'C');
 		
 		$this->SetY(319);
 		$this->SetX(128);
 		$this->SetFont('Arial','',12);
-		$this->Cell(76,0,'DIVISION DE ELECTRONICA Y COMPUTACION',0,0);
+		$this->Cell(76,0,'DIVISION DE ELECTRONICA Y COMPUTACION',0,0,'C');
 	}
 }

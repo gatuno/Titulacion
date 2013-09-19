@@ -9,6 +9,7 @@ class Titulacion_PDF_Acta extends External_FPDF{
 	function renderBase(){
 		Gatuf::loadFunction ('Titulacion_Utils_grado');
 		
+		
 		$nombreCompleto = $this->acta->alumno_nombre.' '.$this->acta->alumno_apellido;
 		
 		$grado = Titulacion_Utils_grado ($this->jurado1->sexo, $this->jurado1->grado);
@@ -27,21 +28,22 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$director = $grado.' '.$this->director->apellido.' '.$this->director->nombre;
 		
 		$evalua = $this->opcion->articulo;
-		/* FIXME: Utilizar $this->opcion->desempeno
-		// En todos los casos, los datos extras se encuentran disponibles en $this->acta
+		
+		$leyenda = $this->acta->leyenda;
+		
 		if ($this->opcion->desempeno) {
-			// Esta modalidad de titulación utiliza desempeño
+			$leyenda = sprintf ($this->acta->leyenda,$this->acta->desempeno,$this->acta->carrera_descripcion);
 		}
 		
 		if ($this->opcion->trabajo) {
-			// Esta modalidad de titulación requiere un nombre de trabajo.
+		$leyenda = sprintf ($this->acta->leyenda,$this->acta->nombre_trabajo);
+			
 		}
 		
 		if ($this->opcion->maestria) {
-			// Esta opción requiere los 3 campos extras de la maestria:
-			// Cantidad de materias, nombre de la maestria y universidad
+			$leyenda = sprintf ($this->acta->leyenda,$this->acta->materias_maestria,$this->acta->nombre_maestria,$this->acta->escuela_maestria);
 		}
-		*/
+		
 		
 		$this->AliasNbPages();
 		$this->SetMargins(20, 5);
@@ -153,12 +155,19 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetFont('Arial','',12);
 		$this->Cell(0,0,$this->opcion->descripcion,0,0);
 		
+		
+	
 		$this->SetY(169);
 		$this->SetX(71);
 		$this->SetFont('Arial','',12);
-		$this->MultiCell(0,5,$this->opcion->leyenda,0,'L');
+		$this->MultiCell(0,5,$leyenda,0,'L');
+			
 		
-		if (!is_null ($this->acta->calificacion)) {
+		
+		
+
+
+		if (($this->acta->calificacion)) {
 			$this->SetY(203);
 			$this->SetX(185);
 			$this->SetFont('Arial','',12);

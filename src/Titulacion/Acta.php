@@ -15,12 +15,14 @@ class Titulacion_Acta extends Gatuf_Model {
 	public $alumno; /*Llave foranea*/
 	public $alumno_nombre;
 	public $alumno_apellido;
+	public $domicilio;
 	public $fechaHora;
 	public $ingreso; /* Calendario de ingreso */
 	public $egreso; /* Calendario de egreso */
 	public $carrera;
 	public $carrera_descripcion;
 	public $calificacion;
+	public $anio;
 	
 	/* Campos extra dependiendo de la modalidad de titulación */
 	public $desempeno;
@@ -28,6 +30,10 @@ class Titulacion_Acta extends Gatuf_Model {
 	public $materias_maestria;
 	public $nombre_maestria;
 	public $escuela_maestria;
+	
+	/* Control interno */
+	public $createtime, $modifcationtime;
+	public $creador, $modificador;
 	
 	function __construct() {
 		$this->_getConnection();
@@ -51,7 +57,12 @@ class Titulacion_Acta extends Gatuf_Model {
 	}
 
 	public function create() {
-		$req = sprintf('INSERT INTO %s (plan, folio, acta, modalidad, alumno, director_division, secretario_division, jurado1, jurado2, jurado3, carrera, fechaHora, ingreso, egreso, calificacion, desempeno, materias_maestria, nombre_maestria, escuela_maestria, nombre_trabajo) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', $this->getSqlTable(), Gatuf_DB_IntegerToDb ($this->plan, $this->_con), Gatuf_DB_IntegerToDb ($this->folio, $this->_con), Gatuf_DB_IntegerToDb ($this->acta, $this->_con), Gatuf_DB_IntegerToDb ($this->modalidad, $this->_con), Gatuf_DB_IdentityToDb ($this->alumno, $this->_con), Gatuf_DB_IntegerToDb ($this->director_division, $this->_con), Gatuf_DB_IntegerToDb ($this->secretario_division, $this->_con), Gatuf_DB_IntegerToDb ($this->jurado1, $this->_con), Gatuf_DB_IntegerToDb ($this->jurado2, $this->_con), Gatuf_DB_IntegerToDb ($this->jurado3, $this->_con),Gatuf_DB_IdentityToDb ($this->carrera, $this->_con), Gatuf_DB_IdentityToDb ($this->fechaHora, $this->_con), Gatuf_DB_IdentityToDb ($this->ingreso, $this->_con), Gatuf_DB_IdentityToDb ($this->egreso, $this->_con), Gatuf_DB_IntegerToDb ($this->calificacion, $this->_con), Gatuf_DB_IdentityToDb ($this->desempeno, $this->_con),Gatuf_DB_IntegerToDb ($this->materias_maestria, $this->_con), Gatuf_DB_IdentityToDb ($this->nombre_maestria, $this->_con), Gatuf_DB_IdentityToDb ($this->escuela_maestria, $this->_con), Gatuf_DB_IdentityToDb ($this->nombre_trabajo, $this->_con));
+		$req = sprintf('INSERT INTO %s (plan, folio, acta, modalidad, alumno, domicilio, director_division, secretario_division, jurado1, jurado2, jurado3, carrera, fechaHora, ingreso, egreso, calificacion, desempeno, materias_maestria, nombre_maestria, escuela_maestria, nombre_trabajo, createtime, creador, modificador) ', $this->getSqlTable ());
+		$req = $req . sprintf ('VALUES (%s, %s, %s, %s, %s, %s, %s, %s, ', Gatuf_DB_IntegerToDb ($this->plan, $this->_con), Gatuf_DB_IntegerToDb ($this->folio, $this->_con), Gatuf_DB_IntegerToDb ($this->acta, $this->_con), Gatuf_DB_IntegerToDb ($this->modalidad, $this->_con), Gatuf_DB_IdentityToDb ($this->alumno, $this->_con), Gatuf_DB_IntegerToDB ($this->domicilio, $this->_con), Gatuf_DB_IntegerToDb ($this->director_division, $this->_con), Gatuf_DB_IntegerToDb ($this->secretario_division, $this->_con));
+		
+		$req = $req . sprintf ('%s, %s, %s, %s, %s, %s, %s, %s, ', Gatuf_DB_IntegerToDb ($this->jurado1, $this->_con), Gatuf_DB_IntegerToDb ($this->jurado2, $this->_con), Gatuf_DB_IntegerToDb ($this->jurado3, $this->_con),Gatuf_DB_IdentityToDb ($this->carrera, $this->_con), Gatuf_DB_IdentityToDb ($this->fechaHora, $this->_con), Gatuf_DB_IdentityToDb ($this->ingreso, $this->_con), Gatuf_DB_IdentityToDb ($this->egreso, $this->_con), Gatuf_DB_IntegerToDb ($this->calificacion, $this->_con));
+		
+		$req = $req . sprintf ('%s, %s, %s, %s, %s, NOW(), %s, %s)', Gatuf_DB_IdentityToDb ($this->desempeno, $this->_con), Gatuf_DB_IntegerToDb ($this->materias_maestria, $this->_con), Gatuf_DB_IdentityToDb ($this->nombre_maestria, $this->_con), Gatuf_DB_IdentityToDb ($this->escuela_maestria, $this->_con), Gatuf_DB_IdentityToDb ($this->nombre_trabajo, $this->_con), Gatuf_DB_IntegerToDb ($this->creador, $this->_con), Gatuf_DB_IntegerToDb ($this->modificador, $this->_con));
 		
 		$this->_con->execute ($req);
 		

@@ -84,7 +84,12 @@ class Titulacion_Views_Acta {
 			$form = new Titulacion_Form_Acta_Agregar ($request->POST, $extra);
 			
 			if ($form-> isValid ()) {
-				$acta = $form->save ();
+				$acta = $form->save (false);
+				
+				$acta->creador = $request->user->codigo;
+				$acta->modificador = $request->user->codigo;
+				
+				$acta->create ();
 				
 				$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::index');
 				return new Gatuf_HTTP_Response_Redirect($url);

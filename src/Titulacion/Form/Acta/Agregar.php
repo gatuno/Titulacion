@@ -404,6 +404,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		$acta->modalidad = $this->cleaned_data['opcTitulacion'];
 		$acta->carrera = $this->cleaned_data['carrera'];
 		$acta->alumno = $this->alumno->codigo;
+		$acta->domicilio = $this->domicilio->id;
 		$acta->fechaHora = $this->cleaned_data['fechaHora'];
 		$acta->ingreso = $this->cleaned_data['ingreso'];
 		$acta->egreso = $this->cleaned_data['egreso'];

@@ -29,19 +29,19 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		
 		$evalua = $this->opcion->articulo;
 		
-		$leyenda = $this->acta->leyenda;
+		$leyenda = $this->opcion->leyenda;
 		
 		if ($this->opcion->desempeno) {
-			$leyenda = sprintf ($this->acta->leyenda,$this->acta->desempeno,$this->acta->carrera_descripcion);
+			$leyenda = sprintf ($this->opcion->leyenda,$this->acta->desempeno,$this->acta->carrera_descripcion);
 		}
 		
 		if ($this->opcion->trabajo) {
-		$leyenda = sprintf ($this->acta->leyenda,$this->acta->nombre_trabajo);
+		$leyenda = sprintf ($this->opcion->leyenda,$this->acta->nombre_trabajo);
 			
 		}
 		
 		if ($this->opcion->maestria) {
-			$leyenda = sprintf ($this->acta->leyenda,$this->acta->materias_maestria,$this->acta->nombre_maestria,$this->acta->escuela_maestria);
+			$leyenda = sprintf ($this->opcion->leyenda,$this->acta->materias_maestria,$this->acta->nombre_maestria,$this->acta->escuela_maestria);
 		}
 		
 		
@@ -54,7 +54,7 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetY(85);
 		$this->SetX(35);
 		$this->SetFont('Arial','',12);
-		$this->Cell(0,0,$this->acta->folio,0,0);
+		$this->Cell(0,0,$this->acta->folio.'/'.$this->acta->anio,0,0);
 		
 		$this->SetY(91);
 		$this->SetX(35);

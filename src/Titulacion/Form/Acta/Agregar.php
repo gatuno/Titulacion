@@ -61,7 +61,6 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				'label' => 'Calificacion',
 				'initial' => '',
 				'help_text'=> 'Calificacion con la que se titula',
-				'min' => 1,
 				'widget_attrs' => array(
 					'size' => 10
 				)

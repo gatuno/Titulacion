@@ -208,6 +208,7 @@ class Titulacion_Views_Acta {
 		$pdf->jurado3 = $jurado3;
 		$pdf->carrera = $carrera;
 		$pdf->opcion = $opcion;
+		$pdf->alumno = $alumno;
 		$pdf->modalidad = $modalidad;
 		$pdf->director = $director;
 		$pdf->secretario = $secretario;

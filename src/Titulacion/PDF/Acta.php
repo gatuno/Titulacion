@@ -4,13 +4,13 @@ class Titulacion_PDF_Acta extends External_FPDF{
 	public $acta, $carrera;
 	public $jurado1, $jurado2, $jurado3;
 	public $opcion, $modalidad;
-	public $director, $secretario;
+	public $director, $secretario, $alumno;
 	
 	function renderBase(){
 		Gatuf::loadFunction ('Titulacion_Utils_grado');
 		setLocale(LC_ALL, 'es_MX.UTF-8');
 		
-		$nombreCompleto = $this->acta->alumno_nombre.' '.$this->acta->alumno_apellido;
+		$nombreCompleto = mb_strtoupper($this->acta->alumno_nombre.' '.$this->acta->alumno_apellido);
 		
 		$grado = Titulacion_Utils_grado ($this->jurado1->sexo, $this->jurado1->grado);
 		$nombreCompletoj1 = mb_strtoupper ($grado.' '.$this->jurado1->apellido.' '.$this->jurado1->nombre);
@@ -43,7 +43,7 @@ class Titulacion_PDF_Acta extends External_FPDF{
 			$leyenda = mb_strtoupper (sprintf ($this->opcion->leyenda,$this->acta->materias_maestria,$this->acta->nombre_maestria,$this->acta->escuela_maestria));
 		}
 		
-		$this->SetMargins(20, 5);
+		$this->SetMargins(0,0);
 		
 		$this->SetFont('Arial','',12);
 		$this->AddPage('P','Legal');
@@ -52,7 +52,7 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetX(35);
 		$this->Cell(0,0,$this->acta->folio.'/'.$this->acta->anio,0,0);
 		
-		$this->SetY(91);
+		$this->SetY(96);
 		$this->SetX(35);
 		$this->Cell(0,0,$this->acta->alumno,0,0);
 		
@@ -69,11 +69,11 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		
 		$this->SetY(60);
 		$this->SetX(90);
-		$this->Cell (0,0 ,$mes,0,0,'C');
-		
+		$this->Cell (38,0 ,$mes,0,0,'C');
+
 		$this->SetY (60);
 		$this->SetX (135);
-		$this->Cell(0, 0, $anio, 0, 0, 'C');
+		$this->Cell(24, 0, $anio, 0, 0, 'C');
 		
 		$this->SetY(110);
 		$this->SetX(70);
@@ -94,15 +94,25 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetY(95);
 		$this->SetX(122);
 		
+		$this->SetFont('Arial','',11);
 		if ($this->opcion->tipo == 'C') {
-			$this->Cell(0, 0, 'MIEMBROS DEL COMITÉ', 0,0);
+			$this->Cell(89, 0, 'MIEMBROS DEL COMITÉ', 0,0,'C');
 		} else if ($this->opcion->tipo == 'J') {
-			$this->Cell(0, 0, 'MIEMBROS DEL JURADO', 0, 0);
+			$this->Cell(89, 0, 'MIEMBROS DEL JURADO', 0, 0,'C');
 		}
 		
+		$this->SetFont('Arial','',12);
 		$this->SetY(100);
-		$this->SetX(71);
-		$this->Cell(0,0,$this->carrera->nombre_largo,0,0);
+		$this->SetX(94);
+		$this->Cell(0,0, mb_strtoupper($this->carrera->nombre_largo),0,0);
+		
+		$this->SetY(118);
+		$this->SetX(94);
+		if(($this->alumno->sexo) == 'F'){
+			$this->Cell(0,0,mb_strtoupper($this->carrera->grado_f));
+		}else{
+		$this->Cell(0,0,mb_strtoupper($this->carrera->grado_f));
+		}
 		
 		$this->SetY(119);
 		$this->SetX(190);
@@ -122,15 +132,15 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		
 		$this->SetY(134);
 		$this->SetX(71);
-		$this->Cell(0,0,$this->modalidad->descripcion,0,0);
+		$this->Cell(0,0, mb_strtoupper($this->modalidad->descripcion),0,0);
 		
 		$this->SetY(146);
 		$this->SetX(71);
-		$this->Cell(0,0,$this->opcion->descripcion,0,0);
+		$this->Cell(0,0, mb_strtoupper($this->opcion->descripcion),0,0);
 		
 		$this->SetY(169);
 		$this->SetX(71);
-		$this->MultiCell(0,5,$leyenda,0,'L');
+		$this->MultiCell(134,5,$leyenda,0,'L');
 		
 		if (($this->acta->calificacion)) {
 			$this->SetY(203);
@@ -143,9 +153,13 @@ class Titulacion_PDF_Acta extends External_FPDF{
 			$this->Cell(0,0,'('.$calificacionLetra.')',0,0);
 		}
 		
+		$this->SetY(212);
+		$this->SetX(100);
+		$this->Cell(0,0,'COMITE DE TITULACIÓN',0,0);
+		
 		$this->SetY(218);
 		$this->SetX(159);
-		$this->Cell(0,0,'"  SI PROTESTO  ".',0,0);
+		$this->Cell(44,0,'SI PROTESTO',0,0,'C');
 		
 		$this->SetY(250);
 		$this->SetX(128);

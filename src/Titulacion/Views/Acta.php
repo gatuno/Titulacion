@@ -14,9 +14,9 @@ class Titulacion_Views_Acta {
 				
 				$alumno = new Titulacion_Alumno ();
 				if (false === ($alumno->getAlumno ($codigo))) {
-					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::agregarAlumno', array (), array ('acta' => 1));
+					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::agregarAlumno', array (), array ('acta' => 1, 'alumno' => $codigo), false);
 				} else {
-					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::editarAlumno', array ($alumno->codigo), array ('acta' => 1));
+					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::editarAlumno', array ($alumno->codigo), array ('acta' => 1), false);
 				}
 				
 				return new Gatuf_HTTP_Response_Redirect ($url);

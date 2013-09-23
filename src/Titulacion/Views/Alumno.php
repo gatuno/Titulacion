@@ -41,6 +41,11 @@ class Titulacion_Views_Alumno {
 		} else {
 			$extra = array ('acta' => 0);
 		}
+		if (isset ($request->REQUEST['alumno']) && $request->REQUEST['alumno'] != '') {
+			$extra['alumno'] = $request->REQUEST['alumno'];
+		} else {
+			$extra['alumno'] = '';
+		}
 		if($request->method == 'POST') {
 			$form = new Titulacion_Form_Alumno_Agregar ($request->POST, $extra);
 			

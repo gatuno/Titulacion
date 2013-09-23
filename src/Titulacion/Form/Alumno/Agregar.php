@@ -6,7 +6,7 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 			array (
 				'required' => true,
 				'label' => 'Código',
-				'initial' => '',
+				'initial' => $extra['alumno'],
 				'help_text' => 'El código de alumno de 9 caracteres',
 				'max_length' => 9,
 				'min_length' => 9,

@@ -255,10 +255,15 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		$this->fields['fechaHora'] = new Gatuf_Form_Field_Datetime (
 			array(
 				'required' => true,
-				'label' => 'Fecha y hora',
+				'label' => 'Fecha y hora ceremonia',
 				'initial' =>'',
 				'help_text'=>'Fecha y hora de la ceremonia de titulacion',
 				'widget' => 'Gatuf_Form_Widget_DatetimeJSInput',
+				'widget_attrs' => array (
+					'js_attrs' => array (
+						'minDate' => 0,
+					),
+				)
 		));
 		$gconf = new Gatuf_GSetting ('Titulacion');
 		

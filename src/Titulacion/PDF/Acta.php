@@ -112,7 +112,11 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		if(($this->alumno->sexo) == 'F'){
 			$this->Cell(95,0,mb_strtoupper($this->carrera->grado_f),0,0,'C');
 		}else{
+<<<<<<< HEAD
 		$this->Cell(95,0,mb_strtoupper($this->carrera->grado_m),0,0,'C');
+=======
+			$this->Cell(0,0,mb_strtoupper($this->carrera->grado_m));
+>>>>>>> 2c67dccfd6f72045e76a2ee1b6b4f8ab03e0cb4c
 		}
 		
 		$this->SetY(120);

@@ -45,14 +45,14 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		
 		$this->SetMargins(0,0);
 		
-		$this->SetFont('Arial','',12);
+		$this->SetFont('Arial','',11);
 		$this->AddPage('P','Legal');
 		
-		$this->SetY(85);
+		$this->SetY(85.5);
 		$this->SetX(35);
 		$this->Cell(0,0,$this->acta->folio.'/'.$this->acta->anio,0,0);
 		
-		$this->SetY(96);
+		$this->SetY(93);
 		$this->SetX(35);
 		$this->Cell(0,0,$this->acta->alumno,0,0);
 		
@@ -67,133 +67,136 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetX(150);
 		$this->Cell (0,0 ,$diaCompleto,0,0,'C');
 		
-		$this->SetY(60);
+		$this->SetY(59.9);
 		$this->SetX(90);
 		$this->Cell (38,0 ,$mes,0,0,'C');
 
-		$this->SetY (60);
+		$this->SetY (59.9);
 		$this->SetX (135);
 		$this->Cell(24, 0, $anio, 0, 0, 'C');
-		
-		$this->SetY(110);
-		$this->SetX(70);
-		$this->Cell(0,0,$nombreCompleto,0,0);
-		
+
 		$this->SetY(77);
-		$this->SetX(71);
+		$this->SetX(74);
 		$this->Cell(0,0,$nombreCompletoj1,0,0);
 		
-		$this->SetY(83);
-		$this->SetX(71);
+		$this->SetY(84);
+		$this->SetX(74);
 		$this->Cell(0,0,$nombreCompletoj2,0,0);
 		
-		$this->SetY(89);
-		$this->SetX(71);
+		$this->SetY(91);
+		$this->SetX(74);
 		$this->Cell(0,0,$nombreCompletoj3,0,0);
 		
-		$this->SetY(95);
-		$this->SetX(122);
+		$this->SetY(110.5);
+		$this->SetX(70);
+		$this->Cell(103,0,$nombreCompleto,0,0,'C');
+		
+		
+		$this->SetY(96);
+		$this->SetX(71);
 		
 		$this->SetFont('Arial','',11);
 		if ($this->opcion->tipo == 'C') {
-			$this->Cell(89, 0, 'MIEMBROS DEL COMITÉ', 0,0,'C');
+			$this->Cell(89, 0, 'MIEMBROS DEL', 0,0,'C');
 		} else if ($this->opcion->tipo == 'J') {
-			$this->Cell(89, 0, 'MIEMBROS DEL JURADO', 0, 0,'C');
+			$this->Cell(89, 0, 'MIEMBROS DEL', 0, 0,'C');
 		}
 		
 		$this->SetFont('Arial','',12);
-		$this->SetY(100);
+		$this->SetY(101);
 		$this->SetX(94);
 		$this->Cell(0,0, mb_strtoupper($this->carrera->nombre_largo),0,0);
 		
-		$this->SetY(118);
+		$this->SetY(115);
 		$this->SetX(94);
 		if(($this->alumno->sexo) == 'F'){
-			$this->Cell(0,0,mb_strtoupper($this->carrera->grado_f));
+			$this->Cell(95,0,mb_strtoupper($this->carrera->grado_f),0,0,'C');
 		}else{
-		$this->Cell(0,0,mb_strtoupper($this->carrera->grado_f));
+		$this->Cell(95,0,mb_strtoupper($this->carrera->grado_m),0,0,'C');
 		}
 		
-		$this->SetY(119);
+		$this->SetY(120);
 		$this->SetX(190);
-		$this->Cell(0,0,$this->opcion->articulo,0,0);
+		$this->Cell(15,0,$this->opcion->articulo,0,0,'C');
 		
 		$this->SetY(124);
 		$this->SetX(85);
-		$this->Cell(0,0,$this->opcion->fraccion,0,0);
+		$this->Cell(19,0,$this->opcion->fraccion,0,0,'C');
 		
 		$this->SetY(124);
 		$this->SetX(146);
-		$this->Cell(0,0,$this->opcion->articulo_cucei,0,0);
+		$this->Cell(18,0,$this->opcion->articulo_cucei,0,0,'C');
 		
 		$this->SetY(124);
 		$this->SetX(182);
-		$this->Cell(0,0,$this->opcion->fraccion_cucei,0,0);
+		$this->Cell(15,0,$this->opcion->fraccion_cucei,0,0,'C');
 		
-		$this->SetY(134);
-		$this->SetX(71);
+		$this->SetY(135);
+		$this->SetX(72);
 		$this->Cell(0,0, mb_strtoupper($this->modalidad->descripcion),0,0);
 		
-		$this->SetY(146);
-		$this->SetX(71);
+		$this->SetY(147.5);
+		$this->SetX(72);
 		$this->Cell(0,0, mb_strtoupper($this->opcion->descripcion),0,0);
 		
-		$this->SetY(169);
+		$this->SetY(151.9);
 		$this->SetX(71);
-		$this->MultiCell(134,5,$leyenda,0,'L');
+		$this->MultiCell(134,7.3,$leyenda,0,'L');
 		
 		if (($this->acta->calificacion)) {
-			$this->SetY(203);
+			$this->SetY(203.5);
 			$this->SetX(185);
-			$this->Cell(0,0,$this->acta->calificacion,0,0);
+			$this->Cell(19,0,$this->acta->calificacion,0,0,'C');
 			
+			$this->SetFont('Arial','',10);
 			$calificacionLetra = Titulacion_Utils_numeroLetra($this->acta->calificacion);
-			$this->SetY(207);
+			$this->SetY(209);
 			$this->SetX(71);
 			$this->Cell(0,0,'('.$calificacionLetra.')',0,0);
 		}
 		
-		$this->SetY(212);
+		$this->SetFont('Arial','',11);
+		$this->SetY(213.5);
 		$this->SetX(100);
 		$this->Cell(0,0,'COMITE DE TITULACIÓN',0,0);
 		
-		$this->SetY(218);
+		$this->SetY(219);
 		$this->SetX(159);
 		$this->Cell(44,0,'SI PROTESTO',0,0,'C');
 		
-		$this->SetY(250);
+		$this->SetY(254);
 		$this->SetX(128);
 		$this->Cell(76,0,$nombreCompletoj1,0,0, 'C');
 		
-		$this->SetY(281);
+		$this->SetY(285);
 		$this->SetX(47);
 		$this->Cell(76,0,$nombreCompletoj2,0,0,'C');
 		
-		$this->SetY(281);
+		$this->SetY(285);
 		$this->SetX(128);
 		$this->Cell(76,0,$nombreCompletoj3,0,0,'C');
 		
-		$this->SetY(311);
+		$this->SetY(315);
 		$this->SetX(47);
 		$this->Cell(76,0,$director,0,0,'C');
 		
-		$this->SetY(315);
+		$this->SetY(319);
 		$this->SetX(47);
 		$this->Cell(76,0,'DIRECTOR',0,0,'C');
 		
-		$this->SetY(319);
+		$this->SetY(323);
 		$this->SetX(47);
 		$this->Cell(76,0,'DIVISION DE ELECTRONICA Y COMPUTACION',0,0,'C');
 		
-		$this->SetY(311);
+		$this->SetY(315);
 		$this->SetX(128);
 		$this->Cell(76,0,$secretario,0,0,'C');
 		
-		$this->SetY(315);
+		$this->SetY(319);
 		$this->SetX(128);
 		$this->Cell(76,0,'SECRETARIO',0,0,'C');
 		
-		$this->SetY(319);
+		$this->SetY(323);
 		$this->SetX(128);
 		$this->Cell(76,0,'DIVISION DE ELECTRONICA Y COMPUTACION',0,0,'C');
 	}

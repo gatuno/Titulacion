@@ -14,7 +14,7 @@ class Titulacion_Views_Alumno {
 		
 		$list_display = array (
 			array ('codigo', 'Gatuf_Paginator_DisplayVal', 'Codigo'),
-			array ('apellido', 'Gatuf_Paginator_DisplayVal', 'Apellido')
+			array ('apellido', 'Gatuf_Paginator_DisplayVal', 'Apellido'),
 			array ('nombre', 'Gatuf_Paginator_DisplayVal', 'Nombre'),
 		);
 		

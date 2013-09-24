@@ -14,7 +14,7 @@ class Titulacion_Views_Alumno {
 		
 		$list_display = array (
 			array ('codigo', 'Gatuf_Paginator_DisplayVal', 'Codigo'),
-			array ('apellido', 'Gatuf_Paginator_DisplayVal', 'Apellido'),
+			array ('apellido', 'Gatuf_Paginator_DisplayVal', 'Apellido')
 			array ('nombre', 'Gatuf_Paginator_DisplayVal', 'Nombre'),
 		);
 		
@@ -108,7 +108,7 @@ class Titulacion_Views_Alumno {
 		if (false === ($alumno->getAlumno ($match[1]))) {
 			return new Gatuf_HTTP_Response_Json (array ());
 		}
-		$alumno_json = array ('codigo' => $alumno->codigo, 'nombre' => $alumno->nombre, 'apellido' => $alumno->apellido);
+		$alumno_json = array ('codigo' => $alumno->codigo, 'nombre' => $alumno->nombre, 'apellido' => $alumno->apellido, 'sexo' => $alumno->sexo);
 		
 		return new Gatuf_HTTP_Response_Json ($alumno_json);
 	}

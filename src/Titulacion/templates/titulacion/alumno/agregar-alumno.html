@@ -27,6 +27,11 @@
 		{$form.f.nombre|safe}<br />
 		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.nombre.help_text}</span> -->
 	</td></tr>
+	<tr><th><strong>{$form.f.sexo.labelTag}:</strong></th>
+	<td>{if $form.f.sexo.errors}{$form.f.sexo.fieldErrors}{/if}
+		{$form.f.sexo|safe}<br />
+		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.apellido.help_text}</span> -->
+	</td></tr>
 	</tbody>
 	<tbody id="div_domicilio">
 	<tr><th><strong>{$form.f.calle.labelTag}:</strong></th>

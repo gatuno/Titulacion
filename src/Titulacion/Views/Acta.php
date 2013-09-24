@@ -32,6 +32,7 @@ class Titulacion_Views_Acta {
 		
 		$list_display = array (
 			array('folio', 'Gatuf_Paginator_FKLink', 'Folio'),
+			array('anio', 'Gatuf_Paginator_DisplayVal', 'Año'),
 			array('acta','Gatuf_Paginator_DisplayVal', 'Numero de acta'),
 			array('carrera','Gatuf_Paginator_FKExtra','Carrera'),
 			array('alumno','Gatuf_Paginator_DisplayVal', 'Codigo del alumno'),
@@ -39,7 +40,7 @@ class Titulacion_Views_Acta {
 			array('alumno_apellido','Gatuf_Paginator_DisplayVal', 'Apellidos'),
 			array('plan_descripcion','Gatuf_Paginator_DisplayVal','Plan de estudios'),
 			array('modalidad_descripcion','Gatuf_Paginator_DisplayVal', 'Opcion de titulacion'),
-			array('fechaHora','Gatuf_Paginator_DisplayVal','Fecha/Hora'),
+			array('fechaHora','Gatuf_Paginator_DateYMDHM','Fecha ceremonia'),
 			array('ingreso','Gatuf_Paginator_DisplayVal','Calendario de ingreso'),
 			array('egreso','Gatuf_Paginator_DisplayVal','Calendario de egreso')
 		);
@@ -48,7 +49,7 @@ class Titulacion_Views_Acta {
 		$pag->no_results_text = 'No hay actas de titulacion disponibles';
 		$pag->max_number_pages = 3;
 		$pag->configure ($list_display,
-				array ('alumno','folio','acta','ingreso','egreso','carrera'),
+				array ('alumno','folio','anio','acta','ingreso','egreso','carrera'),
 				array ('alumno','folio','acta','ingreso','egreso','carrera')
 		        );
 		$pag->setFromRequest($request);
@@ -161,11 +162,9 @@ class Titulacion_Views_Acta {
 		                                         $request);
 	}
 	
-	/*Aqui se hace la prueba para generar el PDF*/
-	//queda pendiente hacer que cuando se descargue el pdf tenga por nombre: codigo.pdf
 	public function imprimirActa ($request, $match){
 		$acta = new Titulacion_Acta ();
-		$match[1];
+		
 		if (false == $acta->getActa ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();
 		}
@@ -215,9 +214,8 @@ class Titulacion_Views_Acta {
 		$pdf->renderBase ();
 		
 		$pdf->Close ();
-		$nombre_pdf = $acta->alumno;
+		$nombre_pdf = $acta->alumno . '.pdf';
  		
-		$nombre_pdf .= '.pdf';
 		$pdf->Output ('/tmp/'.$nombre_pdf, 'F');
 		
 		return new Gatuf_HTTP_Response_File ('/tmp/'.$nombre_pdf, $nombre_pdf, 'application/pdf', true);

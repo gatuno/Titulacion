@@ -39,6 +39,8 @@ class Titulacion_Acta extends Gatuf_Model {
 		$this->_getConnection();
 		$this->tabla = 'Actas';
 		$this->tabla_view= 'Actas_View';
+		
+		$this->default_order = 'anio ASC, modalidad_descripcion ASC, carrera ASC, alumno_apellido ASC';
 	}
 	
 	function getActa($id) {

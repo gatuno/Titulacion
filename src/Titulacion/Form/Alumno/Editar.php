@@ -52,6 +52,17 @@ class Titulacion_Form_Alumno_Editar extends Gatuf_Form {
 			)
 		);
 		
+		$this->fields['sexo'] = new Gatuf_Form_Field_Varchar (
+			array (
+				'required' => true,
+				'label' => 'Sexo',
+				'initial' => '',
+				'widget' => 'Gatuf_Form_Widget_SelectInput',
+				'widget_attrs' => array(
+					'choices' => array ('Masculino' => 'M', 'Femenino' => 'F'),
+				),
+		));
+		
 		/* Recoger todos los domicilios existentes, dar a elegir entre alguno */
 		$sql = new Gatuf_SQL ('alumno=%s', $this->alumno->codigo);
 		$domicilios = Gatuf::factory ('Titulacion_Domicilio')->getList (array ('filter' => $sql->gen()));

@@ -2,9 +2,6 @@
 
 class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 	public function initfields($extra=array()){
-	
-	$choices_sex = array ('Masculino' => 'M', 'Femenino' => 'F');
-	
 		$this->fields['codigo'] = new Gatuf_Form_Field_Varchar (
 			array (
 				'required' => true,
@@ -33,6 +30,7 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 				),
 			)
 		);
+		
 		$this->fields['apellido']= new Gatuf_Form_Field_Varchar (
 			array (
 				'required' => true,
@@ -46,6 +44,17 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 				),
 			)
 		);
+		
+		$this->fields['sexo'] = new Gatuf_Form_Field_Varchar (
+			array (
+				'required' => true,
+				'label' => 'Sexo',
+				'initial' => '',
+				'widget' => 'Gatuf_Form_Widget_SelectInput',
+				'widget_attrs' => array(
+					'choices' => array ('Masculino' => 'M', 'Femenino' => 'F'),
+				),
+		));
 		
 		/* Los datos correspondientes al domicilio */
 		$this->fields['calle'] = new Gatuf_Form_Field_Varchar (
@@ -61,18 +70,6 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 				),
 			)
 		);
-		
-		
-			$this->fields['sexo'] = new Gatuf_Form_Field_Varchar (
-			array (
-				'required' => true,
-				'label' => 'Sexo',
-				'initial' => '',
-				'widget' => 'Gatuf_Form_Widget_SelectInput',
-				'widget_attrs' => array(
-					'choices' => $choices_sex
-				),
-		));
 		
 		$this->fields['numero_ext'] = new Gatuf_Form_Field_Varchar (
 			array (

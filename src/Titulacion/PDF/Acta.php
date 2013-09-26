@@ -45,7 +45,7 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		
 		$this->SetMargins(0,0);
 		
-		$this->SetFont('Arial','',11);
+		$this->SetFont('Arial','',10);
 		$this->AddPage('P','Legal');
 		
 		$this->SetY(85.5);
@@ -95,14 +95,13 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetY(96);
 		$this->SetX(71);
 		
-		$this->SetFont('Arial','',11);
+		
 		if ($this->opcion->tipo == 'C') {
 			$this->Cell(89, 0, 'MIEMBROS DEL', 0,0,'C');
 		} else if ($this->opcion->tipo == 'J') {
 			$this->Cell(89, 0, 'MIEMBROS DEL', 0, 0,'C');
 		}
-		
-		$this->SetFont('Arial','',12);
+
 		$this->SetY(101);
 		$this->SetX(94);
 		$this->Cell(0,0, mb_strtoupper($this->carrera->nombre_largo),0,0);
@@ -112,11 +111,9 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		if(($this->alumno->sexo) == 'F'){
 			$this->Cell(95,0,mb_strtoupper($this->carrera->grado_f),0,0,'C');
 		}else{
-<<<<<<< HEAD
+
 		$this->Cell(95,0,mb_strtoupper($this->carrera->grado_m),0,0,'C');
-=======
-			$this->Cell(0,0,mb_strtoupper($this->carrera->grado_m));
->>>>>>> 2c67dccfd6f72045e76a2ee1b6b4f8ab03e0cb4c
+
 		}
 		
 		$this->SetY(120);
@@ -152,7 +149,6 @@ class Titulacion_PDF_Acta extends External_FPDF{
 			$this->SetX(185);
 			$this->Cell(19,0,$this->acta->calificacion,0,0,'C');
 			
-			$this->SetFont('Arial','',10);
 			$calificacionLetra = Titulacion_Utils_numeroLetra($this->acta->calificacion);
 			$this->SetY(209);
 			$this->SetX(71);

@@ -239,6 +239,44 @@ class Titulacion_Views_Acta {
 			throw new Gatuf_HTTP_Error404 ();
 		}
 		
-		throw new Exception ('No implementado');
+		
+		if (isset ($request->REQUEST['acta']) && $request->REQUEST['acta'] == 1) {
+			$extra['acta'] = 1;
+		} else {
+			$extra['acta'] = 0;
+		}
+		if($request->method == 'POST') {
+			$form = new Titulacion_Form_Acta_Editar ($request->POST, $extra);
+			
+			if($form->isValid ()){
+				$domicilio = $form->save ();
+				if (isset ($request->REQUEST['acta']) && $request->REQUEST['acta'] == 1) {
+					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::agregarActa', array ($acta->alumno, $acta->id));
+				} else {
+					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::index');
+				}
+				return new Gatuf_HTTP_Response_Redirect ($url);
+			}
+		} else {
+				$form = new Titulacion_Form_Acta_Editar (null, $extra);
+		}
+		
+			//$form = new Titulacion_Form_Alumno_Editar (null, $extra);
+		
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/edit-acta.html',
+		                                         array ('page_title' => 'Actualizar acta',
+		                                                'form' => $form),
+		                                         $request);
 	}
+	
+	
+	
+	/*public function jsonActa ($request, $match) {
+		$acta = new Titulacion_Acta ();
+		if (false === ($acta->getActa ($match[1]))) {
+			return new Gatuf_HTTP_Response_Json (array ());
+		}
+		$acta_json = array ('id' => $acta->id, 'plan' => $acta->plan, 'plan_descripcion' => $acta->plan_descripcion, 'folio' => $acta->folio, 'calificacion' => $acta->calificacion, 'cantidad_materias'=>$acta->cantidad_materias);
+		return new Gatuf_HTTP_Response_Json ($acta_json);
+	}*/
 }

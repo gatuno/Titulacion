@@ -164,20 +164,6 @@ $ctl[] =array(
 	'method' => 'imprimirActa',
 );
 
-$ctl[] = array (
-	'regex' => '#^/acta/(\w\d{8})/update/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Acta',
-	'method' => 'editarActa',
-);
-
-$ctl[] = array (
-	'regex' => '#^/acta/(\w\d{8})/json/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Acta',
-	'method' => 'jsonActa',
-);
-
 $ctl[] =array(
 	'regex' => '#^/acta/(\d+)/imprimir/promedio/$#',
 	'base' => $base,

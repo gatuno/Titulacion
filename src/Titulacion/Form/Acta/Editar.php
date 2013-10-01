@@ -11,37 +11,31 @@ class Titulacion_Form_Acta_Editar extends Gatuf_Form {
 		for ($g = date ('Y'); $g > 1968; $g--) {
 			$choices_cal [$g] = array ('A' => $g.'A', 'B' => $g.'B');
 		}
-			
-			
+		
 		$this->fields['calificacion'] = new Gatuf_Form_Field_Float (
 			array (
 				'required' => false,
 				'label' => 'Calificacion',
 				'initial' =>  $this->acta->calificacion,
-				'help_text'=> 'La calificaciÃ³n del alumno',
+				'help_text'=> 'La calificación del alumno',
 				'widget_attrs' => array(
 					'size' => 10
 				)
 		));
-
-			$this->fields['numeroActa'] = new Gatuf_Form_Field_Integer (
-					array(
-							'required' => false,
-							'label' => 'Numero de acta',
-							'initial' => $this->acta->acta,
-							'help_text' => 'El nÃºmero de acta',
-							//'maxlength' => 9,
-							'widget_attrs' => array (
-								//'maxlength' => 9,
-								'size' => 12,
 		
-							),
-
-							
-						)
-			);
-			
-			$this->fields['folio'] = new Gatuf_Form_Field_Integer (
+		$this->fields['numeroActa'] = new Gatuf_Form_Field_Integer (
+			array(
+				'required' => false,
+				'label' => 'Numero de acta',
+				'initial' => $this->acta->acta,
+				'help_text' => 'El número de acta',
+				'min' => 1,
+				'widget_attrs' => array (
+					'size' => 10,
+				),
+		));
+		
+		$this->fields['folio'] = new Gatuf_Form_Field_Integer (
 			array (
 				'required' => true,
 				'label' => 'Folio',
@@ -49,20 +43,19 @@ class Titulacion_Form_Acta_Editar extends Gatuf_Form {
 				'widget_attrs' => array (
 					'size' => 10,
 					'readonly' => 'readonly',
-
 				),
 		));
 		
 		$this->fields['cantidad_materias'] = new Gatuf_Form_Field_Integer (
-				array (
+			array (
 				'required' => false,
 				'label' => 'Cantidad de materias',
 				'initial' => $this->acta->cantidad_materias,
 				'min' => 1,
 		));
-	
+		
 		$this->fields['nombre_maestria'] = new Gatuf_Form_Field_Varchar (
-				array (
+			array (
 				'required' => false,
 				'label' => 'Nombre del posgrado',
 				'initial' => $this->acta->nombre_maestria,
@@ -74,7 +67,7 @@ class Titulacion_Form_Acta_Editar extends Gatuf_Form {
 		));
 		
 		$this->fields['escuela_maestria'] = new Gatuf_Form_Field_Varchar (
-				array (
+			array (
 				'required' => false,
 				'label' => 'Nombre de la universidad donde se encuentra cursandola',
 				'initial' => $this->acta->escuela_maestria,
@@ -84,9 +77,9 @@ class Titulacion_Form_Acta_Editar extends Gatuf_Form {
 					'size' => 30,
 				),
 		));
-	
-	$this->fields['nombre_trabajo'] = new Gatuf_Form_Field_Varchar (
-				array (
+		
+		$this->fields['nombre_trabajo'] = new Gatuf_Form_Field_Varchar (
+			array (
 				'required' => false,
 				'label' => 'Titulo del trabajo',
 				'initial' => '',
@@ -129,13 +122,5 @@ class Titulacion_Form_Acta_Editar extends Gatuf_Form {
 					'size' => 40,
 				),
 		));
-		
-		
-
-			
-		}	
-	
 	}
-
-
-
+}

@@ -51,14 +51,14 @@ class Titulacion_Views_Acta {
 		$pag->configure ($list_display,
 				array ('alumno','folio','anio','acta','ingreso','egreso','carrera'),
 				array ('alumno','folio','acta','ingreso','egreso','carrera')
-		        );
+		);
 		$pag->setFromRequest($request);
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/index.html',
-												array('page_title' => 'Actas de titulacion',
-												'form' => $form,
-												'paginador'  => $pag),
-												$request);
+		                                         array('page_title' => 'Actas de titulacion',
+		                                               'form' => $form,
+		                                               'paginador'  => $pag),
+		                                         $request);
 	}
 	
 	public $agregarActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-actas'));
@@ -99,9 +99,9 @@ class Titulacion_Views_Acta {
 			$form = new Titulacion_Form_Acta_Agregar (null, $extra);
 		}
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/edit-acta.html',
-												array('page_title' => 'Nueva acta de titulacion',
-													   'form' => $form),
-												$request);
+		                                         array('page_title' => 'Nueva acta de titulacion',
+		                                               'form' => $form),
+		                                         $request);
 	
 	
 	}
@@ -215,12 +215,11 @@ class Titulacion_Views_Acta {
 		
 		$pdf->Close ();
 		$nombre_pdf = $acta->alumno . '.pdf';
- 		
+		
 		$pdf->Output ('/tmp/'.$nombre_pdf, 'F');
 		
 		return new Gatuf_HTTP_Response_File ('/tmp/'.$nombre_pdf, $nombre_pdf, 'application/pdf', true);
 	}
-
 	
 	public function imprimirPromedio ($request, $match) {
 		$acta = new Titulacion_Acta ();
@@ -239,44 +238,22 @@ class Titulacion_Views_Acta {
 			throw new Gatuf_HTTP_Error404 ();
 		}
 		
-		
-		if (isset ($request->REQUEST['acta']) && $request->REQUEST['acta'] == 1) {
-			$extra['acta'] = 1;
-		} else {
-			$extra['acta'] = 0;
-		}
+		$extra = array ('acta' => $acta);
 		if($request->method == 'POST') {
 			$form = new Titulacion_Form_Acta_Editar ($request->POST, $extra);
 			
 			if($form->isValid ()){
-				$domicilio = $form->save ();
-				if (isset ($request->REQUEST['acta']) && $request->REQUEST['acta'] == 1) {
-					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::agregarActa', array ($acta->alumno, $acta->id));
-				} else {
-					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::index');
-				}
+				$acta = $form->save ();
+				$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $acta->id);
 				return new Gatuf_HTTP_Response_Redirect ($url);
 			}
 		} else {
-				$form = new Titulacion_Form_Acta_Editar (null, $extra);
+			$form = new Titulacion_Form_Acta_Editar (null, $extra);
 		}
-		
-			//$form = new Titulacion_Form_Alumno_Editar (null, $extra);
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/edit-acta.html',
 		                                         array ('page_title' => 'Actualizar acta',
 		                                                'form' => $form),
 		                                         $request);
 	}
-	
-	
-	
-	/*public function jsonActa ($request, $match) {
-		$acta = new Titulacion_Acta ();
-		if (false === ($acta->getActa ($match[1]))) {
-			return new Gatuf_HTTP_Response_Json (array ());
-		}
-		$acta_json = array ('id' => $acta->id, 'plan' => $acta->plan, 'plan_descripcion' => $acta->plan_descripcion, 'folio' => $acta->folio, 'calificacion' => $acta->calificacion, 'cantidad_materias'=>$acta->cantidad_materias);
-		return new Gatuf_HTTP_Response_Json ($acta_json);
-	}*/
 }

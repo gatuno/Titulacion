@@ -7,7 +7,7 @@ class Titulacion_Form_Alumno_Editar extends Gatuf_Form {
 		Gatuf::loadFunction ('Titulacion_Utils_formatearTelefono');
 		Gatuf::loadFunction ('Titulacion_Utils_formatearDomicilio');
 		
-		$this->$alumno = $extra['alumno'];
+		$this->alumno = $extra['alumno'];
 		
 		$this->fields['codigo'] = new Gatuf_Form_Field_Varchar (
 			array (

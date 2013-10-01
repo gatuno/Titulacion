@@ -63,6 +63,7 @@ class Titulacion_Views_Acta {
 	
 	public $agregarActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-actas'));
 	public function agregarActa ($request, $match) {
+		Gatuf::loadFunction ('Titulacion_Utils_formatearDomicilio');
 		$alumno = new Titulacion_Alumno ();
 		
 		if (false === ($alumno->getAlumno ($match[1]))) {
@@ -90,6 +91,9 @@ class Titulacion_Views_Acta {
 				$acta->creador = $request->user->codigo;
 				$acta->modificador = $request->user->codigo;
 				
+				$acta->alumno = $alumno->codigo;
+				$acta->domicilio = $domicilio->id;
+				
 				$acta->create ();
 				
 				$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::index');
@@ -98,8 +102,10 @@ class Titulacion_Views_Acta {
 		} else {
 			$form = new Titulacion_Form_Acta_Agregar (null, $extra);
 		}
-		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/edit-acta.html',
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/agregar-acta.html',
 		                                         array('page_title' => 'Nueva acta de titulacion',
+		                                               'alumno' => $alumno,
+		                                               'domicilio' => Titulacion_Utils_formatearDomicilio ($domicilio),
 		                                               'form' => $form),
 		                                         $request);
 	

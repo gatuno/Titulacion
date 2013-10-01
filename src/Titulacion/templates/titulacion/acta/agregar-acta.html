@@ -1,0 +1,208 @@
+{extends 'titulacion/base.html'}
+{block body}
+{if $form.errors}
+<div class="errors">
+<p>El formulario contiene algunos errores:</p>
+{if $form.get_top_errors}
+{$form.render_top_errors}
+{/if}
+</div>
+{/if}
+<form action="." method="post">
+<table>
+	<tbody id="div_principal">
+		<tr><th><strong>{$form.f.planEstudios.labelTag}:</strong></th>
+		<td>{if $form.f.planEstudios.errors}{$form.f.planEstudios.fieldErrors}{/if}
+			{$form.f.planEstudios|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.planEstudios.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.carrera.labelTag}:</strong></th>
+		<td>{if $form.f.carrera.errors}{$form.f.carrera.fieldErrors}{/if}
+			{$form.f.carrera|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.carrera.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.folio.labelTag}:</strong></th>
+		<td>{if $form.f.folio.errors}{$form.f.folio.fieldErrors}{/if}
+			{$form.f.folio|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.folio.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.numeroActa.labelTag}:</strong></th>
+		<td>{if $form.f.numeroActa.errors}{$form.f.numeroActa.fieldErrors}{/if}
+			{$form.f.numeroActa|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.numeroActa.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.opcTitulacion.labelTag}:</strong></th>
+		<td>{if $form.f.opcTitulacion.errors}{$form.f.opcTitulacion.fieldErrors}{/if}
+			{$form.f.opcTitulacion|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.opcTitulacion.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.calificacion.labelTag}:</strong></th>
+		<td>{if $form.f.calificacion.errors}{$form.f.calificacion.fieldErrors}{/if}
+			{$form.f.calificacion|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.calificacion.help_text}</span> -->
+		</td></tr>
+	</tbody>
+	
+	<tbody id="div_alumno">
+		<tr><th><strong>Alumno:</strong></th>
+			<td>{$alumno.codigo}</td>
+		</tr>
+		<tr><th><strong>Nombre:</strong></th>
+			<td>{$alumno.nombre}</td>
+		</tr>
+		<tr><th><strong>Apellido:</strong></th>
+			<td>{$alumno.apellido}</td>
+		</tr>
+		<tr><th><strong>Domicilio:</strong></th>
+			<td>{$domicilio}</td>
+		</tr>
+	</tbody>
+	
+	<tbody id="div_maestria">
+		<tr><th><strong>{$form.f.cantidad_materias.labelTag}:</strong></th>
+		<td>{if $form.f.cantidad_materias.errors}{$form.f.cantidad_materias.fieldErrors}{/if}
+			{$form.f.cantidad_materias|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.cantidad_materias.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.nombre_maestria.labelTag}:</strong></th>
+		<td>{if $form.f.nombre_maestria.errors}{$form.f.nombre_maestria.fieldErrors}{/if}
+			{$form.f.nombre_maestria|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.nombre_maestria.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.escuela_maestria.labelTag}:</strong></th>
+		<td>{if $form.f.escuela_maestria.errors}{$form.f.escuela_maestria.fieldErrors}{/if}
+			{$form.f.escuela_maestria|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.escuela_maestria.help_text}</span> -->
+		</td></tr>
+	</tbody>
+	
+	<tbody id="div_trabajo">
+		<tr><th><strong>{$form.f.nombre_trabajo.labelTag}:</strong></th>
+		<td>{if $form.f.nombre_trabajo.errors}{$form.f.nombre_trabajo.fieldErrors}{/if}
+			{$form.f.nombre_trabajo|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.nombre_trabajo.help_text}</span> -->
+		</td></tr>
+	</tbody>
+	
+	<tbody id="div_desempeno">
+		<tr><th><strong>{$form.f.desempeno.labelTag}:</strong></th>
+		<td>{if $form.f.desempeno.errors}{$form.f.desempeno.fieldErrors}{/if}
+			{$form.f.desempeno|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.desempeno.help_text}</span> -->
+		</td></tr>
+	</tbody>
+	
+	<tbody id="div_datos">
+		<tr><th><strong>{$form.f.ingreso.labelTag}:</strong></th>
+		<td>{if $form.f.ingreso.errors}{$form.f.ingreso.fieldErrors}{/if}
+			{$form.f.ingreso|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.ingreso.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.egreso.labelTag}:</strong></th>
+		<td>{if $form.f.egreso.errors}{$form.f.egreso.fieldErrors}{/if}
+			{$form.f.egreso|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.egreso.help_text}</span> -->
+		</td></tr>
+	
+		<tr><th><strong>{$form.f.fechaHora.labelTag}:</strong></th>
+		<td>{if $form.f.fechaHora.errors}{$form.f.fechaHora.fieldErrors}{/if}
+			{$form.f.fechaHora|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.fechaHora.help_text}</span> -->
+		</td></tr>
+	
+		<tr><th><strong>{$form.f.secretario.labelTag}:</strong></th>
+		<td>{if $form.f.secretario.errors}{$form.f.secretario.fieldErrors}{/if}
+			{$form.f.secretario|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.secretario.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.director.labelTag}:</strong></th>
+		<td>{if $form.f.director.errors}{$form.f.director.fieldErrors}{/if}
+			{$form.f.director|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.director.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.jurado1.labelTag}:</strong></th>
+		<td>{if $form.f.jurado1.errors}{$form.f.jurado1.fieldErrors}{/if}
+			{$form.f.jurado1|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.jurado1.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.jurado2.labelTag}:</strong></th>
+		<td>{if $form.f.jurado2.errors}{$form.f.jurado2.fieldErrors}{/if}
+			{$form.f.jurado2|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.jurado2.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.jurado3.labelTag}:</strong></th>
+		<td>{if $form.f.jurado3.errors}{$form.f.jurado3.fieldErrors}{/if}
+			{$form.f.jurado3|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.jurado3.help_text}</span> -->
+		</td></tr>
+		<tr><td>&nbsp;</td><td><input type="submit" value="Nueva acta" /></td></tr>
+	</tbody>
+</table>
+</form>
+{/block}
+{block javascript}
+<script type="text/javascript">
+{literal}
+//<![CDATA[
+	function on_change_opcion () {
+		var opcion = document.getElementById ('id_opcTitulacion');
+		
+		var url = "/titulacion/modalidad/" + opcion.value + "/json/";
+		
+		$.getJSON (url, {}, function (data) {
+			if (data.desempeno == 1) {
+				$('#div_maestria').fadeOut(0);
+				$('#div_trabajo').fadeOut(0);
+				$('#div_desempeno').fadeIn(1000);
+			} else if (data.trabajo == 1) {
+				$('#div_maestria').fadeOut(0);
+				$('#div_desempeno').fadeOut(0);
+				$('#div_trabajo').fadeIn(1000);
+			} else if (data.maestria == 1) {
+				$('#div_desempeno').fadeOut(0);
+				$('#div_trabajo').fadeOut(0);
+				$('#div_maestria').fadeIn(1000);
+			} else {
+				$('#div_desempeno').fadeOut(1000);
+				$('#div_trabajo').fadeOut(1000);
+				$('#div_maestria').fadeOut(1000);
+			}
+		});
+	}
+	
+	var opcion = document.getElementById ('id_opcTitulacion');
+	
+	opcion.onchange = on_change_opcion;
+	var url = "/titulacion/modalidad/" + opcion.value + "/json/";
+	
+	$.getJSON (url, {}, function (data) {
+		if (data.desempeno == 1) {
+			$('#div_maestria').fadeOut(0);
+			$('#div_trabajo').fadeOut(0);
+			$('#div_desempeno').fadeIn(0);
+		} else if (data.trabajo == 1) {
+			$('#div_maestria').fadeOut(0);
+			$('#div_desempeno').fadeOut(0);
+			$('#div_trabajo').fadeIn(0);
+		} else if (data.maestria == 1) {
+			$('#div_desempeno').fadeOut(0);
+			$('#div_trabajo').fadeOut(0);
+			$('#div_maestria').fadeIn(0);
+		} else {
+			$('#div_desempeno').fadeOut(0);
+			$('#div_trabajo').fadeOut(0);
+			$('#div_maestria').fadeOut(0);
+		}
+	});
+// ]]>
+{/literal}
+</script>
+{/block}
+{block extrahead}
+<link rel="stylesheet" media="all" type="text/css" href="{media '/css/smoothness/jquery-ui-1.8.16.custom.css'}" />
+<link rel="stylesheet" media="all" type="text/css" href="{media '/css/timepicker.css'}" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+<script type="text/javascript" src="{media '/scripts/jquery-ui-timepicker-addon.js'}"></script>
+<script type="text/javascript" src="{media '/scripts/ui-timepicker-es.js'}"></script>
+{/block}

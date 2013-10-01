@@ -1,12 +1,8 @@
 <?php
 
 class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
-	private $alumno, $domicilio;
 	
 	public function initfields ($extra = array ()) {
-		$this->alumno = $extra['alumno'];
-		$this->domicilio = $extra['domicilio'];
-		
 		/* Preparar algunos catalogos */
 		$planes = Gatuf::factory('Titulacion_PlanEstudio')->getList();
 		
@@ -183,52 +179,6 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				),
 		));
 		
-		$this->fields['alumno'] = new Gatuf_Form_Field_Varchar (
-			array(
-				'required' => false,
-				'label' => 'Alumno',
-				'initial' => $this->alumno->codigo,
-				'widget_attrs' => array(
-					'readonly' => 'readonly',
-					'size' => 12,
-				),
-		));
-		
-		$this->fields['alumno_nombre'] = new Gatuf_Form_Field_Varchar (
-			array(
-				'required' => false,
-				'label' => 'Nombre',
-				'initial' => $this->alumno->nombre,
-				'widget_attrs' => array(
-					'readonly' => 'readonly',
-					'size' => 40,
-				),
-		));
-		
-		$this->fields['alumno_apellido'] = new Gatuf_Form_Field_Varchar (
-			array(
-				'required' => false,
-				'label' => 'Alumno',
-				'initial' => $this->alumno->apellido,
-				'widget_attrs' => array(
-					'readonly' => 'readonly',
-					'size' => 40,
-				),
-		));
-		Gatuf::loadFunction ('Titulacion_Utils_formatearDomicilio');
-		$cadena_domicilio = Titulacion_Utils_formatearDomicilio ($this->domicilio);
-		
-		$this->fields['domicilio'] = new Gatuf_Form_Field_Varchar (
-			array (
-				'required' => false,
-				'label' => 'Domicilio',
-				'initial' => $cadena_domicilio,
-				'widget_attrs' => array (
-					'readonly' => 'readonly',
-					'size' => 50,
-				),
-		));
-		
 		$this->fields['ingreso'] = new Gatuf_Form_Field_Varchar (
 			array(
 				'required' => true,
@@ -327,23 +277,6 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		));
 	}
 	
-	public function clean_alumno () {
-		$codigo = mb_strtoupper($this->cleaned_data['alumno']);
-		
-		if (!preg_match ('/^\w\d{8}$/', $codigo)) {
-			throw new Gatuf_Form_Invalid ('El código del alumno es incorrecto');
-		}
-		
-		$sql = new Gatuf_SQL ('codigo=%s', array ($codigo));
-		$l = Gatuf::factory('Titulacion_Alumno')->getList(array ('filter' => $sql->gen(), 'count' => true));
-		
-		if ($l == 0) {
-			throw new Gatuf_Form_Invalid ('El alumno especificado no existe');
-		}
-		
-		return $codigo;
-	}
-	
 	public function clean () {
 		/* Hay varias validaciones pendientes */
 		/* La primera es sobre el calendario de ingreso y egreso */
@@ -407,8 +340,6 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		$acta->acta = $this->cleaned_data['numeroActa'];
 		$acta->modalidad = $this->cleaned_data['opcTitulacion'];
 		$acta->carrera = $this->cleaned_data['carrera'];
-		$acta->alumno = $this->alumno->codigo;
-		$acta->domicilio = $this->domicilio->id;
 		$acta->fechaHora = $this->cleaned_data['fechaHora'];
 		$acta->ingreso = $this->cleaned_data['ingreso'];
 		$acta->egreso = $this->cleaned_data['egreso'];

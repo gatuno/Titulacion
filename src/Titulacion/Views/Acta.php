@@ -229,6 +229,8 @@ class Titulacion_Views_Acta {
 	
 	public function imprimirPromedio ($request, $match) {
 		$acta = new Titulacion_Acta ();
+		$alumno = new Titulacion_Alumno ();
+		$alumno->getAlumno ($acta->alumno);
 		
 		if (false == $acta->getActa ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();
@@ -239,12 +241,16 @@ class Titulacion_Views_Acta {
 	
 	public function actualizarActa ($request, $match) {
 		$acta = new Titulacion_Acta ();
+		$alumno = new Titulacion_Alumno ();
+		
+		
 		
 		if (false == $acta->getActa ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();
 		}
 		
-		$extra = array ('acta' => $acta);
+		$alumno->getAlumno ($acta->alumno);
+		$extra = array ('acta' => $acta, 'alumno' => $alumno);
 		if($request->method == 'POST') {
 			$form = new Titulacion_Form_Acta_Editar ($request->POST, $extra);
 			

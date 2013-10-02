@@ -6,6 +6,8 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		/* Preparar algunos catalogos */
 		$planes = Gatuf::factory('Titulacion_PlanEstudio')->getList();
 		
+		$choices_des = array ('Sobresaliente' => 'Sobresaliente', 'Satisfactorio' => 'Satisfactorio');
+		
 		$choices = array();
 		foreach($planes as $m){
 			$choices[$m->plan] = $m ->id;
@@ -49,6 +51,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		for ($g = date ('Y'); $g > 1968; $g--) {
 			$choices_cal [$g] = array ('A' => $g.'A', 'B' => $g.'B');
 		}
+		
 		
 		
 		$this->fields['calificacion'] = new Gatuf_Form_Field_Float (
@@ -129,10 +132,9 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				'initial' => '',
 				'max_length' => 50,
 				'widget_attrs' => array (
-					/* TODO: Poner opciones 'choices' => */
-					'maxlength' => 50,
-					'size' => 30,
+					'choices' => $choices_des
 				),
+				'widget' => 'Gatuf_Form_Widget_SelectInput',
 		));
 		
 		$this->fields['cantidad_materias'] = new Gatuf_Form_Field_Integer (
@@ -215,6 +217,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 					),
 				)
 		));
+		
 		$gconf = new Gatuf_GSetting ('Titulacion');
 		
 		$this->fields['director'] = new Gatuf_Form_Field_Integer (

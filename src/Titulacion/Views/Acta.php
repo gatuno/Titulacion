@@ -236,13 +236,26 @@ class Titulacion_Views_Acta {
 			throw new Gatuf_HTTP_Error404 ();
 		}
 		
-		throw new Exception ('No implementado');
+		$pdf = new Titulacion_PDF_Acta ('P', 'mm','Legal');
+		
+		$pdf->acta = $acta;
+		$pdf->alumno = $alumno;
+		$pdf->renderBase ();
+		
+		$pdf->Close ();
+		$nombre_pdf = $acta->alumno . '.pdf';
+		
+		$pdf->Output ('/tmp/'.$nombre_pdf, 'F');
+		return new Gatuf_HTTP_Response_File ('/tmp/'.$nombre_pdf, $nombre_pdf, 'application/pdf', true);
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/edit-acta.html',
+		                                         array ('page_title' => 'Actualizar acta',
+		                                                'form' => $form),
+		                                         $request);
 	}
 	
 	public function actualizarActa ($request, $match) {
 		$acta = new Titulacion_Acta ();
 		$alumno = new Titulacion_Alumno ();
-		
 		
 		
 		if (false == $acta->getActa ($match[1])) {

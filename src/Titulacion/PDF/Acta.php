@@ -31,8 +31,11 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		
 		$leyenda = $this->opcion->leyenda;
 		
+		
 		if ($this->opcion->desempeno) {
-			$leyenda = mb_strtoupper (sprintf ($this->opcion->leyenda,$this->acta->desempeno,$this->acta->carrera_descripcion));
+		
+				$leyenda = mb_strtoupper (sprintf ($this->opcion->leyenda,$this->acta->desempeno,$this->acta->carrera_descripcion));
+			
 		}
 		
 		if ($this->opcion->trabajo) {

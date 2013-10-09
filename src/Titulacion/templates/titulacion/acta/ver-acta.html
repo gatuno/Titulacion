@@ -3,27 +3,26 @@
 <ul style="list-style-type: none;">
 <li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::verActa', array ($acta.id)}">Detalles</a></li>
 <li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::imprimirActa', array ($acta.id)}">Imprimir</a></li>
-<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::imprimirPromedio', array ($acta.id)}">Imprimir Promedio</a></li>
 <li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::actualizarActa', array ($acta.id)}">Editar</a></li>
 </ul>
 <h2>Detalles</h2>
-<h3>Alumno</h3>
-<p>Código: {$alumno.codigo}</p>
-<p>Nombre: {$alumno.nombre}</p>
-<p>Apellido: {$alumno.apellido}</p>
-<p>Egresa de la carrera: {$carrera.descripcion}, del plan de estudio: {$plan.plan}</p>
-<p>Cursado desde: {$acta.ingreso}-{$acta.egreso}</p>
-<p>Se titula por: {$modalidad.descripcion}, opción {$opcion.descripcion}</p>
-<p>Con un promedio de: FIXME: Poner aquí el promedio</p>
-<p>Funge como director de la división: {$director.apellido} {$director.nombre}</p>
-<p>Como secretario: {$secretario.apellido} {$secretario.nombre}</p>
-{if $opcion.tipo == 'C'}
-	<p>Y como miembros del comité de titulación:
-{else}
-	<p>Y como su jurado:
+<br><b>Alumno: </b> <tt>{$alumno.nombre} {$alumno.apellido} ({$alumno.codigo})</tt></br>
+<br><b>Egresa de la carrera:</b> <tt>{$carrera.descripcion}, del plan de estudio: {$plan.plan}</tt></br>
+<br><b>Cursado desde:</b> <tt>{$acta.ingreso}-{$acta.egreso}</tt></br>
+<br><b>Se titula por: </b> <tt>{$modalidad.descripcion}, opción {$opcion.descripcion}</tt></br>
+{if $acta.calificacion > 0}
+<br><b>Con un promedio de:</b> <tt> {$acta.calificacion}</tt></br>
 {/if}
-<ul><li>{$jurado1.apellido} {$jurado1.nombre}</li>
+<!--<p>Con un promedio de: FIXME: Poner aquí el promedio</p> -->
+<br><b>Funge como director de la división: <b> <tt>{$director.apellido} {$director.nombre}</tt></br>
+<br><b>Como secretario: <b> <tt>{$secretario.apellido} {$secretario.nombre}</tt></br>
+{if $opcion.tipo == 'C'}
+	<br><b>Y como miembros del comité de titulación:<b></br>
+{else}
+	<br><b>Y como su jurado:</b></br>
+{/if}
+<ul><tt><li>{$jurado1.apellido} {$jurado1.nombre}</li>
 <li>{$jurado2.apellido} {$jurado2.nombre}</li>
-<li>{$jurado3.apellido} {$jurado3.nombre}</li></ul>
+<li>{$jurado3.apellido} {$jurado3.nombre}</li></tt></ul>
 </p>
 {/block}

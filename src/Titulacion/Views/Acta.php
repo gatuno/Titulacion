@@ -226,59 +226,39 @@ class Titulacion_Views_Acta {
 		
 		return new Gatuf_HTTP_Response_File ('/tmp/'.$nombre_pdf, $nombre_pdf, 'application/pdf', true);
 	}
-	
-	public function imprimirPromedio ($request, $match) {
-		$acta = new Titulacion_Acta ();
-		$alumno = new Titulacion_Alumno ();
-		$alumno->getAlumno ($acta->alumno);
 		
-		if (false == $acta->getActa ($match[1])) {
-			throw new Gatuf_HTTP_Error404 ();
-		}
-		
-		$pdf = new Titulacion_PDF_Acta ('P', 'mm','Legal');
-		
-		$pdf->acta = $acta;
-		$pdf->alumno = $alumno;
-		$pdf->renderBase ();
-		
-		$pdf->Close ();
-		$nombre_pdf = $acta->alumno . '.pdf';
-		
-		$pdf->Output ('/tmp/'.$nombre_pdf, 'F');
-		return new Gatuf_HTTP_Response_File ('/tmp/'.$nombre_pdf, $nombre_pdf, 'application/pdf', true);
-		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/edit-acta.html',
-		                                         array ('page_title' => 'Actualizar acta',
-		                                                'form' => $form),
-		                                         $request);
-	}
-	
 	public function actualizarActa ($request, $match) {
 		$acta = new Titulacion_Acta ();
 		$alumno = new Titulacion_Alumno ();
-		
-		
+		$opcion = new Titulacion_Opcion ();
+
+
 		if (false == $acta->getActa ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();
 		}
-		
+
 		$alumno->getAlumno ($acta->alumno);
-		$extra = array ('acta' => $acta, 'alumno' => $alumno);
+		$opcion-> getOpcion($acta->modalidad);
+		
+		$extra = array ('acta' => $acta, 'alumno' => $alumno, 'opcion' => $opcion);
 		if($request->method == 'POST') {
 			$form = new Titulacion_Form_Acta_Editar ($request->POST, $extra);
-			
+
 			if($form->isValid ()){
 				$acta = $form->save ();
 				$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $acta->id);
 				return new Gatuf_HTTP_Response_Redirect ($url);
 			}
+			
 		} else {
 			$form = new Titulacion_Form_Acta_Editar (null, $extra);
+			
 		}
-		
+
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/edit-acta.html',
 		                                         array ('page_title' => 'Actualizar acta',
 		                                                'form' => $form),
 		                                         $request);
 	}
+
 }

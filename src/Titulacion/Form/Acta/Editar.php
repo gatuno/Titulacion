@@ -238,4 +238,15 @@ class Titulacion_Form_Acta_Editar extends Gatuf_Form {
 			
 		
 	}
+	
+	public function save($commit = true){
+	if(!$this->isValid()){
+			throw new Exception ('El formulario contiene datos invÃ¡lidos');
+		}
+		if($commit) $this->acta->update ();
+		return $this->acta;
+
+		
+	
+	}
 }

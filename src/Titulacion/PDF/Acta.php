@@ -31,20 +31,33 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		
 		$leyenda = $this->opcion->leyenda;
 		
+			
 		
 		if ($this->opcion->desempeno) {
-		
+			if (($this->acta->calificacion>0)){
+				$leyenda1 = mb_strtoupper (sprintf($this->opcion->leyenda,$this->acta->desempeno,$this->acta->carrera_descripcion));
+				$leyenda = $leyenda1.' '.$this->acta->calificacion;
+				}
+				else{
 				$leyenda = mb_strtoupper (sprintf ($this->opcion->leyenda,$this->acta->desempeno,$this->acta->carrera_descripcion));
-			
+				}
 		}
 		
 		if ($this->opcion->trabajo) {
+			if (($this->acta->calificacion>0)){
 			$leyenda = mb_strtoupper (sprintf ($this->opcion->leyenda,$this->acta->nombre_trabajo));
+			($leyenda1.' '.$this->acta->calificacion);
+			}
+			else{
+			$leyenda = mb_strtoupper (sprintf ($this->opcion->leyenda,$this->acta->nombre_trabajo));
+			}
 		}
 		
+		
 		if ($this->opcion->maestria) {
-			$leyenda = mb_strtoupper (sprintf ($this->opcion->leyenda,$this->acta->materias_maestria,$this->acta->nombre_maestria,$this->acta->escuela_maestria));
+			$leyenda = mb_strtoupper (sprintf ($this->opcion->leyenda,$this->acta->materias_maestria,$this->acta->nombre_maestria,$this->acta->escuela_maestria));	
 		}
+		
 		
 		$this->SetMargins(0,0);
 		

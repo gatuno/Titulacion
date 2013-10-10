@@ -75,9 +75,16 @@ class Titulacion_Acta extends Gatuf_Model {
 		return true;
 	}
 	
+	function preSave ($create=false) {
+		/* Generar el folio */
+	}
+	
 	public function update() {
-		
 		$req = sprintf('UPDATE %s SET acta=%s, calificacion=%s, ingreso=%s, egreso=%s, fechaHora=%s, director_division=%s, secretario_division=%s, jurado1=%s, jurado2=%s, jurado3=%s, desempeno=%s, nombre_trabajo=%s, materias_maestria=%s, nombre_maestria=%s, escuela_maestria=%s WHERE id=%s', $this->getSqlTable (),  Gatuf_DB_IdentityToDB ($this->acta, $this->_con),Gatuf_DB_IdentityToDB ($this->calificacion, $this->_con),Gatuf_DB_IdentityToDB ($this->ingreso, $this->_con),Gatuf_DB_IdentityToDB ($this->egreso, $this->_con),Gatuf_DB_IdentityToDB ($this->fechaHora, $this->_con),Gatuf_DB_IdentityToDB ($this->director_division, $this->_con),Gatuf_DB_IdentityToDB ($this->secretario_division, $this->_con),Gatuf_DB_IdentityToDB ($this->jurado1, $this->_con),Gatuf_DB_IdentityToDB ($this->jurado2, $this->_con),Gatuf_DB_IdentityToDB ($this->jurado3, $this->_con),Gatuf_DB_IdentityToDB ($this->desempeno, $this->_con),Gatuf_DB_IdentityToDB ($this->nombre_trabajo, $this->_con), Gatuf_DB_IdentityToDB ($this->materias_maestria, $this->_con),Gatuf_DB_IdentityToDB ($this->nombre_maestria, $this->_con),Gatuf_DB_IdentityToDB ($this->escuela_maestria, $this->_con),Gatuf_DB_IdentityToDB ($this->id, $this->_con));
+		
+		$this->_con->execute ($req);
+		
+		return true;
 	}
 	
 	public function displaycarrera ($extra=null) {

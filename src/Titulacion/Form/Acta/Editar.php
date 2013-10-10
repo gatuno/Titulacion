@@ -4,8 +4,6 @@ class Titulacion_Form_Acta_Editar extends Gatuf_Form {
 	public $acta;
 	public $alumno;
 	
-	
-	
 	public function initfields($extra=array()) {
 		
 		$maestros = Gatuf::factory ('Titulacion_Maestro') ->getList ();	

@@ -85,7 +85,7 @@ class Titulacion_Views_Acta {
 		if ($request->method == 'POST') {
 			$form = new Titulacion_Form_Acta_Agregar ($request->POST, $extra);
 			
-			if ($form-> isValid ()) {
+			if ($form->isValid ()) {
 				$acta = $form->save (false);
 				
 				$acta->creador = $request->user->codigo;
@@ -149,7 +149,6 @@ class Titulacion_Views_Acta {
 		
 		$jurado3 = new Titulacion_Maestro ();
 		$jurado3->getMaestro ($acta->jurado3);
-		
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/ver-acta.html',
 		                                         array ('acta' => $acta,
@@ -229,18 +228,16 @@ class Titulacion_Views_Acta {
 		
 	public function actualizarActa ($request, $match) {
 		$acta = new Titulacion_Acta ();
-		$alumno = new Titulacion_Alumno ();
-		$opcion = new Titulacion_Opcion ();
-
-
+		
 		if (false == $acta->getActa ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();
 		}
-
+		$alumno = new Titulacion_Alumno ();
 		$alumno->getAlumno ($acta->alumno);
-		$opcion-> getOpcion($acta->modalidad);
+		$opcion = new Titulacion_Opcion ();
+		$opcion->getOpcion ($acta->modalidad);
 		
-		$extra = array ('acta' => $acta, 'alumno' => $alumno, 'opcion' => $opcion);
+		$extra = array ('acta' => $acta, 'alumno' => $alumno);
 		if($request->method == 'POST') {
 			$form = new Titulacion_Form_Acta_Editar ($request->POST, $extra);
 
@@ -252,11 +249,11 @@ class Titulacion_Views_Acta {
 			
 		} else {
 			$form = new Titulacion_Form_Acta_Editar (null, $extra);
-			
 		}
 
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/edit-acta.html',
 		                                         array ('page_title' => 'Actualizar acta',
+		                                                'opcion' => $opcion,
 		                                                'form' => $form),
 		                                         $request);
 	}

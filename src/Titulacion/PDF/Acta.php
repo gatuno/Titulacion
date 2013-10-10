@@ -28,36 +28,29 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$director = mb_strtoupper ($grado.' '.$this->director->apellido.' '.$this->director->nombre);
 		
 		$evalua = $this->opcion->articulo;
-		
 		$leyenda = $this->opcion->leyenda;
-		
-			
 		
 		if ($this->opcion->desempeno) {
 			if (($this->acta->calificacion>0)){
 				$leyenda1 = mb_strtoupper (sprintf($this->opcion->leyenda,$this->acta->desempeno,$this->acta->carrera_descripcion));
 				$leyenda = $leyenda1.' '.$this->acta->calificacion;
-				}
-				else{
+			} else {
 				$leyenda = mb_strtoupper (sprintf ($this->opcion->leyenda,$this->acta->desempeno,$this->acta->carrera_descripcion));
-				}
+			}
 		}
 		
 		if ($this->opcion->trabajo) {
 			if (($this->acta->calificacion>0)){
-			$leyenda = mb_strtoupper (sprintf ($this->opcion->leyenda,$this->acta->nombre_trabajo));
+				$leyenda = mb_strtoupper (sprintf ($this->opcion->leyenda,$this->acta->nombre_trabajo));
 			($leyenda1.' '.$this->acta->calificacion);
-			}
-			else{
-			$leyenda = mb_strtoupper (sprintf ($this->opcion->leyenda,$this->acta->nombre_trabajo));
+			} else {
+				$leyenda = mb_strtoupper (sprintf ($this->opcion->leyenda,$this->acta->nombre_trabajo));
 			}
 		}
-		
 		
 		if ($this->opcion->maestria) {
-			$leyenda = mb_strtoupper (sprintf ($this->opcion->leyenda,$this->acta->materias_maestria,$this->acta->nombre_maestria,$this->acta->escuela_maestria));	
+			$leyenda = mb_strtoupper (sprintf ($this->opcion->leyenda,$this->acta->materias_maestria,$this->acta->nombre_maestria,$this->acta->escuela_maestria));
 		}
-		
 		
 		$this->SetMargins(0,0);
 		
@@ -107,10 +100,8 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetX(70);
 		$this->Cell(103,0,$nombreCompleto,0,0,'C');
 		
-		
 		$this->SetY(96);
 		$this->SetX(71);
-		
 		
 		if ($this->opcion->tipo == 'C') {
 			$this->Cell(89, 0, 'MIEMBROS DEL', 0,0,'C');
@@ -126,10 +117,8 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetX(94);
 		if(($this->alumno->sexo) == 'F'){
 			$this->Cell(95,0,mb_strtoupper($this->carrera->grado_f),0,0,'C');
-		}else{
-
-		$this->Cell(95,0,mb_strtoupper($this->carrera->grado_m),0,0,'C');
-
+		} else {
+			$this->Cell(95,0,mb_strtoupper($this->carrera->grado_m),0,0,'C');
 		}
 		
 		$this->SetY(120);

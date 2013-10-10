@@ -6,23 +6,24 @@
 <li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::actualizarActa', array ($acta.id)}">Editar</a></li>
 </ul>
 <h2>Detalles</h2>
-<br><b>Alumno: </b> <tt>{$alumno.nombre} {$alumno.apellido} ({$alumno.codigo})</tt></br>
-<br><b>Egresa de la carrera:</b> <tt>{$carrera.descripcion}, del plan de estudio: {$plan.plan}</tt></br>
-<br><b>Cursado desde:</b> <tt>{$acta.ingreso}-{$acta.egreso}</tt></br>
-<br><b>Se titula por: </b> <tt>{$modalidad.descripcion}, opción {$opcion.descripcion}</tt></br>
+<p><strong>Alumno: </strong> <tt>{$alumno.nombre} {$alumno.apellido} ({$alumno.codigo})</tt><br />
+<strong>Egresa de la carrera:</strong> <tt>{$carrera.descripcion}</tt>, <strong>del plan de estudio:</strong> <tt>{$plan.plan}</tt><br />
+<strong>Cursado desde:</strong> <tt>{$acta.ingreso}-{$acta.egreso}</tt><br />
+<strong>Se titula por: </strong> <tt>{$modalidad.descripcion},</tt> <strong>opción</strong> <tt>{$opcion.descripcion}</tt><br />
 {if $acta.calificacion > 0}
-<br><b>Con un promedio de:</b> <tt> {$acta.calificacion}</tt></br>
+<strong>Con un promedio de:</b> <tt> {$acta.calificacion}</tt><br />
 {/if}
-<!--<p>Con un promedio de: FIXME: Poner aquí el promedio</p> -->
-<br><b>Funge como director de la división: <b> <tt>{$director.apellido} {$director.nombre}</tt></br>
-<br><b>Como secretario: <b> <tt>{$secretario.apellido} {$secretario.nombre}</tt></br>
+<strong>Funge como director de la división: </strong> <tt>{$director.apellido} {$director.nombre}</tt><br />
+<strong>Como secretario: </strong> <tt>{$secretario.apellido} {$secretario.nombre}</tt><br />
 {if $opcion.tipo == 'C'}
-	<br><b>Y como miembros del comité de titulación:<b></br>
+	<strong>Y como miembros del comité de titulación:</strong>
 {else}
-	<br><b>Y como su jurado:</b></br>
+	<strong>Y como su jurado:</strong>
 {/if}
-<ul><tt><li>{$jurado1.apellido} {$jurado1.nombre}</li>
+<tt><ul>
+<li>{$jurado1.apellido} {$jurado1.nombre}</li>
 <li>{$jurado2.apellido} {$jurado2.nombre}</li>
-<li>{$jurado3.apellido} {$jurado3.nombre}</li></tt></ul>
+<li>{$jurado3.apellido} {$jurado3.nombre}</li>
+</ul></tt>
 </p>
 {/block}

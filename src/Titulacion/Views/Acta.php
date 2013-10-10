@@ -227,17 +227,32 @@ class Titulacion_Views_Acta {
 	}
 		
 	public function actualizarActa ($request, $match) {
+		Gatuf::loadFunction ('Titulacion_Utils_formatearDomicilio');
 		$acta = new Titulacion_Acta ();
 		
 		if (false == $acta->getActa ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();
 		}
+		
 		$alumno = new Titulacion_Alumno ();
 		$alumno->getAlumno ($acta->alumno);
+		
 		$opcion = new Titulacion_Opcion ();
 		$opcion->getOpcion ($acta->modalidad);
 		
-		$extra = array ('acta' => $acta, 'alumno' => $alumno);
+		$modalidad = new Titulacion_Modalidad ();
+		$modalidad->getModalidad ($opcion->modalidad);
+		
+		$carrera = new Titulacion_Carrera ();
+		$carrera->getCarrera ($acta->carrera);
+		
+		$plan = new Titulacion_PlanEstudio ();
+		$plan->getPlan ($acta->plan);
+		
+		$domicilio = new Titulacion_Domicilio ();
+		$domicilio->getDomicilio ($acta->domicilio);
+		
+		$extra = array ('acta' => $acta);
 		if($request->method == 'POST') {
 			$form = new Titulacion_Form_Acta_Editar ($request->POST, $extra);
 
@@ -253,7 +268,13 @@ class Titulacion_Views_Acta {
 
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/edit-acta.html',
 		                                         array ('page_title' => 'Actualizar acta',
+		                                                'alumno' => $alumno,
 		                                                'opcion' => $opcion,
+		                                                'modalida' => $modalidad,
+		                                                'carrera' => $carrera,
+		                                                'plan' => $plan,
+		                                                'acta' => $acta,
+		                                                'domicilio' => Titulacion_Utils_formatearDomicilio ($domicilio),
 		                                                'form' => $form),
 		                                         $request);
 	}

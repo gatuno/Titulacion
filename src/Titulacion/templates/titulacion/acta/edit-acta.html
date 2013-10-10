@@ -11,11 +11,23 @@
 <form action="." method="post">
 <table>
 	<tbody id="div_principal">
+		<tr><th><strong>Plan de estudios:</strong></th>
+			<td>{$plan.plan}</td>
+		</tr>
+		<tr><th><strong>Carrera:</strong></th>
+			<td>{$carrera.descripcion}</td>
+		</tr>
+		<tr><th><strong>Folio:</strong></th>
+			<td>{$acta.folio}</td>
+		</tr>
 		<tr><th><strong>{$form.f.numeroActa.labelTag}:</strong></th>
 		<td>{if $form.f.numeroActa.errors}{$form.f.numeroActa.fieldErrors}{/if}
 			{$form.f.numeroActa|safe}<br />
 			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.numeroActa.help_text}</span> -->
 		</td></tr>
+		<tr><th><strong>Opcion de titulación:</strong></th>
+			<td>{$opcion.descripcion}</td>
+		</tr>
 		<tr><th><strong>{$form.f.calificacion.labelTag}:</strong></th>
 		<td>{if $form.f.calificacion.errors}{$form.f.calificacion.fieldErrors}{/if}
 			{$form.f.calificacion|safe}<br />
@@ -25,16 +37,13 @@
 	
 	<tbody id="div_alumno">
 		<!-- Campos de sÃ³lo lectura -->
-		<tr><th><strong>{$form.f.alumno.labelTag}:</strong></th>
-			<td>{$form.f.alumno|safe}</td>
+		<tr><th><strong>Alumno:</strong></th>
+			<td>{$alumno.apellido} {$alumno.nombre} ({$alumno.codigo})</td>
 		</tr>
-		<tr><th><strong>{$form.f.alumno_nombre.labelTag}:</strong></th>
-			<td>{$form.f.alumno_nombre|safe}</td>
+		<tr><th><strong>Domicilio:</strong></th>
+			<td>{$domicilio}</td>
 		</tr>
-		<tr><th><strong>{$form.f.alumno_apellido.labelTag}:</strong></th>
-			<td>{$form.f.alumno_apellido|safe}</td>
-		</tr>
-		</tbody>
+	</tbody>
 	{if $opcion.maestria}
 	<tbody id="div_maestria">
 		<tr><th><strong>{$form.f.cantidad_materias.labelTag}:</strong></th>

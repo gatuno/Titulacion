@@ -8,6 +8,7 @@ class Titulacion_PDF_Acta extends External_FPDF{
 	
 	function renderBase(){
 		Gatuf::loadFunction ('Titulacion_Utils_grado');
+		Gatuf::loadFunction ('Titulacion_Utils_numeroLetra');
 		setLocale(LC_ALL, 'es_MX.UTF-8');
 		
 		$nombreCompleto = mb_strtoupper($this->acta->alumno_nombre.' '.$this->acta->alumno_apellido);
@@ -27,30 +28,13 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$grado = Titulacion_Utils_grado ($this->director->sexo, $this->director->grado);
 		$director = mb_strtoupper ($grado.' '.$this->director->apellido.' '.$this->director->nombre);
 		
-		$evalua = $this->opcion->articulo;
 		$leyenda = $this->opcion->leyenda;
 		
-		if ($this->opcion->desempeno) {
-			if (($this->acta->calificacion>0)){
-				$leyenda1 = mb_strtoupper (sprintf($this->opcion->leyenda,$this->acta->desempeno,$this->acta->carrera_descripcion));
-				$leyenda = $leyenda1.' '.$this->acta->calificacion;
-			} else {
-				$leyenda = mb_strtoupper (sprintf ($this->opcion->leyenda,$this->acta->desempeno,$this->acta->carrera_descripcion));
-			}
-		}
+		/* Aplicar los reemplazos correspondientes a la leyenda */
+		$cad_bus = array ('/%%/', '/%c/', '/%C/', '/%d/', '/%L/', '/%t/', '/%m/', '/%M/', '/%U/');
+		$reemplazos = array ('%', $this->acta->calificacion, Titulacion_Utils_numeroLetra ($this->acta->calificacion), $this->acta->desempeno, $this->carrera->descripcion, $this->acta->nombre_trabajo, $this->acta->materias_maestria, $this->acta->nombre_maestria, $this->acta->escuela_maestria);
 		
-		if ($this->opcion->trabajo) {
-			if (($this->acta->calificacion>0)){
-				$leyenda = mb_strtoupper (sprintf ($this->opcion->leyenda,$this->acta->nombre_trabajo));
-			($leyenda1.' '.$this->acta->calificacion);
-			} else {
-				$leyenda = mb_strtoupper (sprintf ($this->opcion->leyenda,$this->acta->nombre_trabajo));
-			}
-		}
-		
-		if ($this->opcion->maestria) {
-			$leyenda = mb_strtoupper (sprintf ($this->opcion->leyenda,$this->acta->materias_maestria,$this->acta->nombre_maestria,$this->acta->escuela_maestria));
-		}
+		$leyenda = mb_strtoupper (preg_replace ($cad_bus, $reemplazos, $leyenda));
 		
 		$this->SetMargins(0,0);
 		
@@ -104,9 +88,9 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$this->SetX(71);
 		
 		if ($this->opcion->tipo == 'C') {
-			$this->Cell(89, 0, 'MIEMBROS DEL', 0,0,'C');
+			$this->Cell(89, 0, 'MIEMBROS DEL COMITÉ', 0,0,'C');
 		} else if ($this->opcion->tipo == 'J') {
-			$this->Cell(89, 0, 'MIEMBROS DEL', 0, 0,'C');
+			$this->Cell(89, 0, 'MIEMBROS DEL JURADO', 0, 0,'C');
 		}
 
 		$this->SetY(101);

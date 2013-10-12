@@ -21,11 +21,6 @@
 			{$form.f.carrera|safe}<br />
 			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.carrera.help_text}</span> -->
 		</td></tr>
-		<tr><th><strong>{$form.f.folio.labelTag}:</strong></th>
-		<td>{if $form.f.folio.errors}{$form.f.folio.fieldErrors}{/if}
-			{$form.f.folio|safe}<br />
-			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.folio.help_text}</span> -->
-		</td></tr>
 		<tr><th><strong>{$form.f.numeroActa.labelTag}:</strong></th>
 		<td>{if $form.f.numeroActa.errors}{$form.f.numeroActa.fieldErrors}{/if}
 			{$form.f.numeroActa|safe}<br />
@@ -41,21 +36,6 @@
 			{$form.f.calificacion|safe}<br />
 			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.calificacion.help_text}</span> -->
 		</td></tr>
-	</tbody>
-	
-	<tbody id="div_alumno">
-		<tr><th><strong>Alumno:</strong></th>
-			<td>{$alumno.codigo}</td>
-		</tr>
-		<tr><th><strong>Nombre:</strong></th>
-			<td>{$alumno.nombre}</td>
-		</tr>
-		<tr><th><strong>Apellido:</strong></th>
-			<td>{$alumno.apellido}</td>
-		</tr>
-		<tr><th><strong>Domicilio:</strong></th>
-			<td>{$domicilio}</td>
-		</tr>
 	</tbody>
 	
 	<tbody id="div_maestria">
@@ -90,6 +70,21 @@
 			{$form.f.desempeno|safe}<br />
 			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.desempeno.help_text}</span> -->
 		</td></tr>
+	</tbody>
+	
+	<tbody id="div_alumno">
+		<tr><th><strong>Alumno:</strong></th>
+			<td>{$alumno.codigo}</td>
+		</tr>
+		<tr><th><strong>Nombre:</strong></th>
+			<td>{$alumno.nombre}</td>
+		</tr>
+		<tr><th><strong>Apellido:</strong></th>
+			<td>{$alumno.apellido}</td>
+		</tr>
+		<tr><th><strong>Domicilio:</strong></th>
+			<td>{$domicilio}</td>
+		</tr>
 	</tbody>
 	
 	<tbody id="div_datos">

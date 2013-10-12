@@ -52,8 +52,6 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 			$choices_cal [$g] = array ('A' => $g.'A', 'B' => $g.'B');
 		}
 		
-		
-		
 		$this->fields['calificacion'] = new Gatuf_Form_Field_Float (
 			array (
 				'required' => false,
@@ -69,7 +67,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 			array (
 				'required' => true,
 				'label' => 'Plan de estudios',
-				'initial' => '',
+				'initial' => 2,
 				'help_text' => 'El plan de estudios',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
 				'widget_attrs' => array (
@@ -86,16 +84,6 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
 				'widget_attrs' => array (
 					'choices' => $choices_carreras
-				),
-		));
-		
-		$this->fields['folio'] = new Gatuf_Form_Field_Integer (
-			array (
-				'required' => true,
-				'label' => 'Folio',
-				'initial' => '', /* FIXME: Deberiamos calcularlo automáticamente en base a la carrera y el plan de estudios */
-				'widget_attrs' => array (
-					'size' => 10
 				),
 		));
 		
@@ -338,7 +326,6 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		$acta = new Titulacion_Acta ();
 		
 		$acta->plan = $this->cleaned_data['planEstudios'];
-		$acta->folio = $this->cleaned_data['folio'];
 		$acta->calificacion = $this->cleaned_data['calificacion'];
 		$acta->acta = $this->cleaned_data['numeroActa'];
 		$acta->modalidad = $this->cleaned_data['opcTitulacion'];

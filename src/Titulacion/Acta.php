@@ -40,7 +40,7 @@ class Titulacion_Acta extends Gatuf_Model {
 		$this->tabla = 'Actas';
 		$this->tabla_view= 'Actas_View';
 		
-		$this->default_order = 'anio ASC, modalidad_descripcion ASC, carrera ASC, alumno_apellido ASC';
+		$this->default_order = 'plan ASC, carrera ASC, anio ASC, folio ASC, modalidad_descripcion ASC, alumno_apellido ASC';
 		$this->calificacion = 0.0;
 	}
 	
@@ -111,6 +111,6 @@ class Titulacion_Acta extends Gatuf_Model {
 	
 	public function displaylinkedfolio ($extra = null) {
 		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $this->id);
-		return '<a href="'.$url.'">'.$this->folio.'</a>';
+		return '<a href="'.$url.'">'.$this->folio.'</a>/'.$this->anio;
 	}
 }

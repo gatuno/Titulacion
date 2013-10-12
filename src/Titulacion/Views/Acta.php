@@ -32,8 +32,6 @@ class Titulacion_Views_Acta {
 		
 		$list_display = array (
 			array('folio', 'Gatuf_Paginator_FKLink', 'Folio'),
-			array('anio', 'Gatuf_Paginator_DisplayVal', 'Año'),
-			array('acta','Gatuf_Paginator_DisplayVal', 'Numero de acta'),
 			array('carrera','Gatuf_Paginator_FKExtra','Carrera'),
 			array('alumno','Gatuf_Paginator_DisplayVal', 'Codigo del alumno'),
 			array('alumno_nombre','Gatuf_Paginator_DisplayVal', 'Nombre'),
@@ -49,8 +47,8 @@ class Titulacion_Views_Acta {
 		$pag->no_results_text = 'No hay actas de titulacion disponibles';
 		$pag->max_number_pages = 3;
 		$pag->configure ($list_display,
-				array ('alumno','folio','anio','acta','ingreso','egreso','carrera'),
-				array ('alumno','folio','acta','ingreso','egreso','carrera')
+				array ('alumno','folio','ingreso','egreso','carrera'),
+				array ('alumno','folio','ingreso','egreso','carrera')
 		);
 		$pag->setFromRequest($request);
 		

@@ -105,12 +105,33 @@ class Titulacion_Acta extends Gatuf_Model {
 		return false;
 	}
 	
-	public function displaycarrera ($extra=null) {
-		return '<abbr title="'.$this->carrera_descripcion.'">'.$this->carrera.'</abbr>';
-	}
-	
 	public function displaylinkedfolio ($extra = null) {
 		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $this->id);
-		return '<a href="'.$url.'">'.$this->folio.'</a>/'.$this->anio;
+		
+		if (isset ($extra['f_anio'])) {
+			return '<a href="'.$url.'">'.$this->folio.'</a>/'.$this->anio;
+		}
+		$extra['f_anio'] = $this->anio;
+		$url_anio = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::index', array (), $extra);
+		
+		return '<a href="'.$url.'">'.$this->folio.'</a>/<a href="'.$url_anio.'">'.$this->anio.'</a>';
+	}
+	
+	public function displaylinkedcarrera ($extra = null) {
+		if (isset ($extra['f_carrera'])) {
+			return '<abbr title="'.$this->carrera_descripcion.'">'.$this->carrera.'</abbr>';
+		}
+		$extra['f_carrera'] = $this->carrera;
+		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::index', array (), $extra);
+		return '<abbr title="'.$this->carrera_descripcion.'"><a href="'.$url.'">'.$this->carrera.'</a></abbr>';
+	}
+	
+	public function displaylinkedplan ($extra = null) {
+		if (isset ($extra['f_plan'])) {
+			return $this->plan_descripcion;
+		}
+		$extra['f_plan'] = $this->plan;
+		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::index', array (), $extra);
+		return '<a href="'.$url.'">'.$this->plan_descripcion.'</a>';
 	}
 }

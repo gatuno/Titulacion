@@ -32,11 +32,11 @@ class Titulacion_Views_Acta {
 		
 		$list_display = array (
 			array('folio', 'Gatuf_Paginator_FKLink', 'Folio'),
-			array('carrera','Gatuf_Paginator_FKExtra','Carrera'),
+			array('carrera','Gatuf_Paginator_FKLink','Carrera'),
 			array('alumno','Gatuf_Paginator_DisplayVal', 'Codigo del alumno'),
 			array('alumno_nombre','Gatuf_Paginator_DisplayVal', 'Nombre'),
 			array('alumno_apellido','Gatuf_Paginator_DisplayVal', 'Apellidos'),
-			array('plan_descripcion','Gatuf_Paginator_DisplayVal','Plan de estudios'),
+			array('plan','Gatuf_Paginator_FKLink','Plan de estudios'),
 			array('modalidad_descripcion','Gatuf_Paginator_DisplayVal', 'Opcion de titulacion'),
 			array('fechaHora','Gatuf_Paginator_DateYMDHM','Fecha ceremonia'),
 			array('ingreso','Gatuf_Paginator_DisplayVal','Calendario de ingreso'),
@@ -47,10 +47,24 @@ class Titulacion_Views_Acta {
 		$pag->no_results_text = 'No hay actas de titulacion disponibles';
 		$pag->max_number_pages = 3;
 		$pag->configure ($list_display,
-				array ('alumno','folio','ingreso','egreso','carrera'),
+				array ('alumno','folio','ingreso','egreso','carrera', 'alumno_nombre', 'alumno_apellido'),
 				array ('alumno','folio','ingreso','egreso','carrera')
 		);
 		$pag->setFromRequest($request);
+		
+		/* La magia de los filtros acumulativos */
+		$pag->setExtraParams ();
+		$filtro = new Gatuf_SQL ();
+		$params_pag = array ();
+		foreach (array ('carrera', 'plan', 'anio') as $key) {
+			if (isset ($request->REQUEST['f_'.$key]) && $request->REQUEST['f_'.$key] != '') {
+				$filtro->Q ($key.'=%s', $request->REQUEST['f_'.$key]);
+				$params_pag['f_'.$key] = $request->REQUEST['f_'.$key];
+				$pag->extra['f_'.$key] = $request->REQUEST['f_'.$key];
+			}
+		}
+		$pag->initial_params = $params_pag;
+		$pag->forced_where = $filtro;
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/index.html',
 		                                         array('page_title' => 'Actas de titulacion',

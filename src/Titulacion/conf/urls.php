@@ -122,6 +122,13 @@ $ctl[] = array (
 );
 
 $ctl[] = array (
+	'regex' => '#^/modalidad/(\d+)/update/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Modalidad',
+	'method' => 'actualizarOpcion',
+);
+
+$ctl[] = array (
 	'regex' => '#^/modalidad/(\d+)/json/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Modalidad',

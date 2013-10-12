@@ -11,7 +11,7 @@
 <strong>Cursado desde:</strong> <tt>{$acta.ingreso}-{$acta.egreso}</tt><br />
 <strong>Se titula por: </strong> <tt>{$modalidad.descripcion},</tt> <strong>opción</strong> <tt>{$opcion.descripcion}</tt><br />
 {if $acta.calificacion > 0}
-<strong>Con un promedio de:</b> <tt> {$acta.calificacion}</tt><br />
+<strong>Con un promedio de:</strong> <tt> {$acta.calificacion}</tt><br />
 {/if}
 <strong>Funge como director de la división: </strong> <tt>{$director.apellido} {$director.nombre}</tt><br />
 <strong>Como secretario: </strong> <tt>{$secretario.apellido} {$secretario.nombre}</tt><br />
@@ -20,10 +20,10 @@
 {else}
 	<strong>Y como su jurado:</strong>
 {/if}
-<tt><ul>
-<li>{$jurado1.apellido} {$jurado1.nombre}</li>
-<li>{$jurado2.apellido} {$jurado2.nombre}</li>
-<li>{$jurado3.apellido} {$jurado3.nombre}</li>
-</ul></tt>
 </p>
+<ul>
+<li><tt>{$jurado1.apellido} {$jurado1.nombre}</tt></li>
+<li><tt>{$jurado2.apellido} {$jurado2.nombre}</tt></li>
+<li><tt>{$jurado3.apellido} {$jurado3.nombre}</tt></li>
+</ul>
 {/block}

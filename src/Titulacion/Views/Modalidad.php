@@ -37,7 +37,7 @@ class Titulacion_Views_Modalidad {
 	public $agregarOpcion_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.admin-titulacion'));
 	public function agregarOpcion ($request, $match) {
 		if ($request->method == 'POST') {
-			$form = new Titulacion_Form_Opcion_Agregar ($request->POST, array());
+			$form = new Titulacion_Form_Opcion_Agregar ($request->POST);
 			
 			if ($form->isValid ()) {
 				$modalidad = $form->save ();
@@ -46,11 +46,44 @@ class Titulacion_Views_Modalidad {
 				return new Gatuf_HTTP_Response_Redirect ($url);
 			}
 		} else {
-			$form = new Titulacion_Form_Opcion_Agregar (null, array ());
+			$form = new Titulacion_Form_Opcion_Agregar (null);
+		}
+		
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/modalidad/agregar-opcion.html',
+		                                         array ('page_title' => 'Nueva opción de titulación',
+		                                                'form' => $form),
+		                                         $request);
+	}
+	
+	public $actualizarOpcion_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.admin-titulacion'));
+	public function actualizarOpcion ($request, $match) {
+		$opcion = new Titulacion_Opcion ();
+		
+		if (false === ($opcion->getOpcion ($match[1]))) {
+			throw new Gatuf_HTTP_Error404 ();
+		}
+		
+		$modalidad = new Titulacion_Modalidad ();
+		$modalidad->getModalidad ($opcion->modalidad);
+		
+		$extra = array ('opcion' => $opcion);
+		
+		if ($request->method == 'POST') {
+			$form = new Titulacion_Form_Opcion_Actualizar ($request->POST, $extra);
+			
+			if ($form->isValid ()) {
+				$opcion = $form->save ();
+				
+				$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Modalidad::index');
+				return new Gatuf_HTTP_Response_Redirect ($url);
+			}
+		} else {
+			$form = new Titulacion_Form_Opcion_Actualizar (null, $extra);
 		}
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/modalidad/edit-opcion.html',
-		                                         array ('page_title' => 'Nueva opción de titulación',
+		                                         array ('page_title' => 'Actualizar opción de titulación',
+		                                                'modalidad' => $modalidad,
 		                                                'form' => $form),
 		                                         $request);
 	}

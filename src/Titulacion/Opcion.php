@@ -50,7 +50,11 @@ class Titulacion_Opcion extends Gatuf_Model {
 	}
 	
 	public function update () {
-		throw new Exception ("No implementado");
+		$req = sprintf ('UPDATE %s SET descripcion = %s, articulo = %s, fraccion = %s, articulo_cucei = %s, fraccion_cucei = %s, leyenda = %s, desempeno = %s, trabajo = %s, maestria = %s WHERE id = %s', $this->getSqlTable (), Gatuf_DB_IdentityToDb ($this->descripcion, $this->_con), Gatuf_DB_IntegerToDb ($this->articulo, $this->_con), Gatuf_DB_IdentityToDb ($this->fraccion, $this->_con), Gatuf_DB_IntegerToDb ($this->articulo_cucei, $this->_con), Gatuf_DB_IdentityToDb ($this->fraccion_cucei, $this->_con), Gatuf_DB_IdentityToDb ($this->leyenda, $this->_con), Gatuf_DB_BooleanToDb ($this->desempeno, $this->_con), Gatuf_DB_BooleanToDb ($this->trabajo, $this->_con), Gatuf_DB_BooleanToDb ($this->maestria, $this->_con), Gatuf_DB_IntegerToDb ($this->id, $this->_con));
+		
+		$this->_con->execute ($req);
+		
+		return true;
 	}
 	
 	public function restore () {

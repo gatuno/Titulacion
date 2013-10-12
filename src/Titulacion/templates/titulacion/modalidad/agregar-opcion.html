@@ -7,14 +7,11 @@
 {/if}
 <form action="." method="post">
 <table>
-	<tr><th><strong>Modalidad:</strong></th>
-	<td>{$modalidad->descripcion}<br />
-	</td></tr>
-	{$form.render_table}
-	<tr>
-	<td>&nbsp;</td>
-	<td><input type="submit" value="Guardar cambios" /></td>
-	</tr>
+{$form.render_table}
+<tr>
+<td>&nbsp;</td>
+<td><input type="submit" value="Nueva opción" /></td>
+</tr>
 </table>
 </form>
 {/block}

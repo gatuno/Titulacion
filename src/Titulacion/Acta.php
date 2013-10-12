@@ -41,6 +41,7 @@ class Titulacion_Acta extends Gatuf_Model {
 		$this->tabla_view= 'Actas_View';
 		
 		$this->default_order = 'anio ASC, modalidad_descripcion ASC, carrera ASC, alumno_apellido ASC';
+		$this->calificacion = 0.0;
 	}
 	
 	function getActa($id) {
@@ -59,14 +60,13 @@ class Titulacion_Acta extends Gatuf_Model {
 	}
 
 	public function create() {
-	
-
-		$req = sprintf('INSERT INTO %s (plan, folio, acta, modalidad, alumno, domicilio, director_division, secretario_division, jurado1, jurado2, jurado3, carrera, fechaHora, ingreso, egreso, calificacion, desempeno, materias_maestria, nombre_maestria, escuela_maestria, nombre_trabajo, createtime, creador, modificador) ', $this->getSqlTable ());
+		$this->preSave (true);
+		$req = sprintf('INSERT INTO %s (plan, folio, acta, modalidad, alumno, domicilio, director_division, secretario_division, jurado1, jurado2, jurado3, carrera, fechaHora, ingreso, egreso, calificacion, desempeno, materias_maestria, nombre_maestria, escuela_maestria, nombre_trabajo, createtime, modificationtime, creador, modificador) ', $this->getSqlTable ());
 		$req = $req . sprintf ('VALUES (%s, %s, %s, %s, %s, %s, %s, %s, ', Gatuf_DB_IntegerToDb ($this->plan, $this->_con), Gatuf_DB_IntegerToDb ($this->folio, $this->_con), Gatuf_DB_IntegerToDb ($this->acta, $this->_con), Gatuf_DB_IntegerToDb ($this->modalidad, $this->_con), Gatuf_DB_IdentityToDb ($this->alumno, $this->_con), Gatuf_DB_IntegerToDB ($this->domicilio, $this->_con), Gatuf_DB_IntegerToDb ($this->director_division, $this->_con), Gatuf_DB_IntegerToDb ($this->secretario_division, $this->_con));
 		
 		$req = $req . sprintf ('%s, %s, %s, %s, %s, %s, %s, %s, ', Gatuf_DB_IntegerToDb ($this->jurado1, $this->_con), Gatuf_DB_IntegerToDb ($this->jurado2, $this->_con), Gatuf_DB_IntegerToDb ($this->jurado3, $this->_con),Gatuf_DB_IdentityToDb ($this->carrera, $this->_con), Gatuf_DB_IdentityToDb ($this->fechaHora, $this->_con), Gatuf_DB_IdentityToDb ($this->ingreso, $this->_con), Gatuf_DB_IdentityToDb ($this->egreso, $this->_con), Gatuf_DB_IntegerToDb ($this->calificacion, $this->_con));
 		
-		$req = $req . sprintf ('%s, %s, %s, %s, %s, NOW(), %s, %s)', Gatuf_DB_IdentityToDb ($this->desempeno, $this->_con), Gatuf_DB_IntegerToDb ($this->materias_maestria, $this->_con), Gatuf_DB_IdentityToDb ($this->nombre_maestria, $this->_con), Gatuf_DB_IdentityToDb ($this->escuela_maestria, $this->_con), Gatuf_DB_IdentityToDb ($this->nombre_trabajo, $this->_con), Gatuf_DB_IntegerToDb ($this->creador, $this->_con), Gatuf_DB_IntegerToDb ($this->modificador, $this->_con));
+		$req = $req . sprintf ('%s, %s, %s, %s, %s, %s, %s, %s, %s)', Gatuf_DB_IdentityToDb ($this->desempeno, $this->_con), Gatuf_DB_IntegerToDb ($this->materias_maestria, $this->_con), Gatuf_DB_IdentityToDb ($this->nombre_maestria, $this->_con), Gatuf_DB_IdentityToDb ($this->escuela_maestria, $this->_con), Gatuf_DB_IdentityToDb ($this->nombre_trabajo, $this->_con), Gatuf_DB_IdentityToDb ($this->createtime, $this->_con), Gatuf_DB_IdentityToDb ($this->modificationtime, $this->_con), Gatuf_DB_IntegerToDb ($this->creador, $this->_con), Gatuf_DB_IntegerToDb ($this->modificador, $this->_con));
 		
 		$this->_con->execute ($req);
 		
@@ -75,16 +75,34 @@ class Titulacion_Acta extends Gatuf_Model {
 		return true;
 	}
 	
-	function preSave ($create=false) {
+	function preSave ($create=true) {
 		/* Generar el folio */
+		if ($create) {
+			$this->createtime = date ('Y-m-d H:i:s');
+			
+			$anio = date('Y');
+			/* Generar el folio */
+			$sql = sprintf ('SELECT MAX(folio) as max_folio FROM %s WHERE carrera=%s AND plan=%s AND YEAR(createtime)=%s', $this->getSqlTable (), Gatuf_DB_IdentityToDb ($this->carrera, $this->_con), Gatuf_DB_IntegerToDb ($this->plan, $this->_con), Gatuf_DB_IntegerToDb ($anio, $this->_con));
+			
+			$rs = $this->_con->select ($sql);
+			
+			if (count ($rs) == 0) {
+				$this->folio = 1;
+			} else {
+				$this->folio = ((int) $rs[0]['max_folio']) + 1;
+			}
+		}
+		
+		$this->modificationtime = date ('Y-m-d H:i:s');
 	}
 	
 	public function update() {
-		$req = sprintf('UPDATE %s SET acta=%s, calificacion=%s, ingreso=%s, egreso=%s, fechaHora=%s, director_division=%s, secretario_division=%s, jurado1=%s, jurado2=%s, jurado3=%s, desempeno=%s, nombre_trabajo=%s, materias_maestria=%s, nombre_maestria=%s, escuela_maestria=%s WHERE id=%s', $this->getSqlTable (),  Gatuf_DB_IdentityToDB ($this->acta, $this->_con),Gatuf_DB_IdentityToDB ($this->calificacion, $this->_con),Gatuf_DB_IdentityToDB ($this->ingreso, $this->_con),Gatuf_DB_IdentityToDB ($this->egreso, $this->_con),Gatuf_DB_IdentityToDB ($this->fechaHora, $this->_con),Gatuf_DB_IdentityToDB ($this->director_division, $this->_con),Gatuf_DB_IdentityToDB ($this->secretario_division, $this->_con),Gatuf_DB_IdentityToDB ($this->jurado1, $this->_con),Gatuf_DB_IdentityToDB ($this->jurado2, $this->_con),Gatuf_DB_IdentityToDB ($this->jurado3, $this->_con),Gatuf_DB_IdentityToDB ($this->desempeno, $this->_con),Gatuf_DB_IdentityToDB ($this->nombre_trabajo, $this->_con), Gatuf_DB_IdentityToDB ($this->materias_maestria, $this->_con),Gatuf_DB_IdentityToDB ($this->nombre_maestria, $this->_con),Gatuf_DB_IdentityToDB ($this->escuela_maestria, $this->_con),Gatuf_DB_IdentityToDB ($this->id, $this->_con));
+		$req = sprintf('UPDATE %s SET acta=%s, calificacion=%s, ingreso=%s, egreso=%s, fechaHora=%s, director_division=%s, secretario_division=%s, jurado1=%s, jurado2=%s, ', $this->getSqlTable (), Gatuf_DB_IntegerToDB ($this->acta, $this->_con), Gatuf_DB_IdentityToDB ($this->calificacion, $this->_con), Gatuf_DB_IdentityToDB ($this->ingreso, $this->_con), Gatuf_DB_IdentityToDB ($this->egreso, $this->_con), Gatuf_DB_IdentityToDB ($this->fechaHora, $this->_con), Gatuf_DB_IntegerToDB ($this->director_division, $this->_con), Gatuf_DB_IntegerToDB ($this->secretario_division, $this->_con), Gatuf_DB_IntegerToDB ($this->jurado1, $this->_con), Gatuf_DB_IntegerToDB ($this->jurado2, $this->_con));
 		
+		$req = $req . sprintf ('jurado3=%s, desempeno=%s, nombre_trabajo=%s, materias_maestria=%s, nombre_maestria=%s, escuela_maestria=%s, modificationtime=%s, modificador=%s WHERE id=%s', Gatuf_DB_IntegerToDB ($this->jurado3, $this->_con), Gatuf_DB_IdentityToDB ($this->desempeno, $this->_con), Gatuf_DB_IdentityToDB ($this->nombre_trabajo, $this->_con), Gatuf_DB_IntegerToDB ($this->materias_maestria, $this->_con), Gatuf_DB_IdentityToDB ($this->nombre_maestria, $this->_con), Gatuf_DB_IdentityToDB ($this->escuela_maestria, $this->_con), Gatuf_DB_IdentityToDb ($this->modificationtime, $this->_con), Gatuf_DB_IntegerToDb ($this->modificador, $this->_con), Gatuf_DB_IntegerToDB ($this->id, $this->_con));
 		$this->_con->execute ($req);
 		
-		return true;
+		return false;
 	}
 	
 	public function displaycarrera ($extra=null) {

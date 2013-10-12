@@ -167,6 +167,7 @@ class Titulacion_Views_Acta {
 		                                         $request);
 	}
 	
+	public $imprimirActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-actas'));
 	public function imprimirActa ($request, $match){
 		$acta = new Titulacion_Acta ();
 		
@@ -225,7 +226,8 @@ class Titulacion_Views_Acta {
 		
 		return new Gatuf_HTTP_Response_File ('/tmp/'.$nombre_pdf, $nombre_pdf, 'application/pdf', true);
 	}
-		
+	
+	public $actualizarActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-actas'));
 	public function actualizarActa ($request, $match) {
 		Gatuf::loadFunction ('Titulacion_Utils_formatearDomicilio');
 		$acta = new Titulacion_Acta ();
@@ -253,15 +255,18 @@ class Titulacion_Views_Acta {
 		$domicilio->getDomicilio ($acta->domicilio);
 		
 		$extra = array ('acta' => $acta);
-		if($request->method == 'POST') {
+		if ($request->method == 'POST') {
 			$form = new Titulacion_Form_Acta_Editar ($request->POST, $extra);
 
-			if($form->isValid ()){
-				$acta = $form->save ();
+			if ($form->isValid ()){
+				$acta = $form->save (false);
+				$acta->modificador = $request->user->codigo;
+				
+				$acta->update ();
+				
 				$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $acta->id);
 				return new Gatuf_HTTP_Response_Redirect ($url);
 			}
-			
 		} else {
 			$form = new Titulacion_Form_Acta_Editar (null, $extra);
 		}

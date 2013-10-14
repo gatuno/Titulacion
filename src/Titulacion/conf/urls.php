@@ -171,6 +171,13 @@ $ctl[] =array(
 	'method' => 'imprimirActa',
 );
 
+$ctl[] =array(
+	'regex' => '#^/acta/(\d+)/imprimirProtesta/$#',	
+	'base' => $base,
+	'model' => 'Titulacion_Views_Acta',
+	'method' => 'imprimirProtesta',
+);
+
 /* Listado de los planes de estudio */
 $ctl[] = array (
 	'regex' => '#^/planes/$#',

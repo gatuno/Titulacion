@@ -2,8 +2,10 @@
 {block body}
 <ul style="list-style-type: none;">
 <li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::verActa', array ($acta.id)}">Detalles</a></li>
-<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::imprimirActa', array ($acta.id)}">Imprimir</a></li>
-<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::actualizarActa', array ($acta.id)}">Editar</a></li>
+<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::imprimirActa', array ($acta.id)}"> Imprimir Acta</a></li>
+<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::actualizarActa', array ($acta.id)}"> Editar</a></li>
+<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::imprimirProtesta', array ($acta.id)}"> Imprimir Protesta</a></li>
+
 </ul>
 <h2>Detalles</h2>
 <p><strong>Folio: </strong><tt>{$acta.folio}/{$acta.anio}</tt><br />

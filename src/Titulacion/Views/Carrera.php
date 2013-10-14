@@ -12,7 +12,7 @@ class Titulacion_Views_Carrera {
 		$pag->sumary = 'Lista de carreras';
 		
 		$list_display = array(
-			array ('clave', 'Gatuf_Paginator_DisplayVal', 'Clave'),
+			array ('clave', 'Gatuf_Paginator_FKLink', 'Clave'),
 			array ('descripcion',  'Gatuf_Paginator_DisplayVal', 'Opcion')
 		);
 		
@@ -21,7 +21,6 @@ class Titulacion_Views_Carrera {
 		$pag->configure ($list_display,
 			array('clave', 'descripcion'),
 			array('clave', 'descripcion')
-			
 		);
 		
 		$pag->setFromRequest ($request);

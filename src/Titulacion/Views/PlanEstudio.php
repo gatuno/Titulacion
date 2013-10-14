@@ -9,7 +9,7 @@ class Titulacion_Views_PlanEstudio {
 		$planes = Gatuf::factory ('Titulacion_PlanEstudio')->getList ();
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/plan/index.html',
-		                                         array ('title' => $title,
+		                                         array ('page_title' => $title,
 		                                                'planes' => $planes),
 		                                         $request);
 	}

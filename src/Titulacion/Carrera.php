@@ -58,4 +58,9 @@ class Titulacion_Carrera extends Gatuf_Model {
 		
 		return true;
 	}
+	
+	public function displaylinkedclave () {
+		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::index', array (), array ('f_carrera' => $this->clave));
+		return '<a href="'.$url.'">'.$this->clave.'</a>';
+	}
 }

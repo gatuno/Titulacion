@@ -13,7 +13,7 @@ class Titulacion_Views_Modalidad {
 		
 		$list_display = array (
 			array ('modalidad_descripcion', 'Gatuf_Paginator_DisplayVal', 'Modalidad'),
-			array ('descripcion', 'Gatuf_Paginator_DisplayVal', 'Opcion'),
+			array ('descripcion', 'Gatuf_Paginator_FKLink', 'Opcion'),
 			array ('udg', 'Gatuf_Paginator_FKExtra', 'Estatuto U de G'),
 			array ('cucei', 'Gatuf_Paginator_FKExtra', 'Estatuto CUCEI')
 		);

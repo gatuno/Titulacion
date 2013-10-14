@@ -29,7 +29,7 @@ class Titulacion_Views_Alumno {
 		$pag->setFromRequest($request);
 		
 		return Gatuf_Shortcuts_renderToResponse ('titulacion/alumno/index.html',
-			                                     array('page title'=>'Lista de Alumnos',
+			                                     array('page_title'=> 'Alumnos',
 			                                           'paginador' => $pag),
 			                                     $request);
 	}

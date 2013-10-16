@@ -1,0 +1,29 @@
+{extends 'titulacion/base.html'}
+{block body}
+{if $form.errors}
+<div class="errors">
+<p>El formulario contiene algunos errores:</p>
+</div>
+{/if}
+<form action="." method="post">
+<table>
+		<tr><th><strong>Plan de estudios:</strong></th>
+			<td>{$plan.plan}</td>
+		</tr>
+		<tr><th><strong>Carrera:</strong></th>
+			<td>{$carrera.descripcion}</td>
+		</tr>
+		<tr><th><strong>Folio:</strong></th>
+			<td>{$acta.folio}/{$acta.anio}</td>
+		</tr>
+		<tr><th><strong>Opcion de titulación:</strong></th>
+			<td>{$opcion.descripcion}</td>
+		</tr>
+		<tr><th><strong>Alumno:</strong></th>
+			<td>{$alumno.apellido} {$alumno.nombre} ({$alumno.codigo})</td>
+		</tr>
+		{$form.render_table}
+		<tr><td>&nbsp;</td><td><input type="submit" value="Elimina Acta" /> | <a href="{url 'Titulacion_Views_Acta::verActa', $acta.id}">No, cancelar</a></td></tr>
+</table>
+</form>
+{/block}

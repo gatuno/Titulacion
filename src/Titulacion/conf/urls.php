@@ -178,6 +178,20 @@ $ctl[] =array(
 	'method' => 'imprimirProtesta',
 );
 
+$ctl[] =array(
+	'regex' => '#^/acta/(\d+)/eliminar/$#',	
+	'base' => $base,
+	'model' => 'Titulacion_Views_Acta',
+	'method' => 'eliminarActa',
+);
+
+$ctl[] =array (
+	'regex' => '#^/actas/eliminadas/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Acta',
+	'method' => 'index_eliminadas',
+);
+
 /* Listado de los planes de estudio */
 $ctl[] = array (
 	'regex' => '#^/planes/$#',

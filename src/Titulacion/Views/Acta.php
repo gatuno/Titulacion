@@ -24,7 +24,7 @@ class Titulacion_Views_Acta {
 		} else {
 			$form = new Titulacion_Form_Alumno_Seleccionar (null, array ());
 		}
-		$actas=new Titulacion_Acta ();
+		$actas = new Titulacion_Acta ();
 
 		$pag = new Gatuf_Paginator($actas);
 		$pag->action = array ('Titulacion_Views_Acta::index');
@@ -54,7 +54,7 @@ class Titulacion_Views_Acta {
 
 		/* La magia de los filtros acumulativos */
 		$pag->setExtraParams ();
-		$filtro = new Gatuf_SQL ();
+		$filtro = new Gatuf_SQL ('eliminada=%s', 0);
 		$params_pag = array ();
 		foreach (array ('carrera', 'plan', 'anio', 'modalidad') as $key) {
 			if (isset ($request->REQUEST['f_'.$key]) && $request->REQUEST['f_'.$key] != '') {
@@ -338,7 +338,7 @@ class Titulacion_Views_Acta {
 		                                         array ('page_title' => 'Actualizar acta',
 		                                                'alumno' => $alumno,
 		                                                'opcion' => $opcion,
-		                                                'modalida' => $modalidad,
+		                                                'modalidad' => $modalidad,
 		                                                'carrera' => $carrera,
 		                                                'plan' => $plan,
 		                                                'acta' => $acta,
@@ -347,7 +347,101 @@ class Titulacion_Views_Acta {
 		                                         $request);
 	}
 	
+	public $eliminarActa_precond = array ('Gatuf_Precondition::adminRequired');
+	public function eliminarActa ($request, $match) {
+		$acta = new Titulacion_Acta ();
+
+		if (false == $acta->getActa ($match[1])) {
+			throw new Gatuf_HTTP_Error404 ();
+		}
+		
+		if ($acta->eliminada) {
+			$request->user->setMessage (3, 'El acta con folio '.$acta->folio.'/'.$acta->anio.' ya ha sido eliminada');
+			$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::index_eliminadas');
+			return new Gatuf_HTTP_Response_Redirect ($url);
+		}
+		
+		$alumno = new Titulacion_Alumno ();
+		$alumno->getAlumno ($acta->alumno);
+		
+		$opcion = new Titulacion_Opcion ();
+		$opcion->getOpcion ($acta->modalidad);
+
+		$modalidad = new Titulacion_Modalidad ();
+		$modalidad->getModalidad ($opcion->modalidad);
+
+		$carrera = new Titulacion_Carrera ();
+		$carrera->getCarrera ($acta->carrera);
+		
+		$plan = new Titulacion_PlanEstudio ();
+		$plan->getPlan ($acta->plan);
+		
+		$extra = array ('acta' => $acta);
+		
+		if ($request->method == 'POST') {
+			$form = new Titulacion_Form_Acta_Eliminar ($request->POST, $extra);
+			
+			if ($form->isValid ()) {
+				$acta_eliminada = $form->save (false);
+				
+				$acta_eliminada->usuario = $request->user->codigo;
+				
+				$acta_eliminada->create ();
+				
+				$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $acta_eliminada->acta);
+				return new Gatuf_HTTP_Response_Redirect ($url);
+			}
+		} else {
+			$form = new Titulacion_Form_Acta_Eliminar (null, $extra);
+		}
+		
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/eliminar-acta.html',
+		                                         array ('page_title' => 'Eliminar acta',
+		                                                'alumno' => $alumno,
+		                                                'opcion' => $opcion,
+		                                                'modalidad' => $modalidad,
+		                                                'carrera' => $carrera,
+		                                                'acta' => $acta,
+		                                                'plan' => $plan,
+		                                                'form' => $form),
+		                                         $request);
+	}
 	
+	public $index_eliminadas_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-titulacion'));
+	public function index_eliminadas($request, $match) {
+		$actas = new Titulacion_Acta ();
 
+		$pag = new Gatuf_Paginator($actas);
+		$pag->action = array ('Titulacion_Views_Acta::index');
+		$pag->sumary = 'Lista de actas eliminadas';
 
+		$list_display = array (
+			array('folio', 'Gatuf_Paginator_FKExtra', 'Folio'),
+			array('carrera','Gatuf_Paginator_FKExtra','Carrera'),
+			array('alumno','Gatuf_Paginator_DisplayVal', 'Codigo del alumno'),
+			array('alumno_nombre','Gatuf_Paginator_DisplayVal', 'Nombre'),
+			array('alumno_apellido','Gatuf_Paginator_DisplayVal', 'Apellidos'),
+			array('plan','Gatuf_Paginator_FKExtra','Plan de estudios'),
+			array('modalidad_descripcion','Gatuf_Paginator_DisplayVal', 'Opcion de titulacion'),
+		);
+
+		$pag->items_per_page = 25;
+		$pag->no_results_text = 'No hay actas de titulacion disponibles';
+		$pag->max_number_pages = 3;
+		$pag->configure ($list_display,
+				array ('alumno','folio','ingreso','egreso','carrera', 'alumno_nombre', 'alumno_apellido', 'modalidad_descripcion'),
+				array ('alumno','folio','ingreso','egreso','carrera')
+		);
+		$pag->setFromRequest($request);
+
+		/* La magia de los filtros acumulativos */
+		$filtro = new Gatuf_SQL ('eliminada=%s', 1);
+		
+		$pag->forced_where = $filtro;
+
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/eliminadas.html',
+		                                         array('page_title' => 'Actas de titulacion eliminadas',
+		                                               'paginador'  => $pag),
+		                                         $request);
+	}
 }

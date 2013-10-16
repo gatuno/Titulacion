@@ -144,4 +144,18 @@ class Titulacion_Acta extends Gatuf_Model {
 		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::index', array (), $extra);
 		return '<a href="'.$url.'">'.$this->modalidad_descripcion.'</a>';
 	}
+	
+	public function displayfolio ($extra = null) {
+		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $this->id);
+		
+		return '<a href="'.$url.'">'.$this->folio.'</a>/'.$this->anio;
+	}
+	
+	public function displaycarrera ($extra = null) {
+		return '<abbr title="'.$this->carrera_descripcion.'">'.$this->carrera.'</abbr>';
+	}
+	
+	public function displayplan ($extra = null) {
+		return $this->plan_descripcion;
+	}
 }

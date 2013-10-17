@@ -1,12 +1,19 @@
 {extends 'titulacion/base.html'}
 {block body}
+{if !$acta.eliminada}
 <ul style="list-style-type: none;">
 <li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::verActa', array ($acta.id)}">Detalles</a></li>
 <li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::imprimirActa', array ($acta.id)}"> Imprimir Acta</a></li>
 <li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::actualizarActa', array ($acta.id)}"> Editar</a></li>
 <li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::imprimirProtesta', array ($acta.id)}"> Imprimir Protesta</a></li>
-
+<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::eliminarActa', array ($acta.id)}"> Eliminar</a></li>
 </ul>
+{/if}
+{if $acta.eliminada}
+	<h2>Acta Eliminada</h2>
+	<p><strong>Advertencia: </strong>Esta acta ha sido eliminada. Fué eliminada por {$eliminador.nombre} {$eliminador.apellido}, el día {$acta_eliminada.timestamp|date:"%d-%m-%Y a las %H:%M"}. Por la siguiente razón: <br />
+	{$acta_eliminada.razon|unsafe}</p>
+{/if}
 <h2>Detalles</h2>
 <p><strong>Folio: </strong><tt>{$acta.folio}/{$acta.anio}</tt><br />
 <strong>Número acta: </strong>{$acta.acta}</p>

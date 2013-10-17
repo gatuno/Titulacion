@@ -128,10 +128,20 @@ class Titulacion_Views_Acta {
 	public function verActa($request, $match, $params = array ()){
 		$acta = new Titulacion_Acta ();
 
-		if (false == $acta->getActa ($match[1])) {
+		if (false === $acta->getActa ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();
 		}
-
+		
+		$acta_eliminada = null;
+		$eliminador = null;
+		if ($acta->eliminada) {
+			$acta_eliminada = new Titulacion_ActaEliminada ();
+			$acta_eliminada->get ($acta->id);
+			
+			$eliminador = new Titulacion_Maestro ();
+			$eliminador->getMaestro ($acta_eliminada->usuario);
+		}
+		
 		$alumno = new Titulacion_Alumno ();
 		$alumno->getAlumno ($acta->alumno);
 
@@ -174,7 +184,9 @@ class Titulacion_Views_Acta {
 		                                                'jurado1' => $jurado1,
 		                                                'jurado2' => $jurado2,
 		                                                'jurado3' => $jurado3,
-		                                                'page_title' => 'Ver Acta'
+		                                                'page_title' => 'Ver Acta',
+		                                                'acta_eliminada' => $acta_eliminada,
+		                                                'eliminador' => $eliminador,
 		                                         ),
 		                                         $request);
 	}
@@ -183,10 +195,16 @@ class Titulacion_Views_Acta {
 	public function imprimirActa ($request, $match){
 		$acta = new Titulacion_Acta ();
 
-		if (false == $acta->getActa ($match[1])) {
+		if (false === $acta->getActa ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();
 		}
-
+		
+		if ($acta->eliminada) {
+			$request->user->setMessage (3, 'No se puede imprimir el acta. El acta con folio '.$acta->carrera.' '.$acta->folio.'/'.$acta->anio.' ha sido marcada como eliminada');
+			$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $acta->id);
+			return new Gatuf_HTTP_Response_Redirect ($url);
+		}
+		
 		$alumno = new Titulacion_Alumno ();
 		$alumno->getAlumno ($acta->alumno);
 
@@ -240,13 +258,17 @@ class Titulacion_Views_Acta {
 	}
 	
 	
-	public function imprimirProtesta($request, $match)
-	{
-		
+	public function imprimirProtesta($request, $match) {
 		$acta = new Titulacion_Acta();
 		
 		if (false === $acta->getActa ($match[1])){
 			throw new Gatuf_HTTP_Error404 ();
+		}
+		
+		if ($acta->eliminada) {
+			$request->user->setMessage (3, 'No se puede imprimir la protesta. El acta con folio '.$acta->carrera.' '.$acta->folio.'/'.$acta->anio.' ha sido marcada como eliminada');
+			$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $acta->id);
+			return new Gatuf_HTTP_Response_Redirect ($url);
 		}
 		
 		$alumno = new Titulacion_Alumno ();
@@ -295,10 +317,16 @@ class Titulacion_Views_Acta {
 		Gatuf::loadFunction ('Titulacion_Utils_formatearDomicilio');
 		$acta = new Titulacion_Acta ();
 
-		if (false == $acta->getActa ($match[1])) {
+		if (false === $acta->getActa ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();
 		}
-
+		
+		if ($acta->eliminada) {
+			$request->user->setMessage (3, 'No se puede actualizar el acta. La acta con folio '.$acta->carrera.' '.$acta->folio.'/'.$acta->anio.' ha sido marcada como eliminada');
+			$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $acta->id);
+			return new Gatuf_HTTP_Response_Redirect ($url);
+		}
+		
 		$alumno = new Titulacion_Alumno ();
 		$alumno->getAlumno ($acta->alumno);
 
@@ -356,7 +384,7 @@ class Titulacion_Views_Acta {
 		}
 		
 		if ($acta->eliminada) {
-			$request->user->setMessage (3, 'El acta con folio '.$acta->folio.'/'.$acta->anio.' ya ha sido eliminada');
+			$request->user->setMessage (3, 'El acta con folio '.$acta->carrera.' '.$acta->folio.'/'.$acta->anio.' ya ha sido eliminada');
 			$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::index_eliminadas');
 			return new Gatuf_HTTP_Response_Redirect ($url);
 		}

@@ -8,8 +8,7 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		Gatuf::loadFunction ('Titulacion_Utils_numeroLetra');
 		setLocale(LC_ALL, 'es_MX.UTF-8');
 
-		/*$grado = Titulacion_Utils_grado ($this->alumno->sexo, $this->carrera->grado);
-		$nombreCompleto = mb_strtoupper($grado.' '.$this->acta->alumno_nombre.' '.$this->acta->alumno_apellido);*/
+		
 		
 		$grado = Titulacion_Utils_grado ($this->jurado1->sexo, $this->jurado1->grado);
 		$nombreCompletoj1 = mb_strtoupper ($grado.' '.$this->jurado1->apellido.' '.$this->jurado1->nombre);
@@ -41,6 +40,7 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 			$grado = mb_strtoupper($this->carrera->grado_m);
 		}
 		
+		
 		$leyenda1 = 'En la división de Electrónica y Computación del Centro Universitario de Ciencias Exactas e Ingenierías de la Universidad de Guadalajara, hoy día ';
 		$leyenda2 = 'ante el honorable Comité de Titulación que ha tenido a bien emitir el veredicto aprobatorio a mi examen profesional para obtener el título de';
 		$leyenda3 = 'ante el público que me ha honrado con su presencia en este acto solemne:';
@@ -52,6 +52,9 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		$punto5 ='V.- Ofrecer cooperación, cordialidad y fraternidad a mis compañeros de profesión.';
 		$punto6 ='VI.- Actualizar mis conocimientos y superarme profesionalmente para cooperar en la tarea de formar una patria mejor con justa retribución a la sociedad que proporcionó los medios para mi preparación.';
 		
+		$primeraGrado = substr($grado,0,1);
+		$grado = Titulacion_Utils_grado ($this->alumno->sexo, $primeraGrado);
+		$sustentante = mb_strtoupper($grado.' '.$this->acta->alumno_nombre.' '.$this->acta->alumno_apellido);
 		
 		
 		
@@ -94,19 +97,20 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		$this->Multicell(181,4,$punto6,0,'L');
 
 		
-	
+	/*aqui van los nombres de el Titulado y las de los mienmbros del jurado*/
 		
-		/*
-		$this->SetY(169.9);
+		$this->SetFont('Arial','', 10);
+		
+		$this->SetY(166);
 		$this->SetX(19);
-		$this->Cell(0,3,$nombreCompleto,1,'B','C');
+		$this->Cell(78.2,3,$sustentante ,'B',0,'C');
 		
 		
 		$this->SetY(173.9);
 		$this->SetX(19);
-		$this->Cell(0,3,'Firma del sustentante',0,0,'C');
-		*/
-		$this->SetFont('Arial','', 10);
+		$this->Cell(78.2,3,'Firma del sustentante',0,0,'C');
+		
+	
 		
 		$this->SetY(166);
 		$this->SetX(128.3);

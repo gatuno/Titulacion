@@ -257,7 +257,7 @@ class Titulacion_Views_Acta {
 		return new Gatuf_HTTP_Response_File ('/tmp/'.$nombre_pdf, $nombre_pdf, 'application/pdf', true);
 	}
 	
-	
+	public $imprimirProtesta_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-actas'));
 	public function imprimirProtesta($request, $match) {
 		$acta = new Titulacion_Acta();
 		
@@ -311,7 +311,59 @@ class Titulacion_Views_Acta {
 		
 		return new Gatuf_HTTP_Response_File ('/tmp/'.$nombre_pdf, $nombre_pdf, 'application/pdf', true);
 	}
-
+	
+	public $imprimirCitatorio_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-actas'));
+	public function imprimirCitatorio ($request, $match) {
+		$acta = new Titulacion_Acta();
+		
+		if (false === $acta->getActa ($match[1])){
+			throw new Gatuf_HTTP_Error404 ();
+		}
+		
+		if ($acta->eliminada) {
+			$request->user->setMessage (3, 'No se puede imprimir la protesta. El acta con folio '.$acta->carrera.' '.$acta->folio.'/'.$acta->anio.' ha sido marcada como eliminada');
+			$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $acta->id);
+			return new Gatuf_HTTP_Response_Redirect ($url);
+		}
+		
+		$alumno = new Titulacion_Alumno ();
+		$alumno->getAlumno ($acta->alumno);
+		
+		$secretario = new Titulacion_Maestro ();
+		$secretario->getMaestro ($acta->secretario_division);
+		
+		$jurado1 = new Titulacion_Maestro ();
+		$jurado1->getMaestro ($acta->jurado1);
+		
+		$jurado2 = new Titulacion_Maestro ();
+		$jurado2->getMaestro ($acta->jurado2);
+		
+		$jurado3 = new Titulacion_Maestro ();
+		$jurado3->getMaestro ($acta->jurado3);
+		
+		$carrera = new Titulacion_Carrera ();
+		$carrera->getCarrera ($acta->carrera);
+		
+		$citatorio = new Titulacion_PDF_Citatorio ('P', 'mm','Letter');
+		
+		$citatorio->acta = $acta;
+		$citatorio->jurado1 = $jurado1;
+		$citatorio->jurado2 = $jurado2;
+		$citatorio->jurado3 = $jurado3;
+		$citatorio->carrera = $carrera;
+		$citatorio->alumno = $alumno;
+		$citatorio->secretario = $secretario;
+		$citatorio->renderBase ();
+		
+		$citatorio->Close ();
+		$nombre_al = str_replace (' ', '_', $alumno->apellido.'_'.$alumno->nombre);
+		$nombre_pdf = 'Citatorio_'.$nombre_al.'.pdf';
+		
+		$citatorio->Output ('/tmp/'.$nombre_pdf, 'F');
+		
+		return new Gatuf_HTTP_Response_File ('/tmp/'.$nombre_pdf, $nombre_pdf, 'application/pdf', true);
+	}
+	
 	public $actualizarActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-actas'));
 	public function actualizarActa ($request, $match) {
 		Gatuf::loadFunction ('Titulacion_Utils_formatearDomicilio');

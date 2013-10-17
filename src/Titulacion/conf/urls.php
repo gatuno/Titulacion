@@ -172,10 +172,17 @@ $ctl[] =array(
 );
 
 $ctl[] =array(
-	'regex' => '#^/acta/(\d+)/imprimirProtesta/$#',	
+	'regex' => '#^/acta/(\d+)/protesta/$#',	
 	'base' => $base,
 	'model' => 'Titulacion_Views_Acta',
 	'method' => 'imprimirProtesta',
+);
+
+$ctl[] =array(
+	'regex' => '#^/acta/(\d+)/citatorio/$#',	
+	'base' => $base,
+	'model' => 'Titulacion_Views_Acta',
+	'method' => 'imprimirCitatorio',
 );
 
 $ctl[] =array(

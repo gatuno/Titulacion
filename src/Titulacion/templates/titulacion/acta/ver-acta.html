@@ -3,9 +3,10 @@
 {if !$acta.eliminada}
 <ul style="list-style-type: none;">
 <li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::verActa', array ($acta.id)}">Detalles</a></li>
-<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::imprimirActa', array ($acta.id)}"> Imprimir Acta</a></li>
 <li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::actualizarActa', array ($acta.id)}"> Editar</a></li>
-<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::imprimirProtesta', array ($acta.id)}"> Imprimir Protesta</a></li>
+<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::imprimirCitatorio', array ($acta.id)}"> Citatorio</a></li>
+<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::imprimirActa', array ($acta.id)}"> Imprimir Acta</a></li>
+<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::imprimirProtesta', array ($acta.id)}"> Protesta</a></li>
 <li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::eliminarActa', array ($acta.id)}"> Eliminar</a></li>
 </ul>
 {/if}

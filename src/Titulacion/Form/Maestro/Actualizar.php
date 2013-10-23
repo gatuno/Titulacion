@@ -1,30 +1,20 @@
 <?php
 
-class Titulacion_Form_Maestro_Agregar extends Gatuf_Form {
+class Titulacion_Form_Maestro_Actualizar extends Gatuf_Form {
+	private $maestro;
+	
 	public function initFields ($extra = array ()) {
+		$this->maestro = $extra['maestro'];
+		
 		/* Preparar catalogos */
 		$choices_grados = array ('Lic.' => 'L', 'Ing.' => 'I', 'Mtro./Mtra' => 'M', 'Dr./Dra.' => 'D');
 		$choices_sex = array ('Masculino' => 'M', 'Femenino' => 'F');
-		
-		$this->fields['codigo'] = new Gatuf_Form_Field_Integer (
-			array (
-				'required' => true,
-				'label' => 'Código',
-				'initial' => '',
-				'help_text' => 'El código del maestro de 7 caracteres',
-				'min' => 1000000,
-				'max' => 9999999,
-				'widget_attrs' => array (
-					'maxlength' => 7,
-					'size' => 12,
-				),
-		));
 		
 		$this->fields['nombre'] = new Gatuf_Form_Field_Varchar (
 			array (
 				'required' => true,
 				'label' => 'Nombre',
-				'initial' => '',
+				'initial' => $this->maestro->nombre,
 				'help_text' => 'El nombre o nombres del maestro',
 				'max_length' => 50,
 				'widget_attrs' => array (
@@ -37,7 +27,7 @@ class Titulacion_Form_Maestro_Agregar extends Gatuf_Form {
 			array (
 				'required' => true,
 				'label' => 'Apellido',
-				'initial' => '',
+				'initial' => $this->maestro->apellido,
 				'help_text' => 'Los apellidos del maestro',
 				'max_length' => 100,
 				'widget_attrs' => array (
@@ -50,10 +40,10 @@ class Titulacion_Form_Maestro_Agregar extends Gatuf_Form {
 			array (
 				'required' => true,
 				'label' => 'Sexo',
-				'initial' => '',
+				'initial' => $this->maestro->sexo,
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
 				'widget_attrs' => array(
-					'choices' => $choices_sex
+					'choices' => $choices_sex,
 				),
 		));
 		
@@ -61,10 +51,10 @@ class Titulacion_Form_Maestro_Agregar extends Gatuf_Form {
 			array (
 				'required' => true,
 				'label' => 'Grado de estudios',
-				'initial' => '',
+				'initial' => $this->maestro->grado,
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
 				'widget_attrs' => array(
-					'choices' => $choices_grados
+					'choices' => $choices_grados,
 				),
 		));
 		
@@ -72,21 +62,9 @@ class Titulacion_Form_Maestro_Agregar extends Gatuf_Form {
 			array (
 				'required' => true,
 				'label' => 'Correo',
-				'initial' => '',
+				'initial' => $this->maestro->correo,
 				'help_text' => 'Un correo',
 		));
-	}
-	
-	public function clean_codigo () {
-		$codigo = $this->cleaned_data['codigo'];
-		$sql = new Gatuf_SQL ('codigo=%s', array ($codigo));
-		$l = Gatuf::factory('Titulacion_Maestro')->getList(array ('filter' => $sql->gen(), 'count' => true));
-		
-		if ($l > 0) {
-			throw new Gatuf_Form_Invalid (sprintf ('El código %s del maestro especificado ya existe', $codigo));
-		}
-		
-		return $codigo;
 	}
 	
 	public function save ($commit = true) {
@@ -94,17 +72,14 @@ class Titulacion_Form_Maestro_Agregar extends Gatuf_Form {
 			throw new Exception ('Cannot save the model from and invalid form.');
 		}
 		
-		$maestro = new Titulacion_Maestro ();
+		$this->maestro->nombre = $this->cleaned_data['nombre'];
+		$this->maestro->apellido = $this->cleaned_data['apellido'];
+		$this->maestro->correo = $this->cleaned_data['correo'];
+		$this->maestro->grado = $this->cleaned_data['grado'];
+		$this->maestro->sexo = $this->cleaned_data['sexo'];
 		
-		$maestro->codigo = $this->cleaned_data['codigo'];
-		$maestro->nombre = $this->cleaned_data['nombre'];
-		$maestro->apellido = $this->cleaned_data['apellido'];
-		$maestro->correo = $this->cleaned_data['correo'];
-		$maestro->grado = $this->cleaned_data['grado'];
-		$maestro->sexo = $this->cleaned_data['sexo'];
+		$this->maestro->update();
 		
-		$maestro->create();
-		
-		return $maestro;
+		return $this->maestro;
 	}
 }

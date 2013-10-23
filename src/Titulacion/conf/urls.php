@@ -99,13 +99,6 @@ $ctl[] = array (
 	'method' => 'editarAlumno',
 );
 
-$ctl[] = array (
-	'regex' => '#^/alumno/(\w\d{8})/json/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Alumno',
-	'method' => 'jsonAlumno',
-);
-
 /* Modalidades de titulacion */
 $ctl[] = array (
 	'regex' => '#^/modalidades/$#',

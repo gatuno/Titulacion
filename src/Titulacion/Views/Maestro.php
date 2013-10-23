@@ -33,7 +33,7 @@ class Titulacion_Views_Maestro {
 		                                         $request);
 	}
 	
-	public $agregarMaestro_precond = array (array ('Gatuf_Precondition::hasPerm', 'SIIAU.agregar-maestros'));
+	public $agregarMaestro_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.agregar-maestros'));
 	public function agregarMaestro ($request, $match) {
 		$title = 'Nuevo profesor';
 		
@@ -58,6 +58,7 @@ class Titulacion_Views_Maestro {
 		                                         $request);
 	}
 	
+	public $actualizarMaestro_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.actualizar-maestros'));
 	public function actualizarMaestro ($request, $match) {
 		$title = 'Actualizar profesor';
 		

@@ -34,7 +34,7 @@ class Titulacion_Views_Alumno {
 			                                     $request);
 	}
 	
-	public $agregarAlumno_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-acta'));
+	public $agregarAlumno_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.agregar-alumnos'));
 	public function agregarAlumno ($request, $match) {
 		if (isset ($request->REQUEST['acta']) && $request->REQUEST['acta'] == 1) {
 			$extra = array ('acta' => 1);
@@ -68,7 +68,7 @@ class Titulacion_Views_Alumno {
 		                                         $request);
 	}
 	
-	public $editarAlumno_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-acta'));
+	public $editarAlumno_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.actualizar-alumnos'));
 	public function editarAlumno ($request, $match) {
 		$alumno = new Titulacion_Alumno ();
 		if (false === ($alumno->getAlumno ($match[1]))) {
@@ -103,15 +103,5 @@ class Titulacion_Views_Alumno {
 		                                                'alumno' => $alumno,
 		                                                'form' => $form),
 		                                         $request);
-	}
-	
-	public function jsonAlumno ($request, $match) {
-		$alumno = new Titulacion_Alumno ();
-		if (false === ($alumno->getAlumno ($match[1]))) {
-			return new Gatuf_HTTP_Response_Json (array ());
-		}
-		$alumno_json = array ('codigo' => $alumno->codigo, 'nombre' => $alumno->nombre, 'apellido' => $alumno->apellido, 'sexo' => $alumno->sexo);
-		
-		return new Gatuf_HTTP_Response_Json ($alumno_json);
 	}
 }

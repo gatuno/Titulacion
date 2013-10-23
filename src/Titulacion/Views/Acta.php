@@ -305,11 +305,14 @@ class Titulacion_Views_Acta {
 		$protesta->renderBase ();
 		
 		$protesta->Close ();
-		$nombre_pdf = 'PROTESTA.pdf';
+		
+		$nombre_al = str_replace (' ', '_', $alumno->apellido.'_'.$alumno->nombre);
+		$nombre_pdf = 'Protesta_'.$nombre_al.'.pdf';
 
 		$protesta->Output ('/tmp/'.$nombre_pdf, 'F');
 		
 		return new Gatuf_HTTP_Response_File ('/tmp/'.$nombre_pdf, $nombre_pdf, 'application/pdf', true);
+		
 	}
 	
 	public $imprimirCitatorio_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-actas'));

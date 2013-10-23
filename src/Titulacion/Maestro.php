@@ -47,10 +47,11 @@ class Titulacion_Maestro extends Titulacion_User {
 	
 	function update () {
 		$this->preSave (); /* FIXME: Falta actualizar el grado y el sexo */
-		$req = sprintf ('UPDATE %s SET nombre = %s, apellido = %s, correo = %s WHERE codigo = %s;', $this->getSqlTable(), Gatuf_DB_IdentityToDb ($this->nombre, $this->_con), Gatuf_DB_IdentityToDb ($this->apellido, $this->_con), Gatuf_DB_IdentityToDb ($this->correo, $this->_con), Gatuf_DB_IntegerToDb ($this->codigo, $this->_con));
+		$req = sprintf ('UPDATE %s SET nombre = %s, apellido = %s, correo = %s, grado = %s WHERE codigo = %s;', $this->getSqlTable(), Gatuf_DB_IdentityToDb ($this->nombre, $this->_con), Gatuf_DB_IdentityToDb ($this->apellido, $this->_con), Gatuf_DB_IdentityToDb ($this->correo, $this->_con),Gatuf_DB_IntegerToDb ($this->grado, $this->_con), Gatuf_DB_IntegerToDb ($this->codigo, $this->_con));
 		
 		$this->_con->execute($req);
 		
 		return true;
 	}
+
 }

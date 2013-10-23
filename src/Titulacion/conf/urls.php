@@ -222,4 +222,18 @@ $ctl[] = array(
 	'method' => 'agregarMaestro',
 );
 
+$ctl[] =array(
+	'regex' => '#^/maestros/(\d+)/update/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Maestro',
+	'method' => 'actualizarMaestro',
+);
+
+$ctl[] =array(
+	'regex' => '#^/maestro/(\d+)/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Maestro',
+	'method' => 'verMaestro',
+);
+
 return $ctl;

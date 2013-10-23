@@ -55,4 +55,55 @@ class Titulacion_Views_Maestro {
 		                                                'form' => $form),
 		                                         $request);
 	}
+	
+	public function actualizarMaestro ($request, $match) {
+		$acta = new Titulacion_Maestro ();
+
+		if (false === $maestro->getMaestro ($match[1])) {
+			throw new Gatuf_HTTP_Error404 ();
+		}
+
+			$form = new Titulacion_Form_Maestro_Editar (null, $extra);
+		
+
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/maestro/edit-maestro.html',
+		                                         array ('page_title' => 'Actualizar maestro',
+		                                                'maestro' => $maestro,
+														'codigo' => $codigo,
+														'nombre' => $apellido,
+														'grado' => $grado,
+														'correo' => $correo,		                                             
+		                                                'form' => $form),
+		                                         $request);
+	}
+	
+	public function verMaestro($request, $match, $params = array ()){
+		$maestro = new Titulacion_Maestro ();
+		Gatuf::loadFunction ('Titulacion_Utils_grado');
+		
+		if (false === $maestro->getMaestro ($match[1])) {
+			throw new Gatuf_HTTP_Error404 ();
+		}
+		
+		$nombre = $maestro->nombre;
+		$apellido = $maestro->apellido;
+		$grado = $maestro->grado;
+		$sexo = $maestro->sexo;
+		$correo = $maestro->correo;
+		$gradoC = Titulacion_Utils_grado ($sexo, $grado);
+		
+
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/maestro/ver-maestro.html',
+		                                         array ('maestro' => $maestro,
+		                                                'nombre' => $nombre,
+		                                                'apellido' => $apellido,
+		                                                'grado' => $gradoC,
+		                                                'sexo' => $sexo,
+		                                                'correo' => $correo,
+		                                                'page_title' => 'Ver Maestro',
+		                                              
+		                                         ),
+		                                         $request);
+	}
+
 }

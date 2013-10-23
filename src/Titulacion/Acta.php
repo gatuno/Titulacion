@@ -34,6 +34,8 @@ class Titulacion_Acta extends Gatuf_Model {
 	/* Control interno */
 	public $createtime, $modifcationtime;
 	public $creador, $modificador;
+	public $mes;
+	
 	
 	function __construct() {
 		$this->_getConnection();
@@ -58,6 +60,14 @@ class Titulacion_Acta extends Gatuf_Model {
 		}
 		return true;
 	}
+	
+	/*function getMesCarrera($mes,$carrera){
+	$req = sprintf('SELECT  FROM %s WHERE carrera=%s', $this->getSqlViewTable (),Gatuf_DB_IntegerToDb ($carrera, $this->_con));
+	
+	
+	}
+	*/
+	
 
 	public function create() {
 		$this->preSave (true);
@@ -81,6 +91,7 @@ class Titulacion_Acta extends Gatuf_Model {
 			$this->createtime = date ('Y-m-d H:i:s');
 			
 			$anio = date('Y');
+			$mes = date ('M');
 			/* Generar el folio */
 			$sql = sprintf ('SELECT MAX(folio) as max_folio FROM %s WHERE carrera=%s AND plan=%s AND YEAR(createtime)=%s', $this->getSqlTable (), Gatuf_DB_IdentityToDb ($this->carrera, $this->_con), Gatuf_DB_IntegerToDb ($this->plan, $this->_con), Gatuf_DB_IntegerToDb ($anio, $this->_con));
 			
@@ -117,6 +128,17 @@ class Titulacion_Acta extends Gatuf_Model {
 		return '<a href="'.$url.'">'.$this->folio.'</a>/<a href="'.$url_anio.'">'.$this->anio.'</a>';
 	}
 	
+		/*funcion para que despliegue segun el mes*/
+	public function displaylinkedfechaHora ($extra = null){
+	
+		if (isset ($extra['f_mes'])){
+		return '<abbr title="'.$this->mes.'">'.$this->mes.'</abbr>';
+		}
+		$extra['f_mes'] = $this->mes;
+		$url_mes = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::index', array (), $extra);
+		return '<a href="'.$url_mes.'">'.$this->mes.'</a>';
+	}
+	
 	public function displaylinkedcarrera ($extra = null) {
 		if (isset ($extra['f_carrera'])) {
 			return '<abbr title="'.$this->carrera_descripcion.'">'.$this->carrera.'</abbr>';
@@ -134,6 +156,7 @@ class Titulacion_Acta extends Gatuf_Model {
 		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::index', array (), $extra);
 		return '<a href="'.$url.'">'.$this->plan_descripcion.'</a>';
 	}
+	
 	
 	public function displaylinkedmodalidad ($extra = null) {
 		if (isset ($extra['f_modalidad'])) {

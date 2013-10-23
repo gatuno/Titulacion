@@ -9,22 +9,6 @@ class Titulacion_Form_Alumno_Editar extends Gatuf_Form {
 		
 		$this->alumno = $extra['alumno'];
 		
-		$this->fields['codigo'] = new Gatuf_Form_Field_Varchar (
-			array (
-				'required' => false,
-				'label' => 'Código',
-				'initial' => $this->alumno->codigo,
-				'help_text' => 'El código de alumno de 9 caracteres',
-				'max_length' => 9,
-				'min_length' => 9,
-				'widget_attrs' => array (
-					'maxlength' => 9,
-					'size' => 12,
-					'readonly' => 'readonly',
-				),
-			)
-		);
-	
 		$this->fields['nombre']= new Gatuf_Form_Field_Varchar (
 			array (
 				'required' => true,
@@ -36,8 +20,8 @@ class Titulacion_Form_Alumno_Editar extends Gatuf_Form {
 					'maxlength'=> 50,
 					'size' =>30,
 				),
-			)
-		);
+		));
+		
 		$this->fields['apellido']= new Gatuf_Form_Field_Varchar (
 			array (
 				'required' => true,
@@ -49,8 +33,7 @@ class Titulacion_Form_Alumno_Editar extends Gatuf_Form {
 					'maxlength' => 100,
 					'size' => 30,
 				),
-			)
-		);
+		));
 		
 		$this->fields['sexo'] = new Gatuf_Form_Field_Varchar (
 			array (
@@ -286,5 +269,4 @@ class Titulacion_Form_Alumno_Editar extends Gatuf_Form {
 
 		return $domicilio;
 	}
-		
 }

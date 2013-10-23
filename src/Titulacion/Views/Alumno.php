@@ -72,7 +72,8 @@ class Titulacion_Views_Alumno {
 	public function editarAlumno ($request, $match) {
 		$alumno = new Titulacion_Alumno ();
 		if (false === ($alumno->getAlumno ($match[1]))) {
-			return new Gatuf_HTTP_Response_Json (array ());
+			$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::agregarAlumno', array (), (isset ($request->REQUEST['acta']) && $request->REQUEST['acta'] == 1) ? array ('acta' => 1) : array ());
+			return new Gatuf_HTTP_Response_Redirect ($url);
 		}
 		$extra = array ('alumno' => $alumno);
 		
@@ -99,6 +100,7 @@ class Titulacion_Views_Alumno {
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/alumno/edit-alumno.html',
 		                                         array ('page_title' => 'Actualizar alumno',
+		                                                'alumno' => $alumno,
 		                                                'form' => $form),
 		                                         $request);
 	}

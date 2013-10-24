@@ -1,6 +1,9 @@
 {extends 'titulacion/base.html'}
 {block body}
+{aperm 'puede_editar', $user, 'Titulacion.actualizar-maestros'}
+{if $puede_editar}
 <p><a href="{url 'Titulacion_Views_Maestro::actualizarMaestro', array ($maestro.codigo)}">Cambiar la información</a> de este profesor</a>
+{/if}
 <table class="form" summary="">
 <tr>
 <th style="text-align: right">

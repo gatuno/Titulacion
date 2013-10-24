@@ -1,5 +1,8 @@
 {extends 'titulacion/base.html'}
 {block body}
+{aperm 'puede_agregar', $user, 'Titulacion.agregar-carreras'}
+{if $puede_agregar}
 <a href="{url 'Titulacion_Views_Carrera::agregarCarrera'}"><img src="{media '/img/list-add.png'}" alt="Agregar carrera" />Agregar nueva carrera</a>
+{/if}
 {$paginador.render}
 {/block}

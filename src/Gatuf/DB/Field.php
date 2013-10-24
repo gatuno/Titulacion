@@ -22,32 +22,48 @@
 # ***** END LICENSE BLOCK ***** */
 
 /**
- * Display the messages for the current user.
+ * Default database field.
  */
-class Gatuf_Template_Tag_Messages extends Gatuf_Template_Tag
-{
-    function start($user)
-    {
-        if (is_object($user) && !$user->isAnonymous()) {
-            $messages = $user->getAndDeleteMessages();
-            if (count($messages) > 0) {
-                echo '<div class="user-messages">'."\n";
-                foreach ($messages as $m) {
-                    switch ($m['type']) {
-                        case 1:
-                            $clase = "info";
-                            break;
-                        case 2:
-                            $clase = "advertencia";
-                            break;
-                        case 3:
-                            $clase = "error";
-                            break;
-                    }
-                    echo '<div class="'.$clase.'"><p>'.$m['message'].'</p></div>';
-                }
-                echo '</div>';
-            }
-        }
-    }
+class Gatuf_DB_Field {
+	/**
+	 * The types are defined in the $mappings member variable of the
+	 * schema class of your database engine, for example
+	 * Pluf_DB_Schema_MySQL.
+	 */
+	public $type = '';
+
+	/**
+	 * The column name of the field.
+	 */
+	public $column = '';
+
+	/**
+	 * Current value of the field.
+	 */
+	public $value;
+
+	/**
+	 * All the extra parameters of the field.
+	 */
+	public $extra = array();
+
+	/**
+	 * The extra methods added to the model by the field.
+	 */
+	public $methods = array();
+
+	/**
+	 * Constructor.
+	 *
+	 * @param mixed Value ('')
+	 * @param string Column name ('')
+	 */
+	function __construct($value='', $column='', $extra=array()) {
+		$this->value = $value;
+		$this->column = $column;
+		if ($extra) {
+			$this->extra = array_merge($this->extra, $extra);
+		}
+	}
 }
+

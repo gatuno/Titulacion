@@ -22,32 +22,12 @@
 # ***** END LICENSE BLOCK ***** */
 
 /**
- * Display the messages for the current user.
+ * This field will automatically inflate/deflate its content.
+ *
+ * This can be used to store large text bodies where you do not need
+ * to directly search into the content using the standard SQL
+ * functions.
  */
-class Gatuf_Template_Tag_Messages extends Gatuf_Template_Tag
-{
-    function start($user)
-    {
-        if (is_object($user) && !$user->isAnonymous()) {
-            $messages = $user->getAndDeleteMessages();
-            if (count($messages) > 0) {
-                echo '<div class="user-messages">'."\n";
-                foreach ($messages as $m) {
-                    switch ($m['type']) {
-                        case 1:
-                            $clase = "info";
-                            break;
-                        case 2:
-                            $clase = "advertencia";
-                            break;
-                        case 3:
-                            $clase = "error";
-                            break;
-                    }
-                    echo '<div class="'.$clase.'"><p>'.$m['message'].'</p></div>';
-                }
-                echo '</div>';
-            }
-        }
-    }
+class Gatuf_DB_Field_Compressed extends Gatuf_DB_Field {
+	public $type = 'blob';
 }

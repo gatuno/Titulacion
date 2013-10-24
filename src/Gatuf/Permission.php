@@ -1,14 +1,72 @@
 <?php
 
 class Gatuf_Permission extends Gatuf_Model {
-	public $id;
-	public $name, $code_name;
-	public $description;
-	public $application;
+	public $_model = 'Gatuf_Permission';
 	
-	public function __construct () {
-		$this->_getConnection ();
-		$this->tabla = 'permisos';
+	function init () {
+		$this->_a['table'] = 'permissions';
+		$this->_a['model'] = 'Gatuf_Permission';
+		$this->primary_key = 'id';
+		
+		$this->_a['cols'] = array (
+			'id' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Sequence',
+			       'blank' => true,
+			),
+			'name' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'blank' => false,
+			       'size' => 50,
+			),
+			'code_name' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'blank' => false,
+			       'size' => 100,
+			),
+			'description' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'blank' => false,
+			       'size' => 250,
+			),
+			'application' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'size' => 150,
+			       'blank' => false,
+			),
+		);
+		
+		$this->_a['idx'] = array (
+			'code_name_idx' =>
+			array (
+			       'type' => 'normal',
+			       'col' => 'code_name',
+			),
+			'application_idx' =>
+			array (
+			       'type' => 'normal',
+			       'col' => 'application',
+			),
+		);
+		$hay = array (strtolower (Gatuf::config('gatuf_custom_group', 'Gatuf_Group')), strtolower($this->_a['model']));
+		sort ($hay);
+		$t_asso = $this->_con->pfx.$hay[0].'_'.$hay[1].'_assoc';
+		$t_perm = $this->_con->pfx.'permissions';
+		$this->_a['views'] = array (
+			'join_group' =>
+			array (
+			       'join' => 'LEFT JOIN '.$t_asso
+			                 .' ON '.$t_perm.'.id=gatuf_permission_id',
+			),
+		);
+	}
+	
+	function __toString () {
+		return $this->name.' ('.$this->application.'.'.$this->code_name.')';
 	}
 	
 	public static function getFromString ($perm) {

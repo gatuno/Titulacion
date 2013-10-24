@@ -22,32 +22,17 @@
 # ***** END LICENSE BLOCK ***** */
 
 /**
- * Display the messages for the current user.
+ * Setup of the Plume Framework.
+ *
+ * It creates all the tables for the framework models.
  */
-class Gatuf_Template_Tag_Messages extends Gatuf_Template_Tag
+
+function Gatuf_Migrations_1Setup_up($params=null)
 {
-    function start($user)
-    {
-        if (is_object($user) && !$user->isAnonymous()) {
-            $messages = $user->getAndDeleteMessages();
-            if (count($messages) > 0) {
-                echo '<div class="user-messages">'."\n";
-                foreach ($messages as $m) {
-                    switch ($m['type']) {
-                        case 1:
-                            $clase = "info";
-                            break;
-                        case 2:
-                            $clase = "advertencia";
-                            break;
-                        case 3:
-                            $clase = "error";
-                            break;
-                    }
-                    echo '<div class="'.$clase.'"><p>'.$m['message'].'</p></div>';
-                }
-                echo '</div>';
-            }
-        }
-    }
+    // Do nothing as now in the Install.php file.
+}
+
+function Gatuf_Migrations_1Setup_down($params=null)
+{
+    // Do nothing as now in the Install.php file.
 }

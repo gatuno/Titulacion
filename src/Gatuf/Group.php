@@ -21,33 +21,42 @@
 #
 # ***** END LICENSE BLOCK ***** */
 
-/**
- * Display the messages for the current user.
- */
-class Gatuf_Template_Tag_Messages extends Gatuf_Template_Tag
-{
-    function start($user)
-    {
-        if (is_object($user) && !$user->isAnonymous()) {
-            $messages = $user->getAndDeleteMessages();
-            if (count($messages) > 0) {
-                echo '<div class="user-messages">'."\n";
-                foreach ($messages as $m) {
-                    switch ($m['type']) {
-                        case 1:
-                            $clase = "info";
-                            break;
-                        case 2:
-                            $clase = "advertencia";
-                            break;
-                        case 3:
-                            $clase = "error";
-                            break;
-                    }
-                    echo '<div class="'.$clase.'"><p>'.$m['message'].'</p></div>';
-                }
-                echo '</div>';
-            }
-        }
-    }
+class Gatuf_Group extends Gatuf_Model {
+	public $_model = 'Gatuf_Group';
+	
+	function init () {
+		$this->_a['table'] = 'groups';
+		$this->_a['model'] = 'Gatuf_Group';
+		$this->primary_key = 'id';
+		
+		$this->_a['cols'] = array (
+			'id' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Sequence',
+			       'blank' => true,
+			),
+			'name' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'blank' => false,
+			       'size' => 50,
+			),
+			'description' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'blank' => false,
+			       'size' => 250,
+			),
+			'permissions' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Manytomany',
+			       'blank' => true,
+			       'model' => 'Gatuf_Permission',
+			),
+		);
+	}
+	
+	function __toString() {
+		return $this->name;
+	}
 }

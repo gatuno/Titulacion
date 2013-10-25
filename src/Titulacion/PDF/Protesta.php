@@ -41,6 +41,7 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		}
 		
 		
+		
 		$leyenda1 = 'En la división de Electrónica y Computación del Centro Universitario de Ciencias Exactas e Ingenierías de la Universidad de Guadalajara, hoy día ';
 		$leyenda2 = 'ante el honorable Comité de Titulación que ha tenido a bien emitir el veredicto aprobatorio a mi examen profesional para obtener el título de';
 		$leyenda3 = 'ante el público que me ha honrado con su presencia en este acto solemne:';
@@ -69,6 +70,9 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		$this->SetY(45);
 		$this->SetX(94);
 		$this->Cell(30.5,0,'PROTESTO',0,0,'J');
+
+		$this->Image (dirname(__FILE__).'/data/udg/udg1.png', 3, 26, 210, 168);
+
 		
 		$this->SetFont('Arial','', 12);
 		

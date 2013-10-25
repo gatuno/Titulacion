@@ -3,5 +3,9 @@
 <h2>Detalles</h2>
 <p><strong>Codigo: </strong><tt>{$alumno.codigo}</tt><br />
 <p><strong>Nombre: </strong><tt>{$alumno.nombre} {$alumno.apellido}</tt><br />
+{if $alumno.sexo == 'M'}
 <p><a href="{url 'Titulacion_Views_Alumno::editarAlumno', array ($alumno.codigo)}">Cambiar la información</a> de este alumno</a>
+{else}
+<p><a href="{url 'Titulacion_Views_Alumno::editarAlumno', array ($alumno.codigo)}">Cambiar la información</a> de esta alumna</a>
+{/if}
 {/block}

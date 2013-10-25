@@ -1,9 +1,14 @@
 {extends 'titulacion/base.html'}
 {block body}
+{aperm 'puede_actualizar', $user, 'Titulacion.actualizar-alumnos'}
+{aperm 'puede_agregar', $user, 'Titulacion.agregar-alumnos'}
+{aperm 'puede_generar', $user, 'Titulacion.generar-actas'}
+{if ($puede_generar && $puede_agregar && $puede_actualizar)}
 <h2>Generar nueva acta</h2>
 <form action="." method="post">
 {$form.render_p}
 <input type="submit" value="Enviar" />
 </form>
+{/if}
 {$paginador.render}
 {/block}

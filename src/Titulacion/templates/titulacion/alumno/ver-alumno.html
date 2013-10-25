@@ -1,0 +1,7 @@
+{extends 'titulacion/base.html'}
+{block body}
+<h2>Detalles</h2>
+<p><strong>Codigo: </strong><tt>{$alumno.codigo}</tt><br />
+<p><strong>Nombre: </strong><tt>{$alumno.nombre} {$alumno.apellido}</tt><br />
+<p><a href="{url 'Titulacion_Views_Alumno::editarAlumno', array ($alumno.codigo)}">Cambiar la información</a> de este alumno</a>
+{/block}

@@ -1,9 +1,31 @@
 {extends 'titulacion/base.html'}
 {block body}
-<h2>Detalles</h2>
-<p><strong>Codigo: </strong><tt>{$maestro.codigo}</tt><br />
-<strong>Nombre: </strong>{$maestro.nombre} {$maestro.apellido}</p>
-<strong>Grado:</strong> <tt>{$maestro.grado}</tt><br />
-<strong>Correo:</strong> <tt>{$maestro.correo}</tt><br />
-</p>
+{aperm 'puede_editar', $user, 'Titulacion.actualizar-maestros'}
+{if $puede_editar}
+<p><a href="{url 'Titulacion_Views_Maestro::actualizarMaestro', array ($maestro.codigo)}">Cambiar la información</a> de este profesor</a>
+{/if}
+<table class="form" summary="">
+<tr>
+<th style="text-align: right">
+        {if $user.codigo == $maestro.codigo}
+        <a href="http://gravatar.com/emails/" title="Cambie su imagen en gravatar.com">
+        {else}
+    <a href="http://www.gravatar.com/avatar/{$maestro.correo|md5}.jpg?s=400">
+    {/if}
+    <img src="http://www.gravatar.com/avatar/{$maestro.correo|md5}.jpg?s=60" alt=" " />
+    </a>
+</th>
+{if $user.codigo == $maestro.codigo}
+        <td>Yo</td>
+{else}
+        <td>{$maestro.apellido} {$maestro.nombre}</td>
+{/if}
+</tr>
+<tr>
+<th>Última vez visto:</th>
+<td>{$maestro.last_login|dateago}</td>
+</tr>
+</table>
+<h2>Actas en que ha participado</h2>
+<p>TODO: Falta por hacer </p>
 {/block}

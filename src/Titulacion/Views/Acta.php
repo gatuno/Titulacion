@@ -5,7 +5,7 @@ Gatuf::loadFunction('Gatuf_HTTP_URL_urlForView');
 
 class Titulacion_Views_Acta {
 
-	public $index_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-titulacion'));
+	public $index_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-actas'));
 	public function index($request, $match) {
 		if ($request->method == 'POST') {
 			$form = new Titulacion_Form_Alumno_Seleccionar ($request->POST, array ());
@@ -124,7 +124,7 @@ class Titulacion_Views_Acta {
 
 	}
 
-	public $verActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-titulacion'));
+	public $verActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-actas'));
 	public function verActa($request, $match, $params = array ()){
 		$acta = new Titulacion_Acta ();
 
@@ -191,7 +191,7 @@ class Titulacion_Views_Acta {
 		                                         $request);
 	}
 
-	public $imprimirActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-actas'));
+	public $imprimirActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.imprimir-actas'));
 	public function imprimirActa ($request, $match){
 		$acta = new Titulacion_Acta ();
 
@@ -257,7 +257,7 @@ class Titulacion_Views_Acta {
 		return new Gatuf_HTTP_Response_File ('/tmp/'.$nombre_pdf, $nombre_pdf, 'application/pdf', true);
 	}
 	
-	public $imprimirProtesta_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-actas'));
+	public $imprimirProtesta_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.imprimir-actas'));
 	public function imprimirProtesta($request, $match) {
 		$acta = new Titulacion_Acta();
 		
@@ -315,7 +315,7 @@ class Titulacion_Views_Acta {
 		
 	}
 	
-	public $imprimirCitatorio_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-actas'));
+	public $imprimirCitatorio_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.imprimir-actas'));
 	public function imprimirCitatorio ($request, $match) {
 		$acta = new Titulacion_Acta();
 		
@@ -367,7 +367,7 @@ class Titulacion_Views_Acta {
 		return new Gatuf_HTTP_Response_File ('/tmp/'.$nombre_pdf, $nombre_pdf, 'application/pdf', true);
 	}
 	
-	public $actualizarActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-actas'));
+	public $actualizarActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.actualizar-actas'));
 	public function actualizarActa ($request, $match) {
 		Gatuf::loadFunction ('Titulacion_Utils_formatearDomicilio');
 		$acta = new Titulacion_Acta ();
@@ -430,7 +430,7 @@ class Titulacion_Views_Acta {
 		                                         $request);
 	}
 	
-	public $eliminarActa_precond = array ('Gatuf_Precondition::adminRequired');
+	public $eliminarActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.eliminar-actas'));
 	public function eliminarActa ($request, $match) {
 		$acta = new Titulacion_Acta ();
 
@@ -490,7 +490,7 @@ class Titulacion_Views_Acta {
 		                                         $request);
 	}
 	
-	public $index_eliminadas_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-titulacion'));
+	public $index_eliminadas_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-actas'));
 	public function index_eliminadas($request, $match) {
 		$actas = new Titulacion_Acta ();
 

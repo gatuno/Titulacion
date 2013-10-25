@@ -4,15 +4,17 @@ Gatuf::loadFunction('Gatuf_Shortcuts_RenderToResponse');
 
 class Titulacion_Views_Maestro {
 	public function index ($request, $match) {
+		Gatuf::loadFunction ('Titulacion_Utils_grado');
 		$maestro = new Titulacion_Maestro ();
 		
 		$pag = new Gatuf_Paginator ($maestro);
 		$pag->action = array ('Titulacion_Views_Maestro::index');
 		$pag->summary = 'Lista de maestros';
 		$list_display = array (
-			array ('codigo', 'Gatuf_Paginator_DisplayVal', 'Código'),
+			array ('codigo', 'Gatuf_Paginator_FKLink', 'CÃ³digo'),
 			array ('apellido', 'Gatuf_Paginator_DisplayVal', 'Apellido'),
 			array ('nombre', 'Gatuf_Paginator_DisplayVal', 'Nombre'),
+			array ('grado', 'Gatuf_Paginator_FKExtra', 'Grado'),
 		);
 		
 		$pag->items_per_page = 50;
@@ -20,7 +22,7 @@ class Titulacion_Views_Maestro {
 		$pag->max_number_pages = 5;
 		$pag->configure ($list_display,
 			array ('codigo', 'nombre', 'apellido'),
-			array ('codigo', 'nombre', 'apellido')
+			array ('codigo', 'nombre', 'apellido', 'grado')
 		);
 		
 		$pag->setFromRequest ($request);
@@ -31,7 +33,7 @@ class Titulacion_Views_Maestro {
 		                                         $request);
 	}
 	
-	public $agregarMaestro_precond = array (array ('Gatuf_Precondition::hasPerm', 'SIIAU.agregar-maestros'));
+	public $agregarMaestro_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.agregar-maestros'));
 	public function agregarMaestro ($request, $match) {
 		$title = 'Nuevo profesor';
 		
@@ -50,60 +52,56 @@ class Titulacion_Views_Maestro {
 			$form = new Titulacion_Form_Maestro_Agregar (null, $extra);
 		}
 		
-		return Gatuf_Shortcuts_RenderToResponse ('titulacion/maestro/edit-maestro.html',
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/maestro/agregar-maestro.html',
 		                                         array ('page_title' => $title,
 		                                                'form' => $form),
 		                                         $request);
 	}
 	
+	public $actualizarMaestro_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.actualizar-maestros'));
 	public function actualizarMaestro ($request, $match) {
-		$acta = new Titulacion_Maestro ();
-
+		$title = 'Actualizar profesor';
+		
+		$maestro = new Titulacion_Maestro ();
+		
 		if (false === $maestro->getMaestro ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();
 		}
-
-			$form = new Titulacion_Form_Maestro_Editar (null, $extra);
 		
-
+		$extra = array ('maestro' => $maestro);
+		
+		if ($request->method == 'POST') {
+			$form = new Titulacion_Form_Maestro_Actualizar ($request->POST, $extra);
+			
+			if ($form->isValid()) {
+				$maestro = $form->save ();
+				
+				$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Maestro::verMaestro', array ($maestro->codigo));
+				return new Gatuf_HTTP_Response_Redirect ($url);
+			}
+		} else {
+			$form = new Titulacion_Form_Maestro_Actualizar (null, $extra);
+		}
+		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/maestro/edit-maestro.html',
-		                                         array ('page_title' => 'Actualizar maestro',
+		                                         array ('page_title' => $title,
 		                                                'maestro' => $maestro,
-														'codigo' => $codigo,
-														'nombre' => $apellido,
-														'grado' => $grado,
-														'correo' => $correo,		                                             
 		                                                'form' => $form),
 		                                         $request);
 	}
 	
-	public function verMaestro($request, $match, $params = array ()){
+	public function verMaestro ($request, $match) {
+		$title = 'Perfil pÃºblico del profesor';
+		
 		$maestro = new Titulacion_Maestro ();
-		Gatuf::loadFunction ('Titulacion_Utils_grado');
 		
 		if (false === $maestro->getMaestro ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();
 		}
 		
-		$nombre = $maestro->nombre;
-		$apellido = $maestro->apellido;
-		$grado = $maestro->grado;
-		$sexo = $maestro->sexo;
-		$correo = $maestro->correo;
-		$gradoC = Titulacion_Utils_grado ($sexo, $grado);
-		
-
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/maestro/ver-maestro.html',
 		                                         array ('maestro' => $maestro,
-		                                                'nombre' => $nombre,
-		                                                'apellido' => $apellido,
-		                                                'grado' => $gradoC,
-		                                                'sexo' => $sexo,
-		                                                'correo' => $correo,
-		                                                'page_title' => 'Ver Maestro',
-		                                              
-		                                         ),
+		                                                'page_title' => $title),
 		                                         $request);
 	}
-
 }

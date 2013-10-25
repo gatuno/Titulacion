@@ -4,236 +4,236 @@ $ctl = array ();
 
 /* Bloque base:
 $ctl[] = array (
-	'regex' => '#^/ /$#',
-	'base' => $base,
-	'model' => 'Titulacion_',
-	'method' => '',
+        'regex' => '#^/ /$#',
+        'base' => $base,
+        'model' => 'Titulacion_',
+        'method' => '',
 );
 */
 
 $ctl[] = array (
-	'regex' => '#^/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views',
-	'method' => 'index',
+        'regex' => '#^/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views',
+        'method' => 'index',
 );
 
 $ctl[] = array (
-	'regex' => '#^/login/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views',
-	'method' => 'login',
-	'name' => 'login_view'
+        'regex' => '#^/login/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views',
+        'method' => 'login',
+        'name' => 'login_view'
 );
 
 $ctl[] = array (
-	'regex' => '#^/logout/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views',
-	'method' => 'logout',
+        'regex' => '#^/logout/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views',
+        'method' => 'logout',
 );
 
 /* Recuperación de contraseñas */
 $ctl[] = array (
-	'regex' => '#^/password/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views',
-	'method' => 'passwordRecoveryAsk',
+        'regex' => '#^/password/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views',
+        'method' => 'passwordRecoveryAsk',
 );
 
 $ctl[] = array (
-	'regex' => '#^/password/ik/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views',
-	'method' => 'passwordRecoveryInputCode',
+        'regex' => '#^/password/ik/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views',
+        'method' => 'passwordRecoveryInputCode',
 );
 
 $ctl[] = array (
-	'regex' => '#^/password/k/(.*)/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views',
-	'method' => 'passwordRecovery',
+        'regex' => '#^/password/k/(.*)/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views',
+        'method' => 'passwordRecovery',
 );
 
 $ctl[] = array (
-	'regex' => '#^/preferences/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views',
-	'method' => 'preferences',
+        'regex' => '#^/preferences/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views',
+        'method' => 'preferences',
 );
 
 /* Listado de carreras */
 $ctl[] = array (
-	'regex' => '#^/carreras/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Carrera',
-	'method' => 'index',
+        'regex' => '#^/carreras/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_Carrera',
+        'method' => 'index',
 );
 
 $ctl[] = array (
-	'regex' => '#^/carreras/add/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Carrera',
-	'method' => 'agregarCarrera',
+        'regex' => '#^/carreras/add/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_Carrera',
+        'method' => 'agregarCarrera',
 );
 
 /* Listado de alumnos */
 $ctl[] = array (
-	'regex' => '#^/alumnos/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Alumno',
-	'method' => 'index',
+        'regex' => '#^/alumnos/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_Alumno',
+        'method' => 'index',
 );
 
 $ctl[] = array (
-	'regex'=>'#^/alumnos/add/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Alumno',
-	'method' =>'agregarAlumno'
+        'regex'=>'#^/alumnos/add/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_Alumno',
+        'method' =>'agregarAlumno'
 );
 
 $ctl[] = array (
-	'regex' => '#^/alumno/(\w\d{8})/update/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Alumno',
-	'method' => 'editarAlumno',
+        'regex' => '#^/alumno/(\w\d{8})/update/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_Alumno',
+        'method' => 'editarAlumno',
 );
 
-$ctl[] = array (
-	'regex' => '#^/alumno/(\w\d{8})/json/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Alumno',
-	'method' => 'jsonAlumno',
+$ctl[] = array(
+        'regex' => '#^/alumno/(\d+)/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_Alumno',
+        'method' => 'verAlumno',
 );
 
 /* Modalidades de titulacion */
 $ctl[] = array (
-	'regex' => '#^/modalidades/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Modalidad',
-	'method' => 'index',
+        'regex' => '#^/modalidades/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_Modalidad',
+        'method' => 'index',
 );
 
 $ctl[] = array (
-	'regex' => '#^/modalidades/add/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Modalidad',
-	'method' => 'agregarOpcion',
+        'regex' => '#^/modalidades/add/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_Modalidad',
+        'method' => 'agregarOpcion',
 );
 
 $ctl[] = array (
-	'regex' => '#^/modalidad/(\d+)/update/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Modalidad',
-	'method' => 'actualizarOpcion',
+        'regex' => '#^/modalidad/(\d+)/update/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_Modalidad',
+        'method' => 'actualizarOpcion',
 );
 
 $ctl[] = array (
-	'regex' => '#^/modalidad/(\d+)/json/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Modalidad',
-	'method' => 'jsonOpcion',
+        'regex' => '#^/modalidad/(\d+)/json/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_Modalidad',
+        'method' => 'jsonOpcion',
 );
 
 /* Listado de actas de titulacion */
 $ctl[] =array (
-	'regex' => '#^/actas/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Acta',
-	'method' => 'index',
+        'regex' => '#^/actas/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_Acta',
+        'method' => 'index',
 );
 
 $ctl[] = array (
-	'regex' => '#^/actas/add/(\w\d{8})/(\d+)/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Acta',
-	'method' => 'agregarActa',
+        'regex' => '#^/actas/add/(\w\d{8})/(\d+)/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_Acta',
+        'method' => 'agregarActa',
 );
 
 $ctl[] =array(
-	'regex' => '#^/acta/(\d+)/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Acta',
-	'method' => 'verActa',
+        'regex' => '#^/acta/(\d+)/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_Acta',
+        'method' => 'verActa',
 );
 
 $ctl[] =array(
-	'regex' => '#^/acta/(\d+)/update/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Acta',
-	'method' => 'actualizarActa',
+        'regex' => '#^/acta/(\d+)/update/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_Acta',
+        'method' => 'actualizarActa',
 );
 
 $ctl[] =array(
-	'regex' => '#^/acta/(\d+)/imprimir/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Acta',
-	'method' => 'imprimirActa',
+        'regex' => '#^/acta/(\d+)/imprimir/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_Acta',
+        'method' => 'imprimirActa',
 );
 
 $ctl[] =array(
-	'regex' => '#^/acta/(\d+)/protesta/$#',	
-	'base' => $base,
-	'model' => 'Titulacion_Views_Acta',
-	'method' => 'imprimirProtesta',
+        'regex' => '#^/acta/(\d+)/protesta/$#',        
+        'base' => $base,
+        'model' => 'Titulacion_Views_Acta',
+        'method' => 'imprimirProtesta',
 );
 
 $ctl[] =array(
-	'regex' => '#^/acta/(\d+)/citatorio/$#',	
-	'base' => $base,
-	'model' => 'Titulacion_Views_Acta',
-	'method' => 'imprimirCitatorio',
+        'regex' => '#^/acta/(\d+)/citatorio/$#',        
+        'base' => $base,
+        'model' => 'Titulacion_Views_Acta',
+        'method' => 'imprimirCitatorio',
 );
 
 $ctl[] =array(
-	'regex' => '#^/acta/(\d+)/eliminar/$#',	
-	'base' => $base,
-	'model' => 'Titulacion_Views_Acta',
-	'method' => 'eliminarActa',
+        'regex' => '#^/acta/(\d+)/eliminar/$#',        
+        'base' => $base,
+        'model' => 'Titulacion_Views_Acta',
+        'method' => 'eliminarActa',
 );
 
 $ctl[] =array (
-	'regex' => '#^/actas/eliminadas/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Acta',
-	'method' => 'index_eliminadas',
+        'regex' => '#^/actas/eliminadas/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_Acta',
+        'method' => 'index_eliminadas',
 );
 
 /* Listado de los planes de estudio */
 $ctl[] = array (
-	'regex' => '#^/planes/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_PlanEstudio',
-	'method' => 'index',
+        'regex' => '#^/planes/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_PlanEstudio',
+        'method' => 'index',
 );
 
 /* Bloque para los maestros */
 $ctl[] = array (
-	'regex' => '#^/maestros/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Maestro',
-	'method' => 'index',
+        'regex' => '#^/maestros/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_Maestro',
+        'method' => 'index',
 );
 
 $ctl[] = array(
-	'regex' => '#^/maestros/add/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Maestro',
-	'method' => 'agregarMaestro',
+        'regex' => '#^/maestros/add/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_Maestro',
+        'method' => 'agregarMaestro',
 );
 
-$ctl[] =array(
-	'regex' => '#^/maestros/(\d+)/update/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Maestro',
-	'method' => 'actualizarMaestro',
+$ctl[] = array(
+        'regex' => '#^/maestros/(\d+)/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_Maestro',
+        'method' => 'verMaestro',
 );
 
-$ctl[] =array(
-	'regex' => '#^/maestro/(\d+)/$#',
-	'base' => $base,
-	'model' => 'Titulacion_Views_Maestro',
-	'method' => 'verMaestro',
+$ctl[] = array(
+        'regex' => '#^/maestros/(\d+)/update/$#',
+        'base' => $base,
+        'model' => 'Titulacion_Views_Maestro',
+        'method' => 'actualizarMaestro',
 );
 
 return $ctl;

@@ -172,8 +172,10 @@ class Titulacion_User extends Gatuf_Model {
 	}
 	
 	function hasPerm ($perm, $obj = null) {
+		if ($this->isAnonymous ()) return false;
 		if (!$this->active) return false;
 		if ($this->admin) return true;
+		
 		$perms = $this->getAllPermissions ();
 		
 		if (in_array ($perm, $perms)) return true;

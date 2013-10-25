@@ -43,4 +43,8 @@ class Titulacion_Alumno extends Gatuf_Model {
 		
 		return true;
 	}
+	
+	 public function displaylinkedcodigo () {
+                return '<a href="'.Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::verAlumno', array ($this->codigo)).'">'.$this->codigo.'</a>';
+        }
 }

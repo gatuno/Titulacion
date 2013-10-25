@@ -4,6 +4,7 @@ Gatuf::loadFunction('Gatuf_Shortcuts_RenderToResponse');
 Gatuf::loadFunction('Gatuf_HTTP_URL_urlForView');
 
 class Titulacion_Views_Modalidad {
+	public $index_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-actas'));
 	public function index ($request, $match) {
 		$opciones = new Titulacion_Opcion ();
 		
@@ -34,7 +35,7 @@ class Titulacion_Views_Modalidad {
 		                                         $request);
 	}
 	
-	public $agregarOpcion_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.admin-titulacion'));
+	public $agregarOpcion_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.agregar-opciones'));
 	public function agregarOpcion ($request, $match) {
 		if ($request->method == 'POST') {
 			$form = new Titulacion_Form_Opcion_Agregar ($request->POST);
@@ -55,7 +56,7 @@ class Titulacion_Views_Modalidad {
 		                                         $request);
 	}
 	
-	public $actualizarOpcion_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.admin-titulacion'));
+	public $actualizarOpcion_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.actualizar-opciones'));
 	public function actualizarOpcion ($request, $match) {
 		$opcion = new Titulacion_Opcion ();
 		
@@ -88,6 +89,7 @@ class Titulacion_Views_Modalidad {
 		                                         $request);
 	}
 	
+	public $jsonOpcion_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-actas'));
 	public function jsonOpcion ($request, $match) {
 		$opcion = new Titulacion_Opcion ();
 		

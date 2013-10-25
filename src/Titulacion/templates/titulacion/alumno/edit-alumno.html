@@ -12,11 +12,8 @@
 {$form.f.acta|safe}
 <table>
 	<tbody>
-	<tr><th><strong>{$form.f.codigo.labelTag}:</strong></th>
-	<td>{if $form.f.codigo.errors}{$form.f.codigo.fieldErrors}{/if}
-		{$form.f.codigo|safe}<br />
-		<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.codigo.help_text}</span> -->
-	</td></tr>
+	<tr><th><strong>Código:</strong></th>
+	<td>{$alumno.codigo}</td></tr>
 	<tr><th><strong>{$form.f.apellido.labelTag}:</strong></th>
 	<td>{if $form.f.apellido.errors}{$form.f.apellido.fieldErrors}{/if}
 		{$form.f.apellido|safe}<br />

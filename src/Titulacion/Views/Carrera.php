@@ -31,7 +31,7 @@ class Titulacion_Views_Carrera {
 		                                         $request);
 	}
 	
-	public $agregarCarrera_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.admin-titulacion'));
+	public $agregarCarrera_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.agregar-carreras'));
 	public function agregarCarrera ($request, $match) {
 		$title = 'Crear carrera';
 		$extra = array ();

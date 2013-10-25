@@ -59,7 +59,7 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		
 		
 		
-		$this->SetFont('Arial','', 12);
+		$this->SetFont('Arial','B', 12);
 		$this->Addpage('P','Letter');
 		
 		$this->SetY(18);
@@ -71,10 +71,10 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		$this->SetX(94);
 		$this->Cell(30.5,0,'PROTESTO',0,0,'J');
 
-		$this->Image (dirname(__FILE__).'/data/udg/udg1.png', 3, 26, 210, 168);
+		$this->Image (dirname(__FILE__).'/data/udg/UdgLogo.png', 3, 26, 210, 168);
 
 		
-		$this->SetFont('Arial','', 12);
+		$this->SetFont('Arial','B', 12);
 		
 		$this->SetY(60);
 		$this->SetX(19);

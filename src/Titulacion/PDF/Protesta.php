@@ -1,14 +1,10 @@
 <?php
 
 class Titulacion_PDF_Protesta extends External_FPDF{
-
-	
 	function renderBase(){
 		Gatuf::loadFunction ('Titulacion_Utils_grado');
 		Gatuf::loadFunction ('Titulacion_Utils_numeroLetra');
 		setLocale(LC_ALL, 'es_MX.UTF-8');
-
-		
 		
 		$grado = Titulacion_Utils_grado ($this->jurado1->sexo, $this->jurado1->grado);
 		$nombreCompletoj1 = mb_strtoupper ($grado.' '.$this->jurado1->apellido.' '.$this->jurado1->nombre);
@@ -25,7 +21,6 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		$grado = Titulacion_Utils_grado ($this->director->sexo, $this->director->grado);
 		$director = mb_strtoupper ($grado.' '.$this->director->apellido.' '.$this->director->nombre);
 		
-		
 		$dia = strftime("%e", strtotime ($this->acta->fechaHora)); /* Extraer el día */
 		$mes = (strftime("%B", strtotime ($this->acta->fechaHora))); /* El nombre del mes */
 		$anio = strftime("%Y", strtotime ($this->acta->fechaHora)); /* El año */
@@ -39,8 +34,6 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		} else {
 			$grado = mb_strtoupper($this->carrera->grado_m);
 		}
-		
-		
 		
 		$leyenda1 = 'En la división de Electrónica y Computación del Centro Universitario de Ciencias Exactas e Ingenierías de la Universidad de Guadalajara, hoy día ';
 		$leyenda2 = 'ante el honorable Comité de Titulación que ha tenido a bien emitir el veredicto aprobatorio a mi examen profesional para obtener el título de';
@@ -57,8 +50,6 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		$grado = Titulacion_Utils_grado ($this->alumno->sexo, $primeraGrado);
 		$sustentante = mb_strtoupper($grado.' '.$this->acta->alumno_nombre.' '.$this->acta->alumno_apellido);
 		
-		
-		
 		$this->SetFont('Arial','B', 12);
 		$this->Addpage('P','Letter');
 		
@@ -70,9 +61,8 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		$this->SetY(45);
 		$this->SetX(94);
 		$this->Cell(30.5,0,'PROTESTO',0,0,'J');
-
+		
 		$this->Image (dirname(__FILE__).'/data/udg/UdgLogo.png', 3, 26, 210, 168);
-
 		
 		$this->SetFont('Arial','B', 12);
 		
@@ -100,8 +90,7 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		$this->SetX(19);
 		$this->Multicell(181,4,$punto6,0,'L');
 
-		
-	/*aqui van los nombres de el Titulado y las de los mienmbros del jurado*/
+		/*aqui van los nombres de el Titulado y las de los mienmbros del jurado*/
 		
 		$this->SetFont('Arial','', 10);
 		
@@ -109,12 +98,9 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		$this->SetX(19);
 		$this->Cell(78.2,3,$sustentante ,'B',0,'C');
 		
-		
 		$this->SetY(173.9);
 		$this->SetX(19);
 		$this->Cell(78.2,3,'Firma del sustentante',0,0,'C');
-		
-	
 		
 		$this->SetY(166);
 		$this->SetX(128.3);
@@ -124,7 +110,6 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		$this->SetX(128.3);
 		$this->Cell(78.2,3,'Comité de titulación',0,0,'C');
 		
-		
 		$this->SetY(200);
 		$this->SetX(19);
 		$this->Cell(78.2,3,$nombreCompletoj2,'B',0,'C');
@@ -132,7 +117,6 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		$this->SetY(204);
 		$this->SetX(19);
 		$this->Cell(78.2,3,'Comité de titulación',0,0,'C');
-		
 		
 		$this->SetY(200);
 		$this->SetX(128.3);
@@ -149,9 +133,7 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		$this->SetY(226);
 		$this->SetX(128.3);
 		$this->Cell(78.2,3,'La Secretario',0,0,'C');
-	
 		
-	
 		$this->SetY(253);
 		$this->SetX(128.3);
 		$this->Cell(78.2,5,$secretario,'T',0,'C');
@@ -159,11 +141,5 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		$this->SetY(253);
 		$this->SetX(19);
 		$this->Cell(78.2,5,$director,'T',0,'C');
-		
-		
-		
-		
-	
-
 	}
 }

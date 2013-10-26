@@ -7,18 +7,18 @@
 <table class="form" summary="">
 <tr>
 <th style="text-align: right">
-        {if $user.codigo == $maestro.codigo}
-        <a href="http://gravatar.com/emails/" title="Cambie su imagen en gravatar.com">
-        {else}
+	{if $user.codigo == $maestro.codigo}
+	<a href="http://gravatar.com/emails/" title="Cambie su imagen en gravatar.com">
+	{else}
     <a href="http://www.gravatar.com/avatar/{$maestro.correo|md5}.jpg?s=400">
     {/if}
     <img src="http://www.gravatar.com/avatar/{$maestro.correo|md5}.jpg?s=60" alt=" " />
     </a>
 </th>
 {if $user.codigo == $maestro.codigo}
-        <td>Yo</td>
+	<td>Yo</td>
 {else}
-        <td>{$maestro.apellido} {$maestro.nombre}</td>
+	<td>{$maestro.apellido} {$maestro.nombre}</td>
 {/if}
 </tr>
 <tr>

@@ -11,7 +11,7 @@ class Titulacion_Views_Maestro {
 		$pag->action = array ('Titulacion_Views_Maestro::index');
 		$pag->summary = 'Lista de maestros';
 		$list_display = array (
-			array ('codigo', 'Gatuf_Paginator_FKLink', 'CÃ³digo'),
+			array ('codigo', 'Gatuf_Paginator_FKLink', 'Código'),
 			array ('apellido', 'Gatuf_Paginator_DisplayVal', 'Apellido'),
 			array ('nombre', 'Gatuf_Paginator_DisplayVal', 'Nombre'),
 			array ('grado', 'Gatuf_Paginator_FKExtra', 'Grado'),
@@ -91,7 +91,7 @@ class Titulacion_Views_Maestro {
 	}
 	
 	public function verMaestro ($request, $match) {
-		$title = 'Perfil pÃºblico del profesor';
+		$title = 'Perfil público del profesor';
 		
 		$maestro = new Titulacion_Maestro ();
 		

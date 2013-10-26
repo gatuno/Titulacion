@@ -802,7 +802,6 @@ function Gatuf_Paginator_DateYMDHMS($field, $item) {
     return Gatuf_Template_dateFormat($item->$field, '%d/%m/%Y %H:%M:%S');
 }
 
-
 function Gatuf_Paginator_DateYMDHM($field, $item) {
     Gatuf::loadFunction('Gatuf_Template_dateFormat');
     return Gatuf_Template_dateFormat($item->$field, '%d/%m/%Y %H:%M');

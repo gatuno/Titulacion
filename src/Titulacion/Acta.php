@@ -61,6 +61,74 @@ class Titulacion_Acta extends Gatuf_Model {
 		return true;
 	}
 	
+	function getDirector ($codigo){
+		$req = sprintf('SELECT *FROM %s WHERE director_division=%s', $this->getSqlViewTable (),Gatuf_DB_IntegerToDb ($codigo, $this->_con));
+		if(false=== ($rs = $this->_con->select ($req))){
+			throw new Exception ($this->_con->getError());
+		}
+		if(count ($rs)== 0){
+			return false;
+		}
+		foreach ($rs[0] as $col =>$val){
+			$this->$col = $val;
+		}
+		return true;
+	}
+	
+	function getSecretario ($codigo){
+		$req = sprintf('SELECT *FROM %s WHERE secretario_division=%s', $this->getSqlViewTable (),Gatuf_DB_IntegerToDb ($codigo, $this->_con));
+		if(false=== ($rs = $this->_con->select ($req))){
+			throw new Exception ($this->_con->getError());
+		}
+		if(count ($rs)== 0){
+			return false;
+		}
+		foreach ($rs[0] as $col =>$val){
+			$this->$col = $val;
+		}
+		return true;
+	}
+	function getJurado1 ($codigo){
+		$req = sprintf('SELECT *FROM %s WHERE jurado1=%s', $this->getSqlViewTable (),Gatuf_DB_IntegerToDb ($codigo, $this->_con));
+		if(false=== ($rs = $this->_con->select ($req))){
+			throw new Exception ($this->_con->getError());
+		}
+		if(count ($rs)== 0){
+			return false;
+		}
+		foreach ($rs[0] as $col =>$val){
+			$this->$col = $val;
+		}
+		return true;
+	}
+	
+	function getJurado2 ($codigo){
+		$req = sprintf('SELECT *FROM %s WHERE jurado1=%s', $this->getSqlViewTable (),Gatuf_DB_IntegerToDb ($codigo, $this->_con));
+		if(false=== ($rs = $this->_con->select ($req))){
+			throw new Exception ($this->_con->getError());
+		}
+		if(count ($rs)== 0){
+			return false;
+		}
+		foreach ($rs[0] as $col =>$val){
+			$this->$col = $val;
+		}
+		return true;
+	}
+	function getJurado3 ($codigo){
+		$req = sprintf('SELECT *FROM %s WHERE jurado1=%s', $this->getSqlViewTable (),Gatuf_DB_IntegerToDb ($codigo, $this->_con));
+		if(false=== ($rs = $this->_con->select ($req))){
+			throw new Exception ($this->_con->getError());
+		}
+		if(count ($rs)== 0){
+			return false;
+		}
+		foreach ($rs[0] as $col =>$val){
+			$this->$col = $val;
+		}
+		return true;
+	}
+	
 	/*function getMesCarrera($mes,$carrera){
 	$req = sprintf('SELECT  FROM %s WHERE carrera=%s', $this->getSqlViewTable (),Gatuf_DB_IntegerToDb ($carrera, $this->_con));
 	

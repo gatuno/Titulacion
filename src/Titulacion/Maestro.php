@@ -61,4 +61,5 @@ class Titulacion_Maestro extends Titulacion_User {
 	public function displaylinkedcodigo () {
 		return '<a href="'.Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Maestro::verMaestro', array ($this->codigo)).'">'.$this->codigo.'</a>';
 	}
+	
 }

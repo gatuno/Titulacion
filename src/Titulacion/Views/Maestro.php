@@ -90,18 +90,105 @@ class Titulacion_Views_Maestro {
 		                                         $request);
 	}
 	
+	
+	
 	public function verMaestro ($request, $match) {
 		$title = 'Perfil público del profesor';
 		
 		$maestro = new Titulacion_Maestro ();
+		$acta = new Titulacion_Acta ();
+		$codigo = $maestro->codigo;
+		$director = false;
+		$secretario = false;
+		$jurado = false;
+		$nada = false;
+		$funge = '';
+
+		/*
+			$choices = array();
+		foreach($planes as $m){
+			$choices[$m->plan] = $m ->id;
+			$choices_planes = array();
+			foreach ($planes as $plan){
+				$choices_planes[$plan->plan] = $plan->id;
+			}
+		}
+			public $director_division, $secretario_division;
+	public $jurado1;
+	public $jurado2;
+	public $jurado3;
+		
+		
+		$agregar = Gatuf::factory('Titulacion_Acta')->getList();
+		$actas = array();
+		foreach($agregar as $m){
+			$choices[$m->director_division] = $m ->id;
+			$actas = array();
+			foreach ($planes as $plan){
+				$choices_planes[$plan->plan] = $plan->id;
+			}
+		}*/
+		
 		
 		if (false === $maestro->getMaestro ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();
+		} 
+		
+		if ($acta->getDirector($codigo) == true){
+			$director = true;
+			$funge = 'Director de división';
+		} else
+		if ($acta->getSecretario($codigo) == true){
+			$secretario = true;
+			$funge = 'Secretario de división';
+		}else
+		if ($acta->getJurado1($codigo) == true){
+			$jurado = true;
+			$funge = 'jurado';
+		}else
+		if ($acta->getJurado2($codigo) == true)
+		{
+			$jurado = true;
+				$funge = 'jurado';
+		}else
+		if ($acta->getJurado2($codigo) == true){
+			$jurado = true;
+				$funge = 'jurado';
+		} else{
+			$nada = true;
 		}
+		
+		$pag = new Gatuf_Paginator($actas);
+		//$pag->action = array ('Titulacion_Views_Acta::index');
+		$pag->sumary = 'Lista de actas registradas';
+
+		$list_display = array (
+			array('carrera','Gatuf_Paginator_FKLink','Carrera'),
+			array('alumno','Gatuf_Paginator_DisplayVal', 'Codigo del alumno'),
+			array('alumno_nombre','Gatuf_Paginator_DisplayVal', 'Nombre'),
+			array('alumno_apellido','Gatuf_Paginator_DisplayVal', 'Apellidos'),
+			array('modalidad','Gatuf_Paginator_FKLink', 'Opcion de titulacion'),
+			array('fechaHora','Gatuf_Paginator_DateYMDHM','Fecha ceremonia'),
+			array('funge','Gatuf_Paginator_DisplayVal','Fungio como ')
+		);
+
+		$pag->items_per_page = 25;
+		$pag->no_results_text = 'No hay actas de titulacion en la que este profesor haya participado';
+		$pag->max_number_pages = 3;
+		$pag->configure ($list_display,
+				array ('alumno','carrera', 'alumno_nombre', 'alumno_apellido', 'modalidad_descripcion'),
+				array ('alumno','carrera')
+		);
+		$pag->setFromRequest($request);
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/maestro/ver-maestro.html',
 		                                         array ('maestro' => $maestro,
-		                                                'page_title' => $title),
+														'acta' => $acta,
+														'director' => $director,
+														'secretario' => $secretario,
+														'jurado' => $jurado,
+		                                                'page_title' => $title,
+														'paginador'  => $pag),
 		                                         $request);
 	}
 }

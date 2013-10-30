@@ -1,6 +1,7 @@
 <?php
 
 Gatuf::loadFunction('Gatuf_Shortcuts_RenderToResponse');
+Gatuf::loadFunction('Gatuf_HTTP_URL_urlForView');
 
 class Titulacion_Views_Maestro {
 	public function index ($request, $match) {
@@ -103,36 +104,36 @@ class Titulacion_Views_Maestro {
 		$jurado = false;
 		$nada = false;
 		$funge = '';
-
-		/*
-			$choices = array();
-		foreach($planes as $m){
-			$choices[$m->plan] = $m ->id;
-			$choices_planes = array();
-			foreach ($planes as $plan){
-				$choices_planes[$plan->plan] = $plan->id;
-			}
-		}
-			public $director_division, $secretario_division;
-	public $jurado1;
-	public $jurado2;
-	public $jurado3;
 		
-		
-		$agregar = Gatuf::factory('Titulacion_Acta')->getList();
+		$lista = Gatuf::factory('Titulacion_Acta')->getList();
 		$actas = array();
-		foreach($agregar as $m){
-			$choices[$m->director_division] = $m ->id;
-			$actas = array();
-			foreach ($planes as $plan){
-				$choices_planes[$plan->plan] = $plan->id;
-			}
-		}*/
+		$j=0;
+		$actasProfe = array();
+		for($x=0;$x<count($lista);$x++){
+				if ($lista[$x]->getDirector($codigo) == true){
+					array_push($actasProfe, $lista[$x]);
+				}else
+				if ($lista[$x]->getSecretario($codigo) == true){
+					array_push($actasProfe, $lista[$x]);
+				}else
+				if ($lista[$x]->getJurado1($codigo) == true){
+					array_push($actasProfe, $lista[$x]);
+				}else
+				if ($lista[$x]->getJurado2($codigo) == true){
+					array_push($actasProfe, $lista[$x]);
+				}else
+				if ($lista[$x]->getJurado3($codigo) == true){
+					array_push($actasProfe, $lista[$x]);
+				}
+				
+			
+		}
 		
 		
 		if (false === $maestro->getMaestro ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();
 		} 
+		
 		
 		if ($acta->getDirector($codigo) == true){
 			$director = true;
@@ -158,18 +159,26 @@ class Titulacion_Views_Maestro {
 			$nada = true;
 		}
 		
-		$pag = new Gatuf_Paginator($actas);
-		//$pag->action = array ('Titulacion_Views_Acta::index');
-		$pag->sumary = 'Lista de actas registradas';
+		$carrera = $acta->carrera;
+		$alumno = $acta->alumno;
+		$alumno_nombre = $acta->alumno_nombre;
+		$alumno_apellido = $acta->alumno_apellido;
+		$modalidad = $acta->modalidad_descripcion;
+		
+		
+		$profe = new Titulacion_Maestro();
+		$pag = new Gatuf_Paginator($acta,$profe->codigo);
+		$pag->action = array ('Titulacion_Views_Maestro::verMaestro');
+		$pag->sumary = 'Lista en las que a participado';
 
 		$list_display = array (
-			array('carrera','Gatuf_Paginator_FKLink','Carrera'),
+			array('carrera','Gatuf_Paginator_DisplayVal','Carrera'),
 			array('alumno','Gatuf_Paginator_DisplayVal', 'Codigo del alumno'),
 			array('alumno_nombre','Gatuf_Paginator_DisplayVal', 'Nombre'),
 			array('alumno_apellido','Gatuf_Paginator_DisplayVal', 'Apellidos'),
-			array('modalidad','Gatuf_Paginator_FKLink', 'Opcion de titulacion'),
+			array('modalidad_descripcion','Gatuf_Paginator_DisplayVal', 'Opcion de titulacion'),
 			array('fechaHora','Gatuf_Paginator_DateYMDHM','Fecha ceremonia'),
-			array('funge','Gatuf_Paginator_DisplayVal','Fungio como ')
+			//array('funge','Gatuf_Paginator_DisplayVal','Fungio como ')
 		);
 
 		$pag->items_per_page = 25;
@@ -186,9 +195,10 @@ class Titulacion_Views_Maestro {
 														'acta' => $acta,
 														'director' => $director,
 														'secretario' => $secretario,
-														'jurado' => $jurado,
-		                                                'page_title' => $title,
+														'jurado' => $jurado,                                         
+														'actasProfe' =>$actasProfe,
 														'paginador'  => $pag),
+														
 		                                         $request);
 	}
 }

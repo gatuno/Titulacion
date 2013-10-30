@@ -27,10 +27,5 @@
 </tr>
 </table>
 <h2>Actas en que ha participado</h2>
-	{if $maestro.director == true}
-	{else if $maestro.secretario == true}
-	{else if $maestro.jurado == true}
-	{else if $maestro.nada == true}
-	{/if}
-<p>TODO: Falta por hacer </p>
+{$paginador.render}
 {/block}

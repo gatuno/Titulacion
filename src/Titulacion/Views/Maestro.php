@@ -105,30 +105,6 @@ class Titulacion_Views_Maestro {
 		$nada = false;
 		$funge = '';
 		
-		$lista = Gatuf::factory('Titulacion_Acta')->getList();
-		$actas = array();
-		$j=0;
-		$actasProfe = array();
-		for($x=0;$x<count($lista);$x++){
-				if ($lista[$x]->getDirector($codigo) == true){
-					array_push($actasProfe, $lista[$x]);
-				}else
-				if ($lista[$x]->getSecretario($codigo) == true){
-					array_push($actasProfe, $lista[$x]);
-				}else
-				if ($lista[$x]->getJurado1($codigo) == true){
-					array_push($actasProfe, $lista[$x]);
-				}else
-				if ($lista[$x]->getJurado2($codigo) == true){
-					array_push($actasProfe, $lista[$x]);
-				}else
-				if ($lista[$x]->getJurado3($codigo) == true){
-					array_push($actasProfe, $lista[$x]);
-				}
-				
-			
-		}
-		
 		
 		if (false === $maestro->getMaestro ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();
@@ -166,8 +142,25 @@ class Titulacion_Views_Maestro {
 		$modalidad = $acta->modalidad_descripcion;
 		
 		
+				$this->fields['fechaHora'] = new Gatuf_Form_Field_Datetime (
+			array(
+				'required' => true,
+				'label' => 'Fecha y hora ceremonia',
+				'initial' =>'',
+				'help_text'=>'Fecha y hora de la ceremonia de titulacion',
+				'widget' => 'Gatuf_Form_Widget_DatetimeJSInput',
+				'widget_attrs' => array (
+					'js_attrs' => array (
+						'minDate' => 0,
+					),
+				)
+		));
+		
 		$profe = new Titulacion_Maestro();
-		$pag = new Gatuf_Paginator($acta,$profe->codigo);
+		
+
+		
+		$pag = new Gatuf_Paginator($acta);
 		$pag->action = array ('Titulacion_Views_Maestro::verMaestro');
 		$pag->sumary = 'Lista en las que a participado';
 
@@ -178,7 +171,7 @@ class Titulacion_Views_Maestro {
 			array('alumno_apellido','Gatuf_Paginator_DisplayVal', 'Apellidos'),
 			array('modalidad_descripcion','Gatuf_Paginator_DisplayVal', 'Opcion de titulacion'),
 			array('fechaHora','Gatuf_Paginator_DateYMDHM','Fecha ceremonia'),
-			//array('funge','Gatuf_Paginator_DisplayVal','Fungio como ')
+			array('funge','Gatuf_Paginator_DisplayVal','Fungio como ')
 		);
 
 		$pag->items_per_page = 25;
@@ -188,15 +181,19 @@ class Titulacion_Views_Maestro {
 				array ('alumno','carrera', 'alumno_nombre', 'alumno_apellido', 'modalidad_descripcion'),
 				array ('alumno','carrera')
 		);
+		
 		$pag->setFromRequest($request);
 		
+		$codigo = $maestro->codigo;
+		
+		$sql = new Gatuf_SQL ('director_division=%s OR secretario_division=%s OR jurado1=%s OR jurado2=%s OR jurado3=%s',array($codigo,$codigo,$codigo,$codigo,$codigo));
+		$pag->forced_where = $sql;
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/maestro/ver-maestro.html',
 		                                         array ('maestro' => $maestro,
 														'acta' => $acta,
 														'director' => $director,
 														'secretario' => $secretario,
 														'jurado' => $jurado,                                         
-														'actasProfe' =>$actasProfe,
 														'paginador'  => $pag),
 														
 		                                         $request);

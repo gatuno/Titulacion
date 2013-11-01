@@ -24,6 +24,9 @@ class Titulacion_Acta extends Gatuf_Model {
 	public $calificacion;
 	public $anio;
 	
+	/*esta campo se utilizara para la consulta de los maestros*/
+	public $funge;
+	
 	/* Campos extra dependiendo de la modalidad de titulación */
 	public $desempeno;
 	public $nombre_trabajo;

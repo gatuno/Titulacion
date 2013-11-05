@@ -138,6 +138,7 @@ class Titulacion_Acta extends Gatuf_Model {
 	
 	}
 	*/
+
 	
 
 	public function create() {
@@ -185,6 +186,36 @@ class Titulacion_Acta extends Gatuf_Model {
 		$this->_con->execute ($req);
 		
 		return false;
+	}
+	
+	
+	/*Funcion para que agregue en la participacion que tuvo el maestro en el cata actual*/
+	
+	function getFunge($codigo){
+	$req = sprintf('SELECT *FROM %s WHERE jurado1=%s', $this->getSqlViewTable (),Gatuf_DB_IntegerToDb ($codigo, $this->_con));
+		if(false=== ($rs = $this->_con->select ($req))){
+			throw new Exception ($this->_con->getError());
+		}else{
+		
+		}
+				
+		if ($codigo === $acta->director_division){
+				$acta->funge = 'Director de división';
+		} else
+		if ($codigo === $acta->director_division){
+				$acta->funge = 'Secretario de división';
+		}else
+		if ( $codigo === $acta->jurado1){
+				$acta->funge = 'jurado';
+		}else
+		if ($codigo === $acta->jurado2 )
+		{
+				$acta->funge = 'jurado';
+		}else
+		if ( $codigo === $acta->jurado3){
+				$acta->funge = 'jurado';
+		}
+		
 	}
 	
 	public function displaylinkedfolio ($extra = null) {

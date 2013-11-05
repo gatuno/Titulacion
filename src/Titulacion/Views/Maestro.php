@@ -110,44 +110,44 @@ class Titulacion_Views_Maestro {
 			throw new Gatuf_HTTP_Error404 ();
 		} 
 		
-		
+	    /*
 		if ($acta->getDirector($codigo) == true){
-			$director = true;
 			$funge = 'Director de división';
 		} else
 		if ($acta->getSecretario($codigo) == true){
-			$secretario = true;
 			$funge = 'Secretario de división';
 		}else
 		if ($acta->getJurado1($codigo) == true){
-			$jurado = true;
 			$funge = 'jurado';
 		}else
 		if ($acta->getJurado2($codigo) == true)
 		{
-			$jurado = true;
 				$funge = 'jurado';
 		}else
-		if ($acta->getJurado2($codigo) == true){
-			$jurado = true;
+		if ($acta->getJurado3($codigo) == true){
 				$funge = 'jurado';
 		} else{
 			$nada = true;
-		}
+		}*/
 		
+		
+	
+		//$acta->funge = $funge;
+	
 		$carrera = $acta->carrera;
 		$alumno = $acta->alumno;
 		$alumno_nombre = $acta->alumno_nombre;
 		$alumno_apellido = $acta->alumno_apellido;
 		$modalidad = $acta->modalidad_descripcion;
+		$acta->getFunge($codigo);
 		
 		
-				$this->fields['fechaHora'] = new Gatuf_Form_Field_Datetime (
+			$this->fields['fechaHora'] = new Gatuf_Form_Field_Datetime (
 			array(
 				'required' => true,
-				'label' => 'Fecha y hora ceremonia',
+				'label' => 'Primera fecha',
 				'initial' =>'',
-				'help_text'=>'Fecha y hora de la ceremonia de titulacion',
+				'help_text'=>'Fecha a partir de la cual quieres buscar',
 				'widget' => 'Gatuf_Form_Widget_DatetimeJSInput',
 				'widget_attrs' => array (
 					'js_attrs' => array (
@@ -156,7 +156,6 @@ class Titulacion_Views_Maestro {
 				)
 		));
 		
-		$profe = new Titulacion_Maestro();
 		
 
 		
@@ -188,14 +187,20 @@ class Titulacion_Views_Maestro {
 		
 		$sql = new Gatuf_SQL ('director_division=%s OR secretario_division=%s OR jurado1=%s OR jurado2=%s OR jurado3=%s',array($codigo,$codigo,$codigo,$codigo,$codigo));
 		$pag->forced_where = $sql;
+	
+			
+		
+		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/maestro/ver-maestro.html',
 		                                         array ('maestro' => $maestro,
 														'acta' => $acta,
 														'director' => $director,
 														'secretario' => $secretario,
-														'jurado' => $jurado,                                         
+														'jurado' => $jurado,    
+														'funge' => $funge,
 														'paginador'  => $pag),
 														
 		                                         $request);
+												 $funge = '';
 	}
 }

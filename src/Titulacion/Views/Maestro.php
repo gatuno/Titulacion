@@ -139,9 +139,7 @@ class Titulacion_Views_Maestro {
 		$alumno_nombre = $acta->alumno_nombre;
 		$alumno_apellido = $acta->alumno_apellido;
 		$modalidad = $acta->modalidad_descripcion;
-		$acta->getFunge($codigo);
-		
-		
+				
 			$this->fields['fechaHora'] = new Gatuf_Form_Field_Datetime (
 			array(
 				'required' => true,
@@ -156,9 +154,6 @@ class Titulacion_Views_Maestro {
 				)
 		));
 		
-		
-
-		
 		$pag = new Gatuf_Paginator($acta);
 		$pag->action = array ('Titulacion_Views_Maestro::verMaestro');
 		$pag->sumary = 'Lista en las que a participado';
@@ -170,9 +165,10 @@ class Titulacion_Views_Maestro {
 			array('alumno_apellido','Gatuf_Paginator_DisplayVal', 'Apellidos'),
 			array('modalidad_descripcion','Gatuf_Paginator_DisplayVal', 'Opcion de titulacion'),
 			array('fechaHora','Gatuf_Paginator_DateYMDHM','Fecha ceremonia'),
-			array('funge','Gatuf_Paginator_DisplayVal','Fungio como ')
+			array('funge','Gatuf_Paginator_FKExtra','Fungio como ')
 		);
-
+		
+		$pag->extra = array ('codigo' => $maestro->codigo);
 		$pag->items_per_page = 25;
 		$pag->no_results_text = 'No hay actas de titulacion en la que este profesor haya participado';
 		$pag->max_number_pages = 3;
@@ -181,15 +177,16 @@ class Titulacion_Views_Maestro {
 				array ('alumno','carrera')
 		);
 		
+		$extra = array ('maestro' => $maestro);
+		
 		$pag->setFromRequest($request);
 		
 		$codigo = $maestro->codigo;
 		
 		$sql = new Gatuf_SQL ('director_division=%s OR secretario_division=%s OR jurado1=%s OR jurado2=%s OR jurado3=%s',array($codigo,$codigo,$codigo,$codigo,$codigo));
 		$pag->forced_where = $sql;
-	
-			
-		
+		$form = new Titulacion_Form_Maestro_Buscar(null,$extra);
+
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/maestro/ver-maestro.html',
 		                                         array ('maestro' => $maestro,
@@ -198,6 +195,7 @@ class Titulacion_Views_Maestro {
 														'secretario' => $secretario,
 														'jurado' => $jurado,    
 														'funge' => $funge,
+														'form' => $form,
 														'paginador'  => $pag),
 														
 		                                         $request);

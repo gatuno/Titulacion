@@ -191,32 +191,21 @@ class Titulacion_Acta extends Gatuf_Model {
 	
 	/*Funcion para que agregue en la participacion que tuvo el maestro en el cata actual*/
 	
-	function getFunge($codigo){
-	$req = sprintf('SELECT *FROM %s WHERE jurado1=%s', $this->getSqlViewTable (),Gatuf_DB_IntegerToDb ($codigo, $this->_con));
-		if(false=== ($rs = $this->_con->select ($req))){
-			throw new Exception ($this->_con->getError());
-		}else{
+	function displayfunge ($extra = null){
 		
+		if ($extra['codigo'] == $this->secretario_division) {
+			return 'Secretario de división';
 		}
-				
-		if ($codigo === $acta->director_division){
-				$acta->funge = 'Director de división';
-		} else
-		if ($codigo === $acta->director_division){
-				$acta->funge = 'Secretario de división';
-		}else
-		if ( $codigo === $acta->jurado1){
-				$acta->funge = 'jurado';
-		}else
-		if ($codigo === $acta->jurado2 )
-		{
-				$acta->funge = 'jurado';
-		}else
-		if ( $codigo === $acta->jurado3){
-				$acta->funge = 'jurado';
+		if ($extra['codigo'] == $this->jurado1 || $extra['codigo'] == $this->jurado2 || $extra['codigo'] == $this->jurado3) {
+			return 'Jurado';
 		}
 		
+		if ($extra['codigo'] == $this->director_division) {
+			return 'Director de división';
+		}
 	}
+	
+	
 	
 	public function displaylinkedfolio ($extra = null) {
 		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $this->id);

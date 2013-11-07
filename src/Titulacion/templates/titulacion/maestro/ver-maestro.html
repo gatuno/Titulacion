@@ -26,7 +26,18 @@
 <td>{$maestro.last_login|dateago}</td>
 </tr>
 </table>
+<H3>Filtrar lista por fecha</H3>
+{$form.render_p}
 <h2>Actas en que ha participado</h2>
 {$paginador.render}
 
 {/block}
+
+{block extrahead}
+ <link rel="stylesheet" media="all" type="text/css" href="{media '/css/smoothness/jquery-ui-1.8.16.custom.css'}" />
+ <link rel="stylesheet" media="all" type="text/css" href="{media '/css/timepicker.css'}" />
+ <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+ <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+ <script type="text/javascript" src="{media '/scripts/jquery-ui-timepicker-addon.js'}"></script>
+ <script type="text/javascript" src="{media '/scripts/ui-timepicker-es.js'}"></script>
+ {/block}

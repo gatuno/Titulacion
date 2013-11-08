@@ -62,4 +62,21 @@ class Titulacion_Maestro extends Titulacion_User {
 		return '<a href="'.Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Maestro::verMaestro', array ($this->codigo)).'">'.$this->codigo.'</a>';
 	}
 	
+	
+	
+	/*Funcion para q me regrese el reporte a partir de las fechas de las actas*/
+	public function displayReporte($fecha1,$fecha2){
+	
+			$req = sprintf ('SELECT * FROM %s WHERE fechaHora <= %s AND fechaHora >= %s)', $this->getSqlTable(), Gatuf_DB_IdentityToDb ($fecha1, $this->_con), Gatuf_DB_IdentityToDb ($fecha2, $this->_con));
+			if(false=== ($rs = $this->_con->select ($req))){
+			throw new Exception ($this->_con->getError());
+		}
+		if(count ($rs)== 0){
+			return false;
+		}
+		foreach ($rs[0] as $col =>$val){
+			$this->$col = $val;
+		}
+		return true;
+	}
 }

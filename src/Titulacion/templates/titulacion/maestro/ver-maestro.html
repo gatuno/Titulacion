@@ -26,8 +26,10 @@
 <td>{$maestro.last_login|dateago}</td>
 </tr>
 </table>
+<form action="." method="post">
 <H3>Filtrar lista por fecha</H3>
-{$form.render_p}
+{$form.render_p}<tr><td>&nbsp;</td><td><input type="submit" value="Filtrar" /></td></tr>
+</form>
 <h2>Actas en que ha participado</h2>
 {$paginador.render}
 

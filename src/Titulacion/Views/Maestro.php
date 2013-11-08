@@ -104,55 +104,33 @@ class Titulacion_Views_Maestro {
 		$jurado = false;
 		$nada = false;
 		$funge = '';
+
 		
 		
 		if (false === $maestro->getMaestro ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();
-		} 
-		
-	    /*
-		if ($acta->getDirector($codigo) == true){
-			$funge = 'Director de división';
-		} else
-		if ($acta->getSecretario($codigo) == true){
-			$funge = 'Secretario de división';
-		}else
-		if ($acta->getJurado1($codigo) == true){
-			$funge = 'jurado';
-		}else
-		if ($acta->getJurado2($codigo) == true)
-		{
-				$funge = 'jurado';
-		}else
-		if ($acta->getJurado3($codigo) == true){
-				$funge = 'jurado';
-		} else{
-			$nada = true;
-		}*/
+		}
+		$codigo = $maestro->codigo;
+		$sql = new Gatuf_SQL ('director_division=%s OR secretario_division=%s OR jurado1=%s OR jurado2=%s OR jurado3=%s',array($codigo,$codigo,$codigo,$codigo,$codigo));
+		if($request->method == 'POST'){
+				$form = new Titulacion_Form_Maestro_Buscar($request->POST);
+				$form->isValid();
+				$fechas=$form->save();
+				$filtro = new Gatuf_SQL('fechaHora <= %s AND fechaHora >= %s', array($fechas[0],$fechas[1]));
+				$sql->SAnd ($filtro);
+		}else{
+			$form = new Titulacion_Form_Maestro_Buscar(null);
+		}
 		
 		
 	
-		//$acta->funge = $funge;
+		
 	
 		$carrera = $acta->carrera;
 		$alumno = $acta->alumno;
 		$alumno_nombre = $acta->alumno_nombre;
 		$alumno_apellido = $acta->alumno_apellido;
 		$modalidad = $acta->modalidad_descripcion;
-				
-			$this->fields['fechaHora'] = new Gatuf_Form_Field_Datetime (
-			array(
-				'required' => true,
-				'label' => 'Primera fecha',
-				'initial' =>'',
-				'help_text'=>'Fecha a partir de la cual quieres buscar',
-				'widget' => 'Gatuf_Form_Widget_DatetimeJSInput',
-				'widget_attrs' => array (
-					'js_attrs' => array (
-						'minDate' => 0,
-					),
-				)
-		));
 		
 		$pag = new Gatuf_Paginator($acta);
 		$pag->action = array ('Titulacion_Views_Maestro::verMaestro');
@@ -181,11 +159,11 @@ class Titulacion_Views_Maestro {
 		
 		$pag->setFromRequest($request);
 		
-		$codigo = $maestro->codigo;
 		
-		$sql = new Gatuf_SQL ('director_division=%s OR secretario_division=%s OR jurado1=%s OR jurado2=%s OR jurado3=%s',array($codigo,$codigo,$codigo,$codigo,$codigo));
+		
+	
 		$pag->forced_where = $sql;
-		$form = new Titulacion_Form_Maestro_Buscar(null,$extra);
+		
 
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/maestro/ver-maestro.html',

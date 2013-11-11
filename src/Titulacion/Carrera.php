@@ -55,7 +55,7 @@ class Titulacion_Carrera extends Gatuf_Model {
 		$carrera = new Calif_Carrera ();
 		if ($create) {
 			/* Cuando creamos, asegurarnos de que esta carrera también exista como Calif_Carrera */
-			if (false === ($carrera->get($this->carrera))) {
+			if (false === ($carrera->get($this->clave))) {
 				$carrera->clave = $this->clave;
 				$carrera->descripcion = $this->descripcion;
 				$carrera->create ();
@@ -64,7 +64,7 @@ class Titulacion_Carrera extends Gatuf_Model {
 				$carrera->update ();
 			}
 		} else {
-			$carrera->get($this->carrera);
+			$carrera->get($this->clave);
 			$carrera->descripcion = $this->descripcion;
 			$carrera->update ();
 		}

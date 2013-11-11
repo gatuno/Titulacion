@@ -36,11 +36,10 @@ class Titulacion_Views {
 					$request->session->clear ();
 					$request->session->setData('login_time', gmdate('Y-m-d H:i:s'));
 					$user->last_login = gmdate('Y-m-d H:i:s');
-					$user->updateSession ();
+					$user->update();
 					$request->session->deleteTestCookie ();
 					return new Gatuf_HTTP_Response_Redirect ($success_url);
 				}
-				
 			}
 		}
 		/* Mostrar el formulario de login */
@@ -113,7 +112,7 @@ class Titulacion_Views {
 			$url = Gatuf_HTTP_URL_urlForView ('Gatuf_Views::passwordRecoveryInputKey');
 			return new Gatuf_HTTP_Response_Redirect ($url);
 		}
-		$user = Gatuf::factory('Titulacion_User')->getUser ($email_id[1]);
+		$user = new Calif_User ($email_id[1]);
 		$extra = array ('key' => $key,
 		                'user' => $user);
 		if ($request->method == 'POST') {
@@ -124,7 +123,7 @@ class Titulacion_Views {
 				$request->session->clear();
 				$request->session->setData('login_time', gmdate('Y-m-d H:i:s'));
 				$user->last_login = gmdate('Y-m-d H:i:s');
-				$user->updateSession ();
+				$user->update ();
 				/* FIXME: Establecer un mensaje
 				$request->user->setMessage(); */
 				$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Carrera::index'); /* FIXME: URL principal */

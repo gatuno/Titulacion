@@ -109,6 +109,8 @@ $cfg['middleware_classes'] = array(
 	'Gatuf_Middleware_Session',
 );
 
-$cfg['gatuf_custom_user'] = 'Titulacion_User';
+$cfg['gatuf_custom_user'] = 'Calif_User';
+
+$cfg['installed_apps'] = array('Gatuf', 'Calif', 'Titulacion');
 
 return $cfg;

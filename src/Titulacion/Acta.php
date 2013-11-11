@@ -1,88 +1,185 @@
 <?php
 
 class Titulacion_Acta extends Gatuf_Model {
-	public $id;
-	public $plan; /* El plan de estudios */
-	public $plan_descripcion;
-	public $folio;
-	public $acta; /* El número de acta */
-	public $modalidad; /* La opción de titulación */
-	public $modalidad_descripcion;
-	public $director_division, $secretario_division;
-	public $jurado1;
-	public $jurado2;
-	public $jurado3;
-	public $alumno; /*Llave foranea*/
-	public $alumno_nombre;
-	public $alumno_apellido;
-	public $domicilio;
-	public $fechaHora;
-	public $ingreso; /* Calendario de ingreso */
-	public $egreso; /* Calendario de egreso */
-	public $carrera;
-	public $carrera_descripcion;
-	public $calificacion;
-	public $anio;
+	public $_model = __CLASS__;
 	
-	/* Campos extra dependiendo de la modalidad de titulación */
-	public $desempeno;
-	public $nombre_trabajo;
-	public $materias_maestria;
-	public $nombre_maestria;
-	public $escuela_maestria;
+	function init() {
+		$this->_a['table'] = 'actas';
+		$this->_a['model'] = __CLASS__;
+		$this->primary_key = 'id';
 		
-	/* Control interno */
-	public $createtime, $modifcationtime;
-	public $creador, $modificador;
-	
-	function __construct() {
-		$this->_getConnection();
-		$this->tabla = 'Actas';
-		$this->tabla_view= 'Actas_View';
+		$this->_a['cols'] = array (
+			'id' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Sequence',
+			       'blank' => true,
+			),
+			'plan' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Foreignkey',
+			       'model' => 'Titulacion_PlanEstudio',
+			       'blank' => false,
+			),
+			'carrera' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Foreignkey',
+			       'model' => 'Titulacion_Carrera',
+			       'blank' => false,
+			),
+			'folio' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Integer',
+			       'blank' => false,
+			),
+			'acta' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Integer',
+			       'blank' => false,
+			),
+			'alumno' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Foreignkey',
+			       'model' => 'Calif_Alumno',
+			       'blank' => false,
+			),
+			'opcion' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Foreignkey',
+			       'model' => 'Titulacion_Opcion',
+			       'blank' => false,
+			),
+			'director' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Foreignkey',
+			       'model' => 'Calif_Maestro',
+			       'blank' => false,
+			),
+			'secretario' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Foreignkey',
+			       'model' => 'Calif_Maestro',
+			       'blank' => false,
+			),
+			'jurado1' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Foreignkey',
+			       'model' => 'Calif_Maestro',
+			       'blank' => false,
+			),
+			'jurado2' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Foreignkey',
+			       'model' => 'Calif_Maestro',
+			       'blank' => false,
+			),
+			'jurado3' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Foreignkey',
+			       'model' => 'Calif_Maestro',
+			       'blank' => false,
+			),
+			'fechahora' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Datetime',
+			       'blank' => false,
+			),
+			'ingreso' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Char',
+			       'size' => 5,
+			       'blank' => false,
+			),
+			'egreso' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Char',
+			       'size' => 5,
+			       'blank' => false,
+			),
+			'calificacion' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Float',
+			       'max_digits' => 5,
+			       'decimal_places' => 1,
+			       'blank' => false,
+			),
+			'domicilio' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Foreignkey',
+			       'model' => 'Titulacion_Domicilio',
+			       'blank' => false,
+			),
+			/* Campos extras opcionales */
+			'nombre_trabajo' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'size' => 500,
+			       'blank' => false,
+			),
+			'desempeno' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'size' => 50,
+			       'blank' => false,
+			),
+			'nombre_maestria' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'size' => 200,
+			       'blank' => false,
+			),
+			'escuela_maestria' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'size' => 200,
+			       'blank' => false,
+			),
+			'materias_maestria' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Integer',
+			       'blank' => false,
+			),
+			'eliminada' => /* Cuando un acta ha sido eliminada */
+			array (
+			       'type' => 'Gatuf_DB_Field_Boolean',
+			       'default' => false,
+			       'blank' => false,
+			),
+			'create_time' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Datetime',
+			       'blank' => false,
+			),
+			'create_user' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Foreignkey',
+			       'model' => 'Calif_User',
+			       'blank' => false,
+			),
+			'modification_time' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Datetime',
+			       'blank' => false,
+			),
+			'modification_user' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Foreignkey',
+			       'model' => 'Calif_User',
+			       'blank' => false,
+			),
+		);
 		
+		/* FIXME: La vista */
 		$this->default_order = 'plan ASC, carrera ASC, anio ASC, folio ASC, modalidad_descripcion ASC, alumno_apellido ASC';
-		$this->calificacion = 0.0;
-	}
-	
-	function getActa($id) {
-		$req = sprintf('SELECT * FROM %s WHERE id=%s', $this->getSqlViewTable (),Gatuf_DB_IntegerToDb ($id, $this->_con));
-		
-		if(false=== ($rs = $this->_con->select ($req))){
-			throw new Exception ($this->_con->getError());
-		}
-		if(count ($rs)== 0){
-			return false;
-		}
-		foreach ($rs[0] as $col =>$val){
-			$this->$col = $val;
-		}
-		return true;
-	}
-
-	public function create() {
-		$this->preSave (true);
-		$req = sprintf('INSERT INTO %s (plan, folio, acta, modalidad, alumno, domicilio, director_division, secretario_division, jurado1, jurado2, jurado3, carrera, fechaHora, ingreso, egreso, calificacion, desempeno, materias_maestria, nombre_maestria, escuela_maestria, nombre_trabajo, createtime, modificationtime, creador, modificador) ', $this->getSqlTable ());
-		$req = $req . sprintf ('VALUES (%s, %s, %s, %s, %s, %s, %s, %s, ', Gatuf_DB_IntegerToDb ($this->plan, $this->_con), Gatuf_DB_IntegerToDb ($this->folio, $this->_con), Gatuf_DB_IntegerToDb ($this->acta, $this->_con), Gatuf_DB_IntegerToDb ($this->modalidad, $this->_con), Gatuf_DB_IdentityToDb ($this->alumno, $this->_con), Gatuf_DB_IntegerToDB ($this->domicilio, $this->_con), Gatuf_DB_IntegerToDb ($this->director_division, $this->_con), Gatuf_DB_IntegerToDb ($this->secretario_division, $this->_con));
-		
-		$req = $req . sprintf ('%s, %s, %s, %s, %s, %s, %s, %s, ', Gatuf_DB_IntegerToDb ($this->jurado1, $this->_con), Gatuf_DB_IntegerToDb ($this->jurado2, $this->_con), Gatuf_DB_IntegerToDb ($this->jurado3, $this->_con),Gatuf_DB_IdentityToDb ($this->carrera, $this->_con), Gatuf_DB_IdentityToDb ($this->fechaHora, $this->_con), Gatuf_DB_IdentityToDb ($this->ingreso, $this->_con), Gatuf_DB_IdentityToDb ($this->egreso, $this->_con), Gatuf_DB_IntegerToDb ($this->calificacion, $this->_con));
-		
-		$req = $req . sprintf ('%s, %s, %s, %s, %s, %s, %s, %s, %s)', Gatuf_DB_IdentityToDb ($this->desempeno, $this->_con), Gatuf_DB_IntegerToDb ($this->materias_maestria, $this->_con), Gatuf_DB_IdentityToDb ($this->nombre_maestria, $this->_con), Gatuf_DB_IdentityToDb ($this->escuela_maestria, $this->_con), Gatuf_DB_IdentityToDb ($this->nombre_trabajo, $this->_con), Gatuf_DB_IdentityToDb ($this->createtime, $this->_con), Gatuf_DB_IdentityToDb ($this->modificationtime, $this->_con), Gatuf_DB_IntegerToDb ($this->creador, $this->_con), Gatuf_DB_IntegerToDb ($this->modificador, $this->_con));
-		
-		$this->_con->execute ($req);
-		
-		$this->id = $this->_con->getLastId ();
-		
-		return true;
 	}
 	
 	function preSave ($create=true) {
-		/* Generar el folio */
+		/* Autogenerar el folio */
 		if ($create) {
-			$this->createtime = date ('Y-m-d H:i:s');
+			$this->create_time = date ('Y-m-d H:i:s');
 			
 			$anio = date('Y');
 			/* Generar el folio */
-			$sql = sprintf ('SELECT MAX(folio) as max_folio FROM %s WHERE carrera=%s AND plan=%s AND YEAR(createtime)=%s', $this->getSqlTable (), Gatuf_DB_IdentityToDb ($this->carrera, $this->_con), Gatuf_DB_IntegerToDb ($this->plan, $this->_con), Gatuf_DB_IntegerToDb ($anio, $this->_con));
+			$sql = sprintf ('SELECT MAX(folio) as max_folio FROM %s WHERE carrera=%s AND plan=%s AND YEAR(create_time)=%s', $this->getSqlTable (), Gatuf_DB_IdentityToDb ($this->carrera, $this->_con), Gatuf_DB_IntegerToDb ($this->plan, $this->_con), Gatuf_DB_IntegerToDb ($anio, $this->_con));
 			
 			$rs = $this->_con->select ($sql);
 			
@@ -93,16 +190,7 @@ class Titulacion_Acta extends Gatuf_Model {
 			}
 		}
 		
-		$this->modificationtime = date ('Y-m-d H:i:s');
-	}
-	
-	public function update() {
-		$req = sprintf('UPDATE %s SET acta=%s, calificacion=%s, ingreso=%s, egreso=%s, fechaHora=%s, director_division=%s, secretario_division=%s, jurado1=%s, jurado2=%s, ', $this->getSqlTable (), Gatuf_DB_IntegerToDB ($this->acta, $this->_con), Gatuf_DB_IdentityToDB ($this->calificacion, $this->_con), Gatuf_DB_IdentityToDB ($this->ingreso, $this->_con), Gatuf_DB_IdentityToDB ($this->egreso, $this->_con), Gatuf_DB_IdentityToDB ($this->fechaHora, $this->_con), Gatuf_DB_IntegerToDB ($this->director_division, $this->_con), Gatuf_DB_IntegerToDB ($this->secretario_division, $this->_con), Gatuf_DB_IntegerToDB ($this->jurado1, $this->_con), Gatuf_DB_IntegerToDB ($this->jurado2, $this->_con));
-		
-		$req = $req . sprintf ('jurado3=%s, desempeno=%s, nombre_trabajo=%s, materias_maestria=%s, nombre_maestria=%s, escuela_maestria=%s, modificationtime=%s, modificador=%s WHERE id=%s', Gatuf_DB_IntegerToDB ($this->jurado3, $this->_con), Gatuf_DB_IdentityToDB ($this->desempeno, $this->_con), Gatuf_DB_IdentityToDB ($this->nombre_trabajo, $this->_con), Gatuf_DB_IntegerToDB ($this->materias_maestria, $this->_con), Gatuf_DB_IdentityToDB ($this->nombre_maestria, $this->_con), Gatuf_DB_IdentityToDB ($this->escuela_maestria, $this->_con), Gatuf_DB_IdentityToDb ($this->modificationtime, $this->_con), Gatuf_DB_IntegerToDb ($this->modificador, $this->_con), Gatuf_DB_IntegerToDB ($this->id, $this->_con));
-		$this->_con->execute ($req);
-		
-		return false;
+		$this->modification_time = date ('Y-m-d H:i:s');
 	}
 	
 	public function displaylinkedfolio ($extra = null) {

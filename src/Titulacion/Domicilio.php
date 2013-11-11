@@ -1,41 +1,79 @@
 <?php
 
 class Titulacion_Domicilio extends Gatuf_Model {
-	public $id;
-	public $alumno;
-	public $calle, $numero_exterior, $numero_interior;
-	public $ciudad, $colonia, $codigo_postal;
-	public $telefono_casa, $telefono_celular;
+	public $_model = __CLASS__;
 	
-	function __construct () {
-		$this->_getConnection ();
+	public function init () {
+		$this->_a['table'] = 'domicilios';
+		$this->_a['model'] = __CLASS__;
+		$this->primary_key = 'id';
 		
-		$this->tabla = 'Domicilios';
+		$this->_a['cols'] = array (
+			'id' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Sequence',
+			       'blank' => true,
+			),
+			'alumno' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Foreignkey',
+			       'blank' => false,
+			       'model' => 'Calif_Alumno',
+			),
+			'calle' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'blank' => false,
+			       'size' => 150,
+			),
+			'numero_exterior' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'blank' => false,
+			       'size' => 20,
+			),
+			'numero_interior' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'blank' => false,
+			       'size' => 20,
+			),
+			'colonia' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'blank' => false,
+			       'size' => 150,
+			),
+			'ciudad' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'blank' => false,
+			       'size' => 150,
+			),
+			'estado' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'blank' => false,
+			       'size' => 150,
+			),
+			'codigo_postal' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'blank' => false,
+			       'size' => 6,
+			),
+			'telefono_casa' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'blank' => false,
+			       'size' => 10,
+			),
+			'telefono_celular' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'blank' => false,
+			       'size' => 10,
+			),
+		);
 	}
-	
-	function getDomicilio ($id) {
-		$req = sprintf ('SELECT * FROM %s WHERE id=%s', $this->getSqlViewTable(), Gatuf_DB_IntegerToDb ($id, $this->_con));
-		
-		if (false === ($rs = $this->_con->select ($req))) {
-			throw new Exception ($this->_con->getError ());
-		}
-		if (count ($rs) == 0) {
-			return false;
-		}
-		foreach ($rs[0] as $col => $val) {
-			$this->$col = $val;
-		}
-		return true;
-	}
-	
-	public function create () {
-		$req = sprintf ('INSERT INTO %s (alumno, calle, numero_exterior, numero_interior, colonia, ciudad, codigo_postal, telefono_casa, telefono_celular) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)', $this->getSqlTable (), Gatuf_DB_IdentityToDb ($this->alumno, $this->_con), Gatuf_DB_IdentityToDb ($this->calle, $this->_con), Gatuf_DB_IdentityToDb ($this->numero_exterior, $this->_con), Gatuf_DB_IdentityToDb ($this->numero_interior, $this->_con), Gatuf_DB_IdentityToDb ($this->colonia, $this->_con), Gatuf_DB_IdentityToDb ($this->ciudad, $this->_con), Gatuf_DB_IdentityToDb ($this->codigo_postal, $this->_con), Gatuf_DB_IdentityToDb ($this->telefono_casa, $this->_con), Gatuf_DB_IdentityToDb ($this->telefono_celular, $this->_con));
-		
-		$this->_con->execute ($req);
-		
-		$this->id = $this->_con->getLastId ();
-		
-		return true;
-	}
-	
 }

@@ -1,27 +1,26 @@
 <?php
 
 class Titulacion_PlanEstudio extends Gatuf_Model {
-	public $id;
-	public $plan;
+	/* Manejador de la tabla de los Planes de estudio */
+	public $_model = __CLASS__;
 	
-	public function __construct () {
-		$this->_getConnection ();
-		$this->tabla = 'Planes_Estudio';
-	}
-	
-	public function getPlan ($id) {
-		$req = sprintf ('SELECT * FROM %s WHERE id=%s', $this->getSqlTable (), Gatuf_DB_IntegerToDb ($id, $this->_con));
+	public function init () {
+		$this->_a['table'] = 'planes_estudios';
+		$this->_a['model'] = __CLASS__;
+		$this->primary_key = 'id';
 		
-		if (false === ($rs = $this->_con->select($req))) {
-			throw new Exception($this->_con->getError());
-		}
-		
-		if (count ($rs) == 0) {
-			return false;
-		}
-		foreach ($rs[0] as $col => $val) {
-			$this->$col = $val;
-		}
-		return true;
+		$this->_a['cols'] = array (
+			'id' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Sequence',
+			       'blank' => true,
+			),
+			'descripcion' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'blank' => false,
+			       'size' => 100,
+			),
+		);
 	}
 }

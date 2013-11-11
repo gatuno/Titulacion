@@ -2,61 +2,72 @@
 
 class Titulacion_Carrera extends Gatuf_Model {
 	/* Manejador de la tabla de carreras */
+	public $_model = __CLASS__;
 	
-	/* Campos */
-	public $clave;
-	public $descripcion;
-	public $grado_m, $grado_f;
-	public $nombre_largo;
-	
-	function __construct () {
-		$this->_getConnection();
+	public function init () {
+		$this->_a['table'] = 'titulacion_carreras';
+		$this->_a['model'] = __CLASS__;
+		$this->primary_key = 'clave';
 		
-		$this->tabla = 'Carreras_Extendidas';
-		$this->tabla_view = 'Carreras_View';
+		$this->_a['cols'] = array (
+			'clave' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Char',
+			       'blank' => false,
+			       'size' => 5,
+			),
+			'descripcion' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'blank' => false,
+			       'size' => 120,
+			),
+			'grado' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Char',
+			       'blank' => false,
+			       'size' => 1,
+			),
+			'grado_m' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'blank' => false,
+			       'size' => 100,
+			),
+			'grado_f' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'blank' => false,
+			       'size' => 100,
+			),
+			'nombre_largo' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'blank' => false,
+			       'size' => 100,
+			),
+		);
+		
+		$this->default_order = 'clave ASC, descripcion ASC';
 	}
 	
-	function getCarrera ($clave) {
-		/* Recuperar una carrera */
-		$req = sprintf ('SELECT * FROM %s WHERE clave = %s', $this->getSqlViewTable(), Gatuf_DB_IdentityToDb ($clave, $this->_con));
-		
-		if (false === ($rs = $this->_con->select($req))) {
-			throw new Exception($this->_con->getError());
-		}
-		
-		if (count ($rs) == 0) {
-			return false;
-		}
-		foreach ($rs[0] as $col => $val) {
-			$this->$col = $val;
-		}
-		return true;
-	}
-	
-	function create () {
+	public function preSave ($create = false) {
 		$carrera = new Calif_Carrera ();
-		if (false === ($carrera->getCarrera ($this->clave))) {
-			/* La carrera no existe dentro de las carreras originales */
-			$carrera->clave = $this->clave;
+		if ($create) {
+			/* Cuando creamos, asegurarnos de que esta carrera también exista como Calif_Carrera */
+			if (false === ($carrera->get($this->carrera))) {
+				$carrera->clave = $this->clave;
+				$carrera->descripcion = $this->descripcion;
+				$carrera->create ();
+			} else {
+				$carrera->descripcion = $this->descripcion;
+				$carrera->update ();
+			}
+		} else {
+			$carrera->get($this->carrera);
 			$carrera->descripcion = $this->descripcion;
-			$carrera->create ();
+			$carrera->update ();
 		}
-		$req = sprintf ('INSERT INTO %s (clave, grado_m, grado_f, nombre_largo) VALUES (%s, %s, %s, %s);', $this->getSqlTable(), Gatuf_DB_IdentityToDb ($this->clave, $this->_con), Gatuf_DB_IdentityToDb ($this->grado_m, $this->_con), Gatuf_DB_IdentityToDb ($this->grado_f, $this->_con), Gatuf_DB_IdentityToDb ($this->nombre_largo, $this->_con));
-		$this->_con->execute($req);
-		
-		return true;
-	}
-	
-	function update () {
-		$carrera = new Calif_Carrera ();
-		$carrera->descripcion = $this->descripcion;
-		$carrera->update ();
-		
-		$req = sprintf ('UPDATE %s SET grado_m = %s, grado_f = %s, nombre_largo = %s WHERE clave = %s', $this->getSqlTable(), Gatuf_DB_IdentityToDb ($this->grado_m, $this->_con), Gatuf_DB_IdentityToDb ($this->grado_f, $this->_con), Gatuf_DB_IdentityToDb ($this->nombre_largo, $this->_con), Gatuf_DB_IdentityToDb ($this->clave, $this->_con));
-		
-		$this->_con->execute($req);
-		
-		return true;
 	}
 	
 	public function displaylinkedclave () {

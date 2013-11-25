@@ -28,11 +28,16 @@ class Titulacion_Form_Maestro_Buscar extends Gatuf_Form {
 	}
 	
 	
-	public function save($commit=true){
-	$fecha1 = $this->cleaned_data['primeraFecha'];
-	$fecha2 = $this->cleaned_data['ultimaFecha'];
-	$fechas = array ($fecha1,$fecha2);
-	return $fechas;
+public function save ($commit = true) {
+		if (!$this->isValid ()) {
+			throw new Exception ('Cannot save the model from and invalid form.');
+		}
+		
+			$fecha1 = $this->cleaned_data['primeraFecha'];
+			$fecha2 = $this->cleaned_data['ultimaFecha'];
+			$fechas = array ($fecha1,$fecha2);
+			return $fechas;
+		
 	}
 
 }

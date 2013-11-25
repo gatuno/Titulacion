@@ -115,9 +115,20 @@ class Titulacion_Views_Maestro {
 		if($request->method == 'POST'){
 				$form = new Titulacion_Form_Maestro_Buscar($request->POST);
 				$form->isValid();
-				$fechas=$form->save();
-				$filtro = new Gatuf_SQL('fechaHora <= %s AND fechaHora >= %s', array($fechas[0],$fechas[1]));
+				$fechas = $form->save();
+				
+				//array($fechas[0],$fechas[1])
+				$fecha1 = Date($fechas[0]);
+				$fecha2 = Date($fechas[1]);
+				//$date1 = date_parse($fecha1);
+
+				$date1 = date('Y-m-d H:i:s', strtotime($fecha1));
+				$date2 = date('Y-m-d H:i:s', strtotime($fecha2));
+				
+				 
+				$filtro = new Gatuf_SQL('fechaHora >= %s AND fechaHora <= %s', array($date1,$date2));
 				$sql->SAnd ($filtro);
+				
 		}else{
 			$form = new Titulacion_Form_Maestro_Buscar(null);
 		}
@@ -158,7 +169,6 @@ class Titulacion_Views_Maestro {
 		$extra = array ('maestro' => $maestro);
 		
 		$pag->setFromRequest($request);
-		
 		
 		
 	

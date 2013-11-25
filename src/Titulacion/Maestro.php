@@ -9,6 +9,7 @@ class Titulacion_Maestro extends Titulacion_User {
 	public $apellido;
 	public $correo;
 	public $grado;
+	public $fechas;
 	
 	function __construct () {
 		$this->_getConnection();

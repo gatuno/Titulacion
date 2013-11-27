@@ -7,24 +7,10 @@ class Titulacion_Views_Acta {
 
         public $index_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-actas'));
         public function index($request, $match) {
-                if ($request->method == 'POST') {
-                        $form = new Titulacion_Form_Alumno_Seleccionar ($request->POST, array ());
-                        if ($form->isValid ()) {
-                                $codigo = $form->save ();
-
-                                $alumno = new Titulacion_Alumno ();
-                                if (false === ($alumno->getAlumno ($codigo))) {
-                                        $url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::agregarAlumno', array (), array ('acta' => 1, 'alumno' => $codigo), false);
-                                } else {
-                                        $url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::editarAlumno', array ($alumno->codigo), array ('acta' => 1), false);
-                                }
-
-                                return new Gatuf_HTTP_Response_Redirect ($url);
-                        }
-                } else {
-                        $form = new Titulacion_Form_Alumno_Seleccionar (null, array ());
-                }
-                $actas = new Titulacion_Acta ();
+	
+		
+				
+				$actas = new Titulacion_Acta ();
 
                 $pag = new Gatuf_Paginator($actas);
                 $pag->action = array ('Titulacion_Views_Acta::index');
@@ -52,6 +38,8 @@ class Titulacion_Views_Acta {
                 );
                 $pag->setFromRequest($request);
 
+				
+			
                 /* La magia de los filtros acumulativos */
                 $pag->setExtraParams ();
                 $filtro = new Gatuf_SQL ('eliminada=%s', 0);
@@ -64,25 +52,29 @@ class Titulacion_Views_Acta {
                         }
                 }
 				
-				/*para hacer el formularion con la fecha*/
 				
-				/*				if($request->method == 'POST'){
-				$form = new Titulacion_Form_Acta_Filtrar($request->POST);
-				$form->isValid();
-				$fechas = $form->save();
 				
-				//array($fechas[0],$fechas[1])
-				$fecha1 = Date($fechas[0]);
-				$fecha2 = Date($fechas[1]);
-				//$date1 = date_parse($fecha1);
+				 	if($request->method == 'POST'){
+						$form = new Titulacion_Form_Acta_Filtrar($request->POST);
+						$form->isValid();
+						$fechas = $form->save();
+				
+						
+						$fecha1 = Date($fechas[0]);
+						$fecha2 = Date($fechas[1]);
+						
 
-				$date1 = date('Y-m-d H:i:s', strtotime($fecha1));
-				$date2 = date('Y-m-d H:i:s', strtotime($fecha2));
-				
+						$date1 = date('Y-m-d H:i:s', strtotime($fecha1));
+						$date2 = date('Y-m-d H:i:s', strtotime($fecha2));
+						
+						$sql= new Gatuf_SQL('fechaHora >= %s AND fechaHora <= %s', array($date1,$date2));
+						$filtro-> SAnd ($sql);
 				
 				}else{
-				$form = new Titulacion_Form_Acta_Filtrar(null);
-				}*/
+						$form = new Titulacion_Form_Acta_Filtrar(null);
+				}
+				
+				
                 $pag->initial_params = $params_pag;
                 $pag->forced_where = $filtro;
 
@@ -143,6 +135,30 @@ class Titulacion_Views_Acta {
 
 
         }
+		
+		public $agregarAlumno_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-actas'));
+		public function agregarAlumno ($request, $match) {
+				//$title = 'Nuevo profesor';
+		
+				$extra = array ();
+		  if ($request->method == 'POST') {
+                        $form = new Titulacion_Form_Alumno_Seleccionar ($request->POST, array ());
+                        if ($form->isValid ()) {
+                                $codigo = $form->save ();
+
+                                $alumno = new Titulacion_Alumno ();
+                                if (false === ($alumno->getAlumno ($codigo))) {
+                                        $url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::agregarAlumno', array (), array ('acta' => 1, 'alumno' => $codigo), false);
+                                } else {
+                                        $url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::editarAlumno', array ($alumno->codigo), array ('acta' => 1), false);
+                                }
+
+                                return new Gatuf_HTTP_Response_Redirect ($url);
+                        }
+                } else {
+                        $form = new Titulacion_Form_Alumno_Seleccionar (null, array ());
+                }
+			}
 
         public $verActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-actas'));
         public function verActa($request, $match, $params = array ()){

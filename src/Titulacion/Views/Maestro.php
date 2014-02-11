@@ -112,6 +112,7 @@ class Titulacion_Views_Maestro {
 		}
 		$codigo = $maestro->codigo;
 		$sql = new Gatuf_SQL ('director_division=%s OR secretario_division=%s OR jurado1=%s OR jurado2=%s OR jurado3=%s',array($codigo,$codigo,$codigo,$codigo,$codigo));
+		
 		if($request->method == 'POST'){
 				$form = new Titulacion_Form_Maestro_Buscar($request->POST);
 				$form->isValid();

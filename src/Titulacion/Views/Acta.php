@@ -11,6 +11,7 @@ class Titulacion_Views_Acta {
 		
 				
 				$actas = new Titulacion_Acta ();
+		
 
                 $pag = new Gatuf_Paginator($actas);
                 $pag->action = array ('Titulacion_Views_Acta::index');
@@ -44,13 +45,55 @@ class Titulacion_Views_Acta {
                 $pag->setExtraParams ();
                 $filtro = new Gatuf_SQL ('eliminada=%s', 0);
                 $params_pag = array ();
+				
+				/*nuevos filtros*/
+				
+				/*aqui verificamos si es esta activo el filtro de carrera*/
+				if($car = $request->session->getData('carrera',null)){
+					$acta = new Titulacion_Acta();
+					$acta->get($car);
+					$filtro[$c] = $acta->carrera;
+					$sql = new Gatuf_SQL ('carrera=%s', $car);
+					$pag->forced_where = $sql;
+					
+				}
+				
+				if($plan = $request->session->getData( 'filtro_titulacion_plan',null )){
+					$acta->get($plan);
+					$filtro['p'] =$acta->plan;
+					$sql = new Gatuf_SQL('plan=%s', $plan);
+					$pag->forced_where  = $sql;
+				
+				}
+				
+				if($opc = $request->session->getData('filtro_Titulacion_opcion'),null){
+				
+					$acta->get($opc);
+					$filtro['o'] = $acta->moalidad_descripcion;
+					$sql = new Gatuf_SQL('modalidad_descripcion=%s',$opc);
+					$pag->forced_where = $sql;
+				
+				}
+				 
+				 if($anio = $request->session->getData('filtro_titulacion_anio',null)){
+					$acta->get($anio);
+					$filtro[$a] = $acta->anio;
+					$sql = new Gatuf_SQL('anio = %s', $anio);
+				 }
+				
+				$request->session->getData('filtro_titulacion_carrera',null);
+				
+			
+			
+
+			/*
                 foreach (array ('carrera', 'plan', 'anio', 'modalidad') as $key) {
                         if (isset ($request->REQUEST['f_'.$key]) && $request->REQUEST['f_'.$key] != '') {
                                 $filtro->Q ($key.'=%s', $request->REQUEST['f_'.$key]);
                                 $params_pag['f_'.$key] = $request->REQUEST['f_'.$key];
                                 $pag->extra['f_'.$key] = $request->REQUEST['f_'.$key];
                         }
-                }
+                }*/
 				
 				
 				

@@ -52,7 +52,7 @@ class Titulacion_Views_Acta {
 				if($car = $request->session->getData('carrera',null)){
 					$acta = new Titulacion_Acta();
 					$acta->get($car);
-					$filtro[$c] = $acta->carrera;
+					$filtro['c'] = $acta->carrera;
 					$sql = new Gatuf_SQL ('carrera=%s', $car);
 					$pag->forced_where = $sql;
 					
@@ -77,7 +77,7 @@ class Titulacion_Views_Acta {
 				 
 				 if($anio = $request->session->getData('filtro_titulacion_anio',null)){
 					$acta->get($anio);
-					$filtro[$a] = $acta->anio;
+					$filtro['a'] = $acta->anio;
 					$sql = new Gatuf_SQL('anio = %s', $anio);
 				 }
 				
@@ -127,6 +127,19 @@ class Titulacion_Views_Acta {
                                                                'paginador'  => $pag),
                                                          $request);
         }
+		
+		public function eliminarFiltro($request, $match){
+		if($match[1] == 'p')
+			$request->session->setData('filtro_materia_departamento',null);
+		if($match[1] == 'c')
+			$request->session->setData('filtro_materia_carrera',null);
+		if($match[1] == 'o')
+			$request->session->setData('filtro_materia_carrera',null);
+		if($match[1] == 'a')
+			$request->session->setData('filtro_materia_carrera',null);
+		$url = Gatuf_HTTP_URL_urlForView('Titulacion_Views_Acta::index');
+		return new Gatuf_HTTP_Response_Redirect ($url);
+	}
 
         public $agregarActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-actas'));
         public function agregarActa ($request, $match) {

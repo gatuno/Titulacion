@@ -21,7 +21,6 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		$grado = Titulacion_Utils_grado ($this->director->sexo, $this->director->grado);
 		$director = mb_strtoupper ($grado.' '.$this->director->apellido.' '.$this->director->nombre);
 		
-		
 		$dia = strftime("%e", strtotime ($this->acta->fechaHora)); /* Extraer el día */
 		$mes = (strftime("%B", strtotime ($this->acta->fechaHora))); /* El nombre del mes */
 		$anio = strftime("%Y", strtotime ($this->acta->fechaHora)); /* El año */
@@ -51,7 +50,7 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		$grado = Titulacion_Utils_grado ($this->alumno->sexo, $primeraGrado);
 		$sustentante = mb_strtoupper($grado.' '.$this->acta->alumno_nombre.' '.$this->acta->alumno_apellido);
 		
-		$this->SetFont('Arial','', 12);
+		$this->SetFont('Arial','B', 12);
 		$this->Addpage('P','Letter');
 		
 		$this->SetY(18);
@@ -63,7 +62,9 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		$this->SetX(94);
 		$this->Cell(30.5,0,'PROTESTO',0,0,'J');
 		
-		$this->SetFont('Arial','', 12);
+		$this->Image (dirname(__FILE__).'/data/udg/UdgLogo.png', 3, 26, 210, 168);
+		
+		$this->SetFont('Arial','B', 12);
 		
 		$this->SetY(60);
 		$this->SetX(19);

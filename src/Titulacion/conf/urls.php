@@ -92,6 +92,13 @@ $ctl[] = array (
 	'method' =>'agregarAlumno'
 );
 
+$ctl[] = array(
+	'regex' => '#^/alumno/(\w\d{8})/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Alumno',
+	'method' => 'verAlumno', 
+}
+
 $ctl[] = array (
 	'regex' => '#^/alumno/(\w\d{8})/update/$#',
 	'base' => $base,

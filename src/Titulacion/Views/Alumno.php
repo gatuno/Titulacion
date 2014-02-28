@@ -13,7 +13,7 @@ class Titulacion_Views_Alumno {
 		$pag->sumary = 'Lista de alumnos registrados';
 		
 		$list_display = array (
-			array ('codigo', 'Gatuf_Paginator_DisplayVal', 'Codigo'),
+			array ('codigo', 'Gatuf_Paginator_FKLink', 'Codigo'),
 			array ('apellido', 'Gatuf_Paginator_DisplayVal', 'Apellido'),
 			array ('nombre', 'Gatuf_Paginator_DisplayVal', 'Nombre'),
 		);
@@ -29,9 +29,9 @@ class Titulacion_Views_Alumno {
 		$pag->setFromRequest($request);
 		
 		return Gatuf_Shortcuts_renderToResponse ('titulacion/alumno/index.html',
-			                                     array('page_title'=> 'Alumnos',
-			                                           'paginador' => $pag),
-			                                     $request);
+		                                         array('page_title'=> 'Alumnos',
+		                                               'paginador' => $pag),
+		                                         $request);
 	}
 	
 	public $agregarAlumno_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.agregar-alumnos'));
@@ -64,7 +64,7 @@ class Titulacion_Views_Alumno {
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/alumno/agregar-alumno.html',
 		                                         array ('page_title' => 'Agregar alumno',
-		                                                'form' => $form),
+		                                         'form' => $form),
 		                                         $request);
 	}
 	
@@ -100,8 +100,23 @@ class Titulacion_Views_Alumno {
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/alumno/edit-alumno.html',
 		                                         array ('page_title' => 'Actualizar alumno',
-		                                                'alumno' => $alumno,
-		                                                'form' => $form),
+		                                         'alumno' => $alumno,
+		                                         'form' => $form),
+		                                         $request);
+	}
+		
+	public function verAlumno ($request, $match) {
+		$title = 'Perfil escolar del alumno';
+		 
+		$alumno = new Titulacion_Alumno ();
+		
+		if (false === $alumno-> getAlumno($match[1])) {
+			throw new Gatuf_HTTP_Error404 ();
+		}
+		
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/alumno/ver-alumno.html',
+		                                         array ('alumno' => $alumno,
+		                                         'page_title' => $title),
 		                                         $request);
 	}
 }

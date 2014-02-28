@@ -4,11 +4,19 @@
 {aperm 'puede_agregar', $user, 'Titulacion.agregar-alumnos'}
 {aperm 'puede_generar', $user, 'Titulacion.generar-actas'}
 {if ($puede_generar && $puede_agregar && $puede_actualizar)}
-<h2>Generar nueva acta</h2>
-<form action="." method="post">
-{$form.render_p}
-<input type="submit" value="Enviar" />
-</form>
+<p><a href="{url 'Titulacion_Views_Acta::agregarAlumno'}"><img src="{media '/img/list-add.png'}" alt="Agregar alumno/modificar domicilio" />Agregar/Actualizar alumno</a></p>
 {/if}
+<form action="." method="post">
+<H3>Filtrar lista por fecha</H3>
+{$form.render_p}<tr><td>&nbsp;</td><td><input type="submit" value="Filtrar" /></td></tr>
+</form>
 {$paginador.render}
 {/block}
+{block extrahead}
+ <link rel="stylesheet" media="all" type="text/css" href="{media '/css/smoothness/jquery-ui-1.8.16.custom.css'}" />
+ <link rel="stylesheet" media="all" type="text/css" href="{media '/css/timepicker.css'}" />
+ <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+ <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+ <script type="text/javascript" src="{media '/scripts/jquery-ui-timepicker-addon.js'}"></script>
+ <script type="text/javascript" src="{media '/scripts/ui-timepicker-es.js'}"></script>
+ {/block}

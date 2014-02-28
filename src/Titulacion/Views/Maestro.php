@@ -5,7 +5,7 @@ Gatuf::loadFunction('Gatuf_Shortcuts_RenderToResponse');
 class Titulacion_Views_Maestro {
 	public function index ($request, $match) {
 		Gatuf::loadFunction ('Titulacion_Utils_grado');
-		$maestro = new Calif_Maestro ();
+		$maestro = new Titulacion_Maestro ();
 		
 		$pag = new Gatuf_Paginator ($maestro);
 		$pag->action = array ('Titulacion_Views_Maestro::index');
@@ -62,8 +62,7 @@ class Titulacion_Views_Maestro {
 	public function actualizarMaestro ($request, $match) {
 		$title = 'Actualizar profesor';
 		
-		$maestro = new Calif_Maestro ();
-		$maestro->getUser ();
+		$maestro = new Titulacion_Maestro ();
 		
 		if (false === $maestro->getMaestro ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();
@@ -94,7 +93,7 @@ class Titulacion_Views_Maestro {
 	public function verMaestro ($request, $match) {
 		$title = 'Perfil público del profesor';
 		
-		$maestro = new Calif_Maestro ();
+		$maestro = new Titulacion_Maestro ();
 		
 		if (false === $maestro->getMaestro ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();

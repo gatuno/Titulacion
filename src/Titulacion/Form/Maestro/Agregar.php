@@ -68,7 +68,7 @@ class Titulacion_Form_Maestro_Agregar extends Gatuf_Form {
 				),
 		));
 		
-		$this->fields['correo'] = new Gatuf_Form_Field_Email (
+		$this->fields['email'] = new Gatuf_Form_Field_Email (
 			array (
 				'required' => true,
 				'label' => 'Correo',
@@ -80,7 +80,7 @@ class Titulacion_Form_Maestro_Agregar extends Gatuf_Form {
 	public function clean_codigo () {
 		$codigo = $this->cleaned_data['codigo'];
 		$sql = new Gatuf_SQL ('codigo=%s', array ($codigo));
-		$l = Gatuf::factory('Titulacion_Maestro')->getList(array ('filter' => $sql->gen(), 'count' => true));
+		$l = Gatuf::factory('Calif_Maestro')->getList(array ('filter' => $sql->gen(), 'count' => true));
 		
 		if ($l > 0) {
 			throw new Gatuf_Form_Invalid (sprintf ('El código %s del maestro especificado ya existe', $codigo));
@@ -94,16 +94,22 @@ class Titulacion_Form_Maestro_Agregar extends Gatuf_Form {
 			throw new Exception ('Cannot save the model from and invalid form.');
 		}
 		
-		$maestro = new Titulacion_Maestro ();
+		$maestro = new Calif_Maestro ();
+		$user = new Calif_User ();
 		
-		$maestro->codigo = $this->cleaned_data['codigo'];
-		$maestro->nombre = $this->cleaned_data['nombre'];
-		$maestro->apellido = $this->cleaned_data['apellido'];
-		$maestro->correo = $this->cleaned_data['correo'];
-		$maestro->grado = $this->cleaned_data['grado'];
-		$maestro->sexo = $this->cleaned_data['sexo'];
+		$maestro->setFromFormData ($this->cleaned_data);
 		
-		$maestro->create();
+		$user->login = $this->cleaned_data['codigo'];
+		$user->email = $this->cleaned_data['email'];
+		$user->type = 'm';
+		$user->administrator = false;
+		
+		$maestro->user = $user;
+		
+		if ($commit) {
+			$maestro->create();
+			$user->create ();
+		}
 		
 		return $maestro;
 	}

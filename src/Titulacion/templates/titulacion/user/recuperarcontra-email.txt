@@ -20,4 +20,4 @@ contraseña, simplemente ignora este correo, tu
 contraseña no será cambiada.
 
 Atentamente,
-El sistema de titulación
+El sistema de calificaciones

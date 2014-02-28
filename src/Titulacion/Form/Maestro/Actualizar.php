@@ -58,11 +58,11 @@ class Titulacion_Form_Maestro_Actualizar extends Gatuf_Form {
 				),
 		));
 		
-		$this->fields['correo'] = new Gatuf_Form_Field_Email (
+		$this->fields['email'] = new Gatuf_Form_Field_Email (
 			array (
 				'required' => true,
 				'label' => 'Correo',
-				'initial' => $this->maestro->correo,
+				'initial' => $this->maestro->user->email,
 				'help_text' => 'Un correo',
 		));
 	}
@@ -72,13 +72,11 @@ class Titulacion_Form_Maestro_Actualizar extends Gatuf_Form {
 			throw new Exception ('Cannot save the model from and invalid form.');
 		}
 		
-		$this->maestro->nombre = $this->cleaned_data['nombre'];
-		$this->maestro->apellido = $this->cleaned_data['apellido'];
-		$this->maestro->correo = $this->cleaned_data['correo'];
-		$this->maestro->grado = $this->cleaned_data['grado'];
-		$this->maestro->sexo = $this->cleaned_data['sexo'];
+		$this->maestro->setFromFormData ($this->cleaned_data);
+		$this->user->email = $this->cleaned_data['email'];
 		
 		$this->maestro->update();
+		$this->maestro->user->update ();
 		
 		return $this->maestro;
 	}

@@ -55,4 +55,19 @@ class Titulacion_ActaEliminada extends Gatuf_Model {
 			throw new Exception ('No se puede actualizar una acta eliminada');
 		}
 	}
+	
+	function _getConnection () {
+		static $con = null;
+		if ($this->_con !== null) {
+			return $this->_con;
+		}
+		if ($con !== null) {
+			$this->_con = $con;
+			return $this->_con;
+		}
+		Gatuf::loadFunction('Titulacion_DB_getConnection');
+		$this->_con = Titulacion_DB_getConnection();
+		$con = $this->_con;
+		return $this->_con;
+	}
 }

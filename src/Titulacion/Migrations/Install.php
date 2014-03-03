@@ -9,7 +9,8 @@ function Titulacion_Migrations_Install_setup ($params=null) {
 	                 'Titulacion_Opcion',
 	                 'Titulacion_PlanEstudio',
 	                 );
-	$db = Gatuf::db ();
+	Gatuf::loadFunction('Titulacion_DB_getConnection');
+	$db = &Titulacion_DB_getConnection();
 	$schema = new Gatuf_DB_Schema ($db);
 	foreach ($models as $model) {
 		$schema->model = new $model ();
@@ -22,6 +23,8 @@ function Titulacion_Migrations_Install_setup ($params=null) {
 	}
 	
 	//Titulacion_Migrations_Install_1Vistas_setup ();
+	Titulacion_Migrations_Install_2Modalidades_setup ();
+	Titulacion_Migrations_Install_3Planes_setup ();
 }
 
 function Titulacion_Migrations_Install_teardown ($params=null) {
@@ -65,6 +68,39 @@ function Titulacion_Migrations_Install_1Vistas_teardown ($params = null) {
 		$sql = 'DROP VIEW '.$db->pfx.$view;
 		
 		$db->execute ($sql);
+	}
+}
+
+function Titulacion_Migrations_Install_2Modalidades_setup ($params = null) {
+	$modalidad_model = new Titulacion_Modalidad ();
+	
+	$modalidades = array ('Desempeño académico sobresaliente',
+	                      'Exámenes',
+	                      'Producción de materiales educativos',
+	                      'Investigación y estudios de posgrados',
+	                      'Tesis e Informes'
+	                      );
+	
+	foreach ($modalidades as $mod) {
+		$modalidad_model->descripcion = $mod;
+		
+		$modalidad_model->create (true);
+	}
+}
+
+function Titulacion_Migrations_Install_3Planes_setup ($params = null) {
+	$plan_model = new Titulacion_PlanEstudio ();
+	
+	$planes = array ('Créditos',
+	                 'Rígido',
+	                 'Créditos (Incorporadas)',
+	                 'Rígido (Incorporadas)'
+	);
+	
+	foreach ($planes as $plan) {
+		$plan_model->descripcion = $plan;
+		
+		$plan_model->create (true);
 	}
 }
 

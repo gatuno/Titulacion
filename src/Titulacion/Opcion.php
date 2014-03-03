@@ -19,6 +19,24 @@ class Titulacion_Opcion extends Gatuf_Model {
 			       'blank' => false,
 			       'model' => 'Titulacion_Modalidad',
 			),
+			'descripcion' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Varchar',
+			       'blank' => false,
+			       'size' => 150,
+			),
+			'leyenda' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Text',
+			       'blank' => false,
+			),
+			'tipo' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Char',
+			       'blank' => false,
+			       'size' => 1,
+			       'default' => 'C',
+			),
 			'articulo' =>
 			array (
 			       'type' => 'Gatuf_DB_Field_Integer',
@@ -84,5 +102,20 @@ class Titulacion_Opcion extends Gatuf_Model {
 		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::index', array (), array ('f_modalidad' => $this->id));
 		
 		return '<a href="'.$url.'">'.$this->descripcion.'</a>';
+	}
+	
+	function _getConnection () {
+		static $con = null;
+		if ($this->_con !== null) {
+			return $this->_con;
+		}
+		if ($con !== null) {
+			$this->_con = $con;
+			return $this->_con;
+		}
+		Gatuf::loadFunction('Titulacion_DB_getConnection');
+		$this->_con = Titulacion_DB_getConnection();
+		$con = $this->_con;
+		return $this->_con;
 	}
 }

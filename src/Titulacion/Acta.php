@@ -169,7 +169,7 @@ class Titulacion_Acta extends Gatuf_Model {
 		);
 		
 		/* FIXME: La vista */
-		$this->default_order = 'plan ASC, carrera ASC, anio ASC, folio ASC, modalidad_descripcion ASC, alumno_apellido ASC';
+		$this->default_order = 'plan ASC, carrera ASC, anio ASC, folio ASC, modalidad ASC';
 	}
 	
 	function preSave ($create=true) {
@@ -277,5 +277,21 @@ class Titulacion_Acta extends Gatuf_Model {
 	
 	public function displayplan ($extra = null) {
 		return $this->plan_descripcion;
+	}
+	
+	/* Override Gatuf's connection */
+	function _getConnection () {
+		static $con = null;
+		if ($this->_con !== null) {
+			return $this->_con;
+		}
+		if ($con !== null) {
+			$this->_con = $con;
+			return $this->_con;
+		}
+		Gatuf::loadFunction('Titulacion_DB_getConnection');
+		$this->_con = Titulacion_DB_getConnection();
+		$con = $this->_con;
+		return $this->_con;
 	}
 }

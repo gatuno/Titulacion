@@ -73,13 +73,13 @@ $cfg['db_engine'] = 'MySQL';
 
 # El nombre de la base de datos para MySQL y PostgreSQL, y la ruta absoluta
 # al archivo de la base de datos si estás usando SQLite.
-$cfg['db_database'] = 'titulacion';
+$cfg['db_database'] = 'calificaciones';
 
 # El servidor a conectarse
 $cfg['db_server'] = 'localhost';
 
 # Información del usuario.
-$cfg['db_login'] = 'titulacion';
+$cfg['db_login'] = 'sistemas';
 $cfg['db_password'] = 'housepets';
 
 # Un prefijo para todas tus tabla; esto puede ser útil si piensas correr

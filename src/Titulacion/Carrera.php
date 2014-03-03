@@ -74,4 +74,19 @@ class Titulacion_Carrera extends Gatuf_Model {
 		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::index', array (), array ('f_carrera' => $this->clave));
 		return '<a href="'.$url.'">'.$this->clave.'</a>';
 	}
+	
+	function _getConnection () {
+		static $con = null;
+		if ($this->_con !== null) {
+			return $this->_con;
+		}
+		if ($con !== null) {
+			$this->_con = $con;
+			return $this->_con;
+		}
+		Gatuf::loadFunction('Titulacion_DB_getConnection');
+		$this->_con = Titulacion_DB_getConnection();
+		$con = $this->_con;
+		return $this->_con;
+	}
 }

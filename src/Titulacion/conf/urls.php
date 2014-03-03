@@ -97,7 +97,7 @@ $ctl[] = array(
 	'base' => $base,
 	'model' => 'Titulacion_Views_Alumno',
 	'method' => 'verAlumno', 
-}
+);
 
 $ctl[] = array (
 	'regex' => '#^/alumno/(\w\d{8})/update/$#',

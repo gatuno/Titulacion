@@ -83,7 +83,7 @@ class Titulacion_Opcion extends Gatuf_Model {
 		
 		$this->_a['views'] = array (
 			'paginador' => array (
-				'select' => $this->_con->pfx.'opciones_view',
+				'select' => $this->_con->pfx.'opciones_view.*',
 				'from' => $this->_con->pfx.'opciones_view',
 				'props' => array ('modalidad_desc'),
 			),

@@ -9,11 +9,12 @@ class Titulacion_Views_Modalidad {
 		$opciones = new Titulacion_Opcion ();
 		
 		$pag = new Gatuf_Paginator ($opciones);
+		$pag->model_view = 'paginador';
 		$pag->action = array ('Titulacion_Views_Modalidad::index');
 		$pag->summary = 'Lista de opciones de titulación';
 		
 		$list_display = array (
-			array ('modalidad_descripcion', 'Gatuf_Paginator_DisplayVal', 'Modalidad'),
+			array ('modalidad_desc', 'Gatuf_Paginator_DisplayVal', 'Modalidad'),
 			array ('descripcion', 'Gatuf_Paginator_FKLink', 'Opcion'),
 			array ('udg', 'Gatuf_Paginator_FKExtra', 'Estatuto U de G'),
 			array ('cucei', 'Gatuf_Paginator_FKExtra', 'Estatuto CUCEI')
@@ -23,8 +24,8 @@ class Titulacion_Views_Modalidad {
 		$pag->no_results_text = 'No hay modalidades de titulación disponibles';
 		$pag->max_number_pages = 3;
 		$pag->configure ($list_display,
-			array ('modalidad_descripcion', 'descripcion'),
-			array ('modalidad_descripcion', 'descripcion')
+			array ('modalidad_desc', 'descripcion'),
+			array ('modalidad_desc', 'descripcion')
 		);
 		
 		$pag->setFromRequest ($request);

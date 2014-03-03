@@ -252,7 +252,7 @@ class Titulacion_Form_Alumno_Editar extends Gatuf_Form {
 			$domicilio->telefono_casa = $this->cleaned_data['tel_casa'];
 			$domicilio->telefono_celular = $this->cleaned_data['tel_cel'];
 			
-			$domicilio->alumno = $this->alumno->codigo;
+			$domicilio->alumno = $this->alumno;
 			
 			$domicilio->create ();
 		} else {

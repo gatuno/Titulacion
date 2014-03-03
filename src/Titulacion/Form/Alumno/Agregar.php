@@ -181,7 +181,7 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 		}
 
 		$sql = new Gatuf_SQL ('codigo=%s', array ($codigo));
-		$l = Gatuf::factory('Titulacion_Alumno')->getList(array ('filter' => $sql->gen(), 'count' => true));
+		$l = Gatuf::factory('Calif_Alumno')->getList(array ('filter' => $sql->gen(), 'count' => true));
 
 		if ($l > 0) {
 			throw new Gatuf_Form_Invalid (sprintf ('El código %s de alumno especificado ya existe', $codigo));
@@ -218,13 +218,14 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 		if(!$this->isValid()){
 			throw new Exception ('El formulario no tiene datos validos');
 		}
-		$alumno = new Titulacion_Alumno ();
+		$alumno = new Calif_Alumno ();
 		
 		$alumno->nombre = $this->cleaned_data['nombre'];
 		$alumno->apellido = $this->cleaned_data['apellido'];
 		$alumno->codigo = $this->cleaned_data['codigo'];
 		$alumno->sexo = $this->cleaned_data['sexo'];
-	
+		$alumno->setFromFormData (array ('carrera' => 'TEST'));
+		
 		if ($commit) $alumno->create ();
 		
 		$domicilio = new Titulacion_Domicilio ();
@@ -238,7 +239,7 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 		$domicilio->telefono_casa = $this->cleaned_data['tel_casa'];
 		$domicilio->telefono_celular = $this->cleaned_data['tel_cel'];
 		
-		$domicilio->alumno = $alumno->codigo;
+		$domicilio->alumno = $alumno;
 		
 		$domicilio->create ();
 		

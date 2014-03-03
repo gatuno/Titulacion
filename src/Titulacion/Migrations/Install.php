@@ -54,15 +54,23 @@ function Titulacion_Migrations_Install_teardown ($params=null) {
 
 function Titulacion_Migrations_Install_1Vistas_setup ($params = null) {
 	/* Crear todas las vistas necesarias */
-	$db = Gatuf::db ();
+	Gatuf::loadFunction('Titulacion_DB_getConnection');
+	$db = Titulacion_DB_getConnection();
 	
+	$opcion_tabla = Gatuf::factory ('Titulacion_Opcion')->getSqlTable ();
+	$modalidad_tabla = Gatuf::factory ('Titulacion_Modalidad')->getSqlTable ();
 	
+	$sql = 'CREATE VIEW '.$db->pfx.'opciones_view AS '."\n"
+	    .'SELECT '.$opcion_tabla.'.*, '.$modalidad_tabla.'.descripcion as carrera_desc'."\n"
+	    .'FROM '.$opcion_tabla."\n"
+	    .'LEFT JOIN '.$modalidad_tabla.' ON '.$opcion_tabla.'.modalidad = '.$modalidad_tabla.'.id';
+	$db->execute ($sql);
 }
 
 function Titulacion_Migrations_Install_1Vistas_teardown ($params = null) {
 	$db = Gatuf::db ();
 	
-	$views = array ();
+	$views = array ('opciones_view');
 	
 	foreach ($views as $view) {
 		$sql = 'DROP VIEW '.$db->pfx.$view;

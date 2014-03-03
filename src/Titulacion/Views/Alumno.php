@@ -6,14 +6,14 @@ Gatuf::loadFunction('Gatuf_HTTP_URL_urlForView');
 class Titulacion_Views_Alumno {
 	
 	public function index ($request, $match) {
-		$alumnos = new Titulacion_Alumno ();
+		$alumnos = new Calif_Alumno ();
 		
 		$pag = new Gatuf_Paginator ($alumnos);
 		$pag->action = array ('Titulacion_Views_Alumno::index');
 		$pag->sumary = 'Lista de alumnos registrados';
 		
 		$list_display = array (
-			array ('codigo', 'Gatuf_Paginator_FKLink', 'Codigo'),
+			array ('codigo', 'Gatuf_Paginator_DisplayVal', 'Codigo'),
 			array ('apellido', 'Gatuf_Paginator_DisplayVal', 'Apellido'),
 			array ('nombre', 'Gatuf_Paginator_DisplayVal', 'Nombre'),
 		);
@@ -70,8 +70,8 @@ class Titulacion_Views_Alumno {
 	
 	public $editarAlumno_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.actualizar-alumnos'));
 	public function editarAlumno ($request, $match) {
-		$alumno = new Titulacion_Alumno ();
-		if (false === ($alumno->getAlumno ($match[1]))) {
+		$alumno = new Calif_Alumno ();
+		if (false === ($alumno->get ($match[1]))) {
 			$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::agregarAlumno', array (), (isset ($request->REQUEST['acta']) && $request->REQUEST['acta'] == 1) ? array ('acta' => 1) : array ());
 			return new Gatuf_HTTP_Response_Redirect ($url);
 		}
@@ -108,7 +108,7 @@ class Titulacion_Views_Alumno {
 	public function verAlumno ($request, $match) {
 		$title = 'Perfil escolar del alumno';
 		 
-		$alumno = new Titulacion_Alumno ();
+		$alumno = new Calif_Alumno ();
 		
 		if (false === $alumno-> getAlumno($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();

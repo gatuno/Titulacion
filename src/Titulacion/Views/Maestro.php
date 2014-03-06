@@ -5,7 +5,7 @@ Gatuf::loadFunction('Gatuf_Shortcuts_RenderToResponse');
 class Titulacion_Views_Maestro {
 	public function index ($request, $match) {
 		Gatuf::loadFunction ('Titulacion_Utils_grado');
-		$maestro = new Titulacion_Maestro ();
+		$maestro = new Calif_Maestro ();
 		
 		$pag = new Gatuf_Paginator ($maestro);
 		$pag->action = array ('Titulacion_Views_Maestro::index');
@@ -14,7 +14,7 @@ class Titulacion_Views_Maestro {
 			array ('codigo', 'Gatuf_Paginator_FKLink', 'Código'),
 			array ('apellido', 'Gatuf_Paginator_DisplayVal', 'Apellido'),
 			array ('nombre', 'Gatuf_Paginator_DisplayVal', 'Nombre'),
-			array ('grado', 'Gatuf_Paginator_FKExtra', 'Grado'),
+			array ('grado', 'Gatuf_Paginator_DisplayVal', 'Grado'),
 		);
 		
 		$pag->items_per_page = 50;
@@ -49,7 +49,7 @@ class Titulacion_Views_Maestro {
 				return new Gatuf_HTTP_Response_Redirect ($url);
 			}
 		} else {
-			$form = new Titulacion_Form_Maestro_Agregar (null, $extra);
+			$form = new Calif_Form_Maestro_Agregar (null, $extra);
 		}
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/maestro/agregar-maestro.html',
@@ -62,7 +62,7 @@ class Titulacion_Views_Maestro {
 	public function actualizarMaestro ($request, $match) {
 		$title = 'Actualizar profesor';
 		
-		$maestro = new Titulacion_Maestro ();
+		$maestro = new Calif_Maestro ();
 		
 		if (false === $maestro->getMaestro ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();

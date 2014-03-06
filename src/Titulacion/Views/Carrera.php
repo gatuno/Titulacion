@@ -5,14 +5,14 @@ Gatuf::loadFunction('Gatuf_HTTP_URL_urlForView');
 
 class Titulacion_Views_Carrera {
 	function index ($request, $match) {
-		$carrera = new Titulacion_Carrera ();
+		$carrera = new Calif_Carrera ();
 		
 		$pag = new Gatuf_Paginator($carrera);
 		$pag->action = array ('Titulacion_Views_Carrera::index');
 		$pag->sumary = 'Lista de carreras';
 		
 		$list_display = array(
-			array ('clave', 'Gatuf_Paginator_FKLink', 'Clave'),
+			array ('clave', 'Gatuf_Paginator_DisplayVal', 'Clave'),
 			array ('descripcion',  'Gatuf_Paginator_DisplayVal', 'Opcion')
 		);
 		

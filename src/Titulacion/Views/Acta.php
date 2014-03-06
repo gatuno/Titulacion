@@ -66,7 +66,7 @@ class Titulacion_Views_Acta {
 				
 				}
 				
-				if($opc = $request->session->getData('filtro_Titulacion_opcion'),null){
+				if($opc = $request->session->getData('filtro_Titulacion_opcion',null)){
 				
 					$acta->get($opc);
 					$filtro['o'] = $acta->moalidad_descripcion;

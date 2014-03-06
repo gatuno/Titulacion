@@ -2,7 +2,7 @@
 {block body}
 <ul>
 {foreach $planes as $plan}
-<li><a href="{url 'Titulacion_Views_Acta::index', array (), array ('f_plan' => $plan->id)}">{$plan->plan}</a></li>
+<li><a href="{url 'Titulacion_Views_Acta::index', array (), array ('f_plan' => $plan->id)}">{$plan->id}.-{$plan->descripcion}</a></li>
 {/foreach}
 </ul>
 {/block}

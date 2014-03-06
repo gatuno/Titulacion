@@ -4,5 +4,20 @@
 {if $puede_agregar}
 <a href="{url 'Titulacion_Views_Carrera::agregarCarrera'}"><img src="{media '/img/list-add.png'}" alt="Agregar carrera" />Agregar nueva carrera</a>
 {/if}
-{$paginador.render}
+{if count ($divisiones) != 0}
+	{foreach $divisiones as $division}
+		<h3>{$division}</h3>
+		{if count ($carreras[$division.id]) != 0}
+			<ol>
+			{foreach $carreras[$division.id] as $carrera}
+				<li>{$carrera.clave}-{$carrera.descripcion}</li>
+			{/foreach}
+			</ol>
+		{else}
+			<p>No hay carreras para esta división</p>
+		{/if}
+	{/foreach}
+{else}
+	<p>No hay divisiones registradas</p>
+{/if}
 {/block}

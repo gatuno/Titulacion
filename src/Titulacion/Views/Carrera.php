@@ -6,28 +6,19 @@ Gatuf::loadFunction('Gatuf_HTTP_URL_urlForView');
 class Titulacion_Views_Carrera {
 	function index ($request, $match) {
 		$carrera = new Calif_Carrera ();
+		# Listar las carreras aquí, por división
+		$divisiones = Gatuf::factory ('Calif_Division')->getList ();
 		
-		$pag = new Gatuf_Paginator($carrera);
-		$pag->action = array ('Titulacion_Views_Carrera::index');
-		$pag->sumary = 'Lista de carreras';
-		
-		$list_display = array(
-			array ('clave', 'Gatuf_Paginator_DisplayVal', 'Clave'),
-			array ('descripcion',  'Gatuf_Paginator_DisplayVal', 'Opcion')
-		);
-		
-		$pag->items_per_page =25;
-		$pag->no_results_text = 'No hay carreras disponibles por el momento';
-		$pag->configure ($list_display,
-			array('clave', 'descripcion'),
-			array('clave', 'descripcion')
-		);
-		
-		$pag->setFromRequest ($request);
+		$carreras = array ();
+		foreach ($divisiones as $div) {
+			$sql = new Gatuf_SQL ('division=%s', $div->id);
+			$carreras [$div->id] = Gatuf::factory('Calif_Carrera')->getList(array ('filter' => $sql->gen ()));
+		}
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/carrera/index.html',
 		                                         array('page_title' => 'Carreras',
-		                                               'paginador' => $pag),
+		                                               'divisiones' => $divisiones,
+		                                               'carreras' => $carreras),
 		                                         $request);
 	}
 	

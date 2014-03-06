@@ -195,7 +195,7 @@ class Titulacion_Views_Acta {
 		public $agregarAlumno_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-actas'));
 		public function agregarAlumno ($request, $match) {
 				//$title = 'Nuevo profesor';
-		
+				
 				$extra = array ();
 		  if ($request->method == 'POST') {
                         $form = new Titulacion_Form_Alumno_Seleccionar ($request->POST, array ());

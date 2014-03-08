@@ -22,10 +22,17 @@ class Titulacion_Carrera extends Gatuf_Model {
 			       'blank' => false,
 			       'size' => 120,
 			),
+			'division' =>
+			array (
+			       'type' => 'Gatuf_DB_Field_Foreignkey',
+			       'blank' => false,
+			       'model' => 'Calif_Division',
+			),
 			'grado' =>
 			array (
 			       'type' => 'Gatuf_DB_Field_Char',
 			       'blank' => false,
+			       'default' => 'L',
 			       'size' => 1,
 			),
 			'grado_m' =>
@@ -58,14 +65,17 @@ class Titulacion_Carrera extends Gatuf_Model {
 			if (false === ($carrera->get($this->clave))) {
 				$carrera->clave = $this->clave;
 				$carrera->descripcion = $this->descripcion;
+				$carrera->division = new Calif_Division ($this->division);
 				$carrera->create ();
 			} else {
 				$carrera->descripcion = $this->descripcion;
+				$carrera->division = new Calif_Division ($this->division);
 				$carrera->update ();
 			}
 		} else {
 			$carrera->get($this->clave);
 			$carrera->descripcion = $this->descripcion;
+			$carrera->division = new Calif_Division ($this->division);
 			$carrera->update ();
 		}
 	}

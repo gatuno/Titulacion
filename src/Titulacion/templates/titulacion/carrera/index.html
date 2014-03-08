@@ -6,15 +6,13 @@
 {/if}
 {if count ($divisiones) != 0}
 	{foreach $divisiones as $division}
-		<h3>{$division}</h3>
 		{if count ($carreras[$division.id]) != 0}
+			<h3>{$division}</h3>
 			<ol>
 			{foreach $carreras[$division.id] as $carrera}
-				<li>{$carrera.clave}-{$carrera.descripcion}</li>
+				<li>{$carrera.clave} - {$carrera.descripcion}</li>
 			{/foreach}
 			</ol>
-		{else}
-			<p>No hay carreras para esta división</p>
 		{/if}
 	{/foreach}
 {else}

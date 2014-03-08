@@ -70,6 +70,13 @@ $ctl[] = array (
 	'method' => 'index',
 );
 
+$ctl[] = array(
+	'regex' => '#^/carrera/([A-Za-z]{3,5})/update/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Carrera',
+	'method' => 'actualizarCarrera',
+);
+
 $ctl[] = array (
 	'regex' => '#^/carreras/add/$#',
 	'base' => $base,

@@ -1,19 +1,64 @@
 {extends 'titulacion/base.html'}
 {block body}
 {if $form.errors}
-<div class="errors">
-<p>El formulario contiene algunos errores:</p>
-{if $form.get_top_errors}
-{$form.render_top_errors}
-{/if}
-</div>
+	<div class="errors">
+	<p>El formulario contiene algunos errores:</p>
+	{if $form.get_top_errors}
+		{$form.render_top_errors}
+	{/if}
+	</div>
 {/if}
 <form method="post" action=".">
 <table>
-{$form.render_table}
 <tr>
-<td>&nbsp;</td>
-<td><input type="submit" name="submit" value="Crear carrera" /></td>
+	<th><strong>Clave:</strong></th>
+	<td>{$carrera.clave}</td>
+</tr>
+<tr>
+	<th><strong>{$form.f.division.labelTag}:</strong></th>
+	<td>{if $form.f.division.errors}{$form.f.division.fieldErrors}{/if}
+	{$form.f.division|safe}<br />
+	<span class="helptext">{$form.f.division.help_text}</span>
+	</td>
+</tr>
+<tr>
+	<th><strong>{$form.f.descripcion.labelTag}:</strong></th>
+	<td>{if $form.f.descripcion.errors}{$form.f.descripcion.fieldErrors}{/if}
+	{$form.f.descripcion|safe}<br />
+	<span class="helptext">{$form.f.descripcion.help_text}</span>
+	</td>
+</tr>
+<tr>
+	<th><strong>{$form.f.grado.labelTag}:</strong></th>
+	<td>{if $form.f.grado.errors}{$form.f.grado.fieldErrors}{/if}
+	{$form.f.grado|safe}<br />
+	<span class="helptext">{$form.f.grado.help_text}</span>
+	</td>
+</tr>
+<tr>
+	<th><strong>{$form.f.grado_m.labelTag}:</strong></th>
+	<td>{if $form.f.grado_m.errors}{$form.f.grado_m.fieldErrors}{/if}
+	{$form.f.grado_m|safe}<br />
+	<span class="helptext">{$form.f.grado_m.help_text}</span>
+	</td>
+</tr>
+<tr>
+	<th><strong>{$form.f.grado_f.labelTag}:</strong></th>
+	<td>{if $form.f.grado_f.errors}{$form.f.grado_f.fieldErrors}{/if}
+	{$form.f.grado_f|safe}<br />
+	<span class="helptext">{$form.f.grado_f.help_text}</span>
+	</td>
+</tr>
+<tr>
+	<th><strong>{$form.f.nombre_largo.labelTag}:</strong></th>
+	<td>{if $form.f.nombre_largo.errors}{$form.f.nombre_largo.fieldErrors}{/if}
+	{$form.f.nombre_largo|safe}<br />
+	<span class="helptext">{$form.f.nombre_largo.help_text}</span>
+	</td>
+</tr>
+<tr>
+	<td>&nbsp;</td>
+	<td><input type="submit" name="submit" value="Actualizar carrera" /></td>
 </tr>
 </table>
 </form>

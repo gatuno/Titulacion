@@ -24,8 +24,8 @@ class Titulacion_Views_Acta {
 			array('alumno','Gatuf_Paginator_DisplayVal', 'Codigo del alumno'),
 			array('alumno_nombre','Gatuf_Paginator_DisplayVal', 'Nombre'),
 			array('alumno_apellido','Gatuf_Paginator_DisplayVal', 'Apellidos'),
-			array('plan','Gatuf_Paginator_DisplayVal','Plan de estudios'),
-			array('opcion','Gatuf_Paginator_DisplayVal', 'Opcion de titulacion'),
+			array('plan','Gatuf_Paginator_FKLink','Plan de estudios'),
+			array('opcion','Gatuf_Paginator_FKLink', 'Opcion de titulacion'),
 			array('fechahora','Gatuf_Paginator_DateYMDHM','Fecha ceremonia'),
 			array('ingreso','Gatuf_Paginator_DisplayVal','Calendario de ingreso'),
 			array('egreso','Gatuf_Paginator_DisplayVal','Calendario de egreso')

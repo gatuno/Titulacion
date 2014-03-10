@@ -236,11 +236,19 @@ class Titulacion_Acta extends Gatuf_Model {
 	}
 	
 	public function displaylinkedplan ($extra = null) {
-		return $this->plan_descripcion;
+		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $this->plan);
+		
+		return '<a href="'.$url.'">'.$this->plan.'</a>';
 	}
 	
 	public function displaylinkedmodalidad ($extra = null) {
 		return $this->modalidad_descripcion;
+	}
+	
+	public function displaylinkedopcion ($extra = null) {
+		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $this->opcion);
+		
+		return '<a href="'.$url.'">'.$this->opcion.'</a>';
 	}
 	
 	public function displayfolio ($extra = null) {

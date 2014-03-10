@@ -4,11 +4,12 @@
 {aperm 'puede_agregar', $user, 'Titulacion.agregar-alumnos'}
 {aperm 'puede_generar', $user, 'Titulacion.generar-actas'}
 {if ($puede_generar && $puede_agregar && $puede_actualizar)}
-<p><a href="{url 'Titulacion_Views_Acta::agregarAlumno'}"><img src="{media '/img/list-add.png'}" alt="Agregar alumno/modificar domicilio" />Agregar/Actualizar alumno</a></p>
+<p><a href="url 'Titulacion_Views_Acta::agregarAlumno'"><img src="{media '/img/list-add.png'}" alt="Agregar alumno/modificar domicilio" />FIXME: Restaurar el viejo formulario de selección de alumno. Atte. Félix.</a></p>
 {/if}
 <form action="." method="post">
 <H3>Filtrar lista por fecha</H3>
-{$form.render_p}<tr><td>&nbsp;</td><td><input type="submit" value="Filtrar" /></td></tr>
+<p>FIXME: Poner un formulario para rangos de fechas, pero no debe hacer post hacia esta misma página, que haga un get hacia una vista que active los filtros y luego regrese a esta vista.</p>
+$form.render_p<tr><td>&nbsp;</td><td><input type="submit" value="Filtrar" /></td></tr>
 </form>
 {$paginador.render}
 {/block}

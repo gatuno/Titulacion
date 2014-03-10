@@ -4,129 +4,48 @@ Gatuf::loadFunction('Gatuf_Shortcuts_RenderToResponse');
 Gatuf::loadFunction('Gatuf_HTTP_URL_urlForView');
 
 class Titulacion_Views_Acta {
-
-        public $index_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-actas'));
-        public function index($request, $match) {
-	
+	public $index_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-actas'));
+	public function index($request, $match) {
+		$acta = new Titulacion_Acta ();
 		
-				
-				$actas = new Titulacion_Acta ();
+		$pag = new Gatuf_Paginator($acta);
+		$pag->model_view = 'paginador';
 		
-
-                $pag = new Gatuf_Paginator($actas);
-                $pag->action = array ('Titulacion_Views_Acta::index');
-                $pag->sumary = 'Lista de actas registradas';
-
-                $list_display = array (
-                        array('folio', 'Gatuf_Paginator_FKLink', 'Folio'),
-                        array('carrera','Gatuf_Paginator_FKLink','Carrera'),
-                        array('alumno','Gatuf_Paginator_DisplayVal', 'Codigo del alumno'),
-                        array('alumno_nombre','Gatuf_Paginator_DisplayVal', 'Nombre'),
-                        array('alumno_apellido','Gatuf_Paginator_DisplayVal', 'Apellidos'),
-                        array('plan','Gatuf_Paginator_FKLink','Plan de estudios'),
-                        array('modalidad','Gatuf_Paginator_FKLink', 'Opcion de titulacion'),
-                        array('fechaHora','Gatuf_Paginator_DateYMDHM','Fecha ceremonia'),
-                        array('ingreso','Gatuf_Paginator_DisplayVal','Calendario de ingreso'),
-                        array('egreso','Gatuf_Paginator_DisplayVal','Calendario de egreso')
-                );
-
-                $pag->items_per_page = 25;
-                $pag->no_results_text = 'No hay actas de titulacion disponibles';
-                $pag->max_number_pages = 3;
-                $pag->configure ($list_display,
-                                array ('alumno','folio','ingreso','egreso','carrera', 'alumno_nombre', 'alumno_apellido', 'modalidad_descripcion'),
-                                array ('alumno','folio','ingreso','egreso','carrera')
-                );
-                $pag->setFromRequest($request);
-
-				
-			
-                /* La magia de los filtros acumulativos */
-                $pag->setExtraParams ();
-                $filtro = new Gatuf_SQL ('eliminada=%s', 0);
-                $params_pag = array ();
-				
-				/*nuevos filtros*/
-				
-				/*aqui verificamos si es esta activo el filtro de carrera*/
-				if($car = $request->session->getData('carrera',null)){
-					$acta = new Titulacion_Acta();
-					$acta->get($car);
-					$filtro['c'] = $acta->carrera;
-					$sql = new Gatuf_SQL ('carrera=%s', $car);
-					$pag->forced_where = $sql;
-					
-				}
-				
-				if($plan = $request->session->getData( 'filtro_titulacion_plan',null )){
-					$acta->get($plan);
-					$filtro['p'] =$acta->plan;
-					$sql = new Gatuf_SQL('plan=%s', $plan);
-					$pag->forced_where  = $sql;
-				
-				}
-				
-				if($opc = $request->session->getData('filtro_Titulacion_opcion',null)){
-				
-					$acta->get($opc);
-					$filtro['o'] = $acta->moalidad_descripcion;
-					$sql = new Gatuf_SQL('modalidad_descripcion=%s',$opc);
-					$pag->forced_where = $sql;
-				
-				}
-				 
-				 if($anio = $request->session->getData('filtro_titulacion_anio',null)){
-					$acta->get($anio);
-					$filtro['a'] = $acta->anio;
-					$sql = new Gatuf_SQL('anio = %s', $anio);
-				 }
-				
-				$request->session->getData('filtro_titulacion_carrera',null);
-				
-			
-			
-
-			/*
-                foreach (array ('carrera', 'plan', 'anio', 'modalidad') as $key) {
-                        if (isset ($request->REQUEST['f_'.$key]) && $request->REQUEST['f_'.$key] != '') {
-                                $filtro->Q ($key.'=%s', $request->REQUEST['f_'.$key]);
-                                $params_pag['f_'.$key] = $request->REQUEST['f_'.$key];
-                                $pag->extra['f_'.$key] = $request->REQUEST['f_'.$key];
-                        }
-                }*/
-				
-				
-				
-				 	if($request->method == 'POST'){
-						$form = new Titulacion_Form_Acta_Filtrar($request->POST);
-						$form->isValid();
-						$fechas = $form->save();
-				
-						
-						$fecha1 = Date($fechas[0]);
-						$fecha2 = Date($fechas[1]);
-						
-
-						$date1 = date('Y-m-d H:i:s', strtotime($fecha1));
-						$date2 = date('Y-m-d H:i:s', strtotime($fecha2));
-						
-						$sql= new Gatuf_SQL('fechaHora >= %s AND fechaHora <= %s', array($date1,$date2));
-						$filtro-> SAnd ($sql);
-				
-				}else{
-						$form = new Titulacion_Form_Acta_Filtrar(null);
-				}
-				
-				
-                $pag->initial_params = $params_pag;
-                $pag->forced_where = $filtro;
-
-                return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/index.html',
-                                                         array('page_title' => 'Actas de titulacion',
-                                                               'form' => $form,
-                                                               'paginador'  => $pag),
-                                                         $request);
-        }
+		/* Solo las actas válidas */
+		$filtro = new Gatuf_SQL ('eliminada=%s', 0);
+		$pag->forced_where = $filtro;
+		
+		$pag->action = array ('Titulacion_Views_Acta::index');
+		$pag->sumary = 'Lista de actas registradas';
+		
+		$list_display = array (
+			array('folio', 'Gatuf_Paginator_DisplayVal', 'Folio'),
+			array('carrera','Gatuf_Paginator_DisplayVal','Carrera'),
+			array('alumno','Gatuf_Paginator_DisplayVal', 'Codigo del alumno'),
+			array('alumno_nombre','Gatuf_Paginator_DisplayVal', 'Nombre'),
+			array('alumno_apellido','Gatuf_Paginator_DisplayVal', 'Apellidos'),
+			array('plan','Gatuf_Paginator_DisplayVal','Plan de estudios'),
+			array('opcion','Gatuf_Paginator_DisplayVal', 'Opcion de titulacion'),
+			array('fechahora','Gatuf_Paginator_DateYMDHM','Fecha ceremonia'),
+			array('ingreso','Gatuf_Paginator_DisplayVal','Calendario de ingreso'),
+			array('egreso','Gatuf_Paginator_DisplayVal','Calendario de egreso')
+		);
+		
+		$pag->items_per_page = 25;
+		$pag->no_results_text = 'No hay actas de titulacion disponibles';
+		$pag->max_number_pages = 3;
+		$pag->configure ($list_display,
+			array ('alumno','folio','ingreso','egreso','carrera', 'alumno_nombre', 'alumno_apellido', 'opcion_descripcion'),
+			array ('alumno','folio','ingreso','egreso','carrera')
+		);
+		$pag->setFromRequest($request);
+		
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/index.html',
+		                                         array('page_title' => 'Actas de titulacion',
+		                                               //'form' => $form,
+		                                               'paginador'  => $pag),
+		                                         $request);
+	}
 		
 		public function eliminarFiltro($request, $match){
 		if($match[1] == 'p')

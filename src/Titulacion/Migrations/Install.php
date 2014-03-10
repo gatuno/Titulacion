@@ -59,11 +59,20 @@ function Titulacion_Migrations_Install_1Vistas_setup ($params = null) {
 	
 	$opcion_tabla = Gatuf::factory ('Titulacion_Opcion')->getSqlTable ();
 	$modalidad_tabla = Gatuf::factory ('Titulacion_Modalidad')->getSqlTable ();
+	$alumno_tabla = Gatuf::factory ('Calif_Alumno')->getSqlTable ();
+	$acta_tabla = Gatuf::factory ('Titulacion_Acta')->getSqlTable ();
 	
 	$sql = 'CREATE VIEW '.$db->pfx.'opciones_view AS '."\n"
 	    .'SELECT '.$opcion_tabla.'.*, '.$modalidad_tabla.'.descripcion as carrera_desc'."\n"
 	    .'FROM '.$opcion_tabla."\n"
 	    .'LEFT JOIN '.$modalidad_tabla.' ON '.$opcion_tabla.'.modalidad = '.$modalidad_tabla.'.id';
+	$db->execute ($sql);
+	
+	$sql = 'CREATE VIEW '.$db->pfx.'actas_view AS '."\n"
+	    .'SELECT '.$acta_tabla.'.*, YEAR (create_time) as anio, '.$alumno_tabla.'.nombre as alumno_nombre, '.$alumno_tabla.'.apellido as alumno_apellido, '.$opcion_tabla.'.descripcion as opcion_descripcion'."\n"
+	    .'FROM '.$acta_tabla."\n"
+	    .'LEFT JOIN '.$alumno_tabla.' ON '.$acta_tabla.'.alumno = '.$alumno_tabla.'.codigo'
+	    .'LEFT JOIN '.$opcion_tabla.' ON '.$acta_tabla.'.opcion = '.$opcion_tabla.'.id';
 	$db->execute ($sql);
 }
 

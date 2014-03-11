@@ -165,6 +165,13 @@ $ctl[] =array(
 );
 
 $ctl[] =array(
+	'regex' => '#^/acta/op/(\d+)/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Acta',
+	'method' => 'porOpcion',
+);
+
+$ctl[] =array(
 	'regex' => '#^/acta/(\d+)/update/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Acta',

@@ -236,7 +236,7 @@ class Titulacion_Acta extends Gatuf_Model {
 	}
 	
 	public function displaylinkedplan ($extra = null) {
-		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $this->plan);
+		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::porPlan', array($this->plan));
 		
 		return '<a href="'.$url.'">'.$this->plan.'</a>';
 	}
@@ -246,9 +246,9 @@ class Titulacion_Acta extends Gatuf_Model {
 	}
 	
 	public function displaylinkedopcion ($extra = null) {
-		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $this->opcion);
+		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::porOpcion', array($this->opcion));
 		
-		return '<a href="'.$url.'">'.$this->opcion.'</a>';
+		return '<a href="'.$url.'">'.$this->opcion.'.-'.$this->opcion_descripcion.'</a>';
 	}
 	
 	public function displayfolio ($extra = null) {
@@ -263,6 +263,10 @@ class Titulacion_Acta extends Gatuf_Model {
 	
 	public function displayplan ($extra = null) {
 		return $this->plan_descripcion;
+	}
+	public function displayopcion ($extra = null) {
+			
+		return $this->opcion_descripcion;
 	}
 	
 	/* Override Gatuf's connection */

@@ -12,11 +12,20 @@ class Titulacion_Views_Acta {
 		$pag->model_view = 'paginador';
 		
 		/* Solo las actas válidas */
-		$filtro = new Gatuf_SQL ('eliminada=%s', 0);
-		$pag->forced_where = $filtro;
+		$filtro_elim = new Gatuf_SQL ('eliminada=%s', 0);
+		
 		
 		$pag->action = array ('Titulacion_Views_Acta::index');
 		$pag->sumary = 'Lista de actas registradas';
+		
+		/* Verificr filtro de materias por opcion */
+		$op = $request->session->getData('filtro_acta_opcion',null);
+		if(!is_null ($op) ){
+			$filtro['d'] = $op;
+			$sqlf = new Gatuf_SQL ('opcion=%s', $op);
+			$filtro_elim->SAnd($sqlf);
+		}
+		$pag->forced_where = $filtro_elim;
 		
 		$list_display = array (
 			array('folio', 'Gatuf_Paginator_DisplayVal', 'Folio'),
@@ -24,8 +33,8 @@ class Titulacion_Views_Acta {
 			array('alumno','Gatuf_Paginator_DisplayVal', 'Codigo del alumno'),
 			array('alumno_nombre','Gatuf_Paginator_DisplayVal', 'Nombre'),
 			array('alumno_apellido','Gatuf_Paginator_DisplayVal', 'Apellidos'),
-			array('plan','Gatuf_Paginator_FKLink','Plan de estudios'),
-			array('opcion','Gatuf_Paginator_FKLink', 'Opcion de titulacion'),
+			array('plan', (is_null ($op) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra'),'Plan de estudios'),
+			array('opcion',(is_null ($op) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra'), 'Opcion de titulacion'),
 			array('fechahora','Gatuf_Paginator_DateYMDHM','Fecha ceremonia'),
 			array('ingreso','Gatuf_Paginator_DisplayVal','Calendario de ingreso'),
 			array('egreso','Gatuf_Paginator_DisplayVal','Calendario de egreso')
@@ -46,6 +55,19 @@ class Titulacion_Views_Acta {
 		                                               'paginador'  => $pag),
 		                                         $request);
 	}
+	public function porOpcion($request, $match){
+		$opcion = new Titulacion_Opcion ();
+		
+		if (false === ($opcion->get ($match[1]))) {
+			throw new Gatuf_HTTP_Error404 ();
+		}
+		
+		$request->session->setData('filtro_acta_opcion',$opcion->id);
+		
+		$url = Gatuf_HTTP_URL_urlForView('Titulacion_Views_Acta::index');
+		return new Gatuf_HTTP_Response_Redirect ($url);
+	}
+	
 		
 		public function eliminarFiltro($request, $match){
 		if($match[1] == 'p')

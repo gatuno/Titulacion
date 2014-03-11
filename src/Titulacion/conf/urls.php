@@ -170,6 +170,20 @@ $ctl[] =array(
 	'model' => 'Titulacion_Views_Acta',
 	'method' => 'porOpcion',
 );
+$ctl[] =array(
+	'regex' => '#^/acta/plan/(\d+)/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Acta',
+	'method' => 'porPlan',
+);
+
+$ctl[] =array(
+	'regex' => '#^/acta/nofiltro/([op])/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Acta',
+	'method' => 'eliminarFiltro',
+);
+
 
 $ctl[] =array(
 	'regex' => '#^/acta/(\d+)/update/$#',

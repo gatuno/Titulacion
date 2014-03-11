@@ -13,6 +13,7 @@ class Titulacion_Views_Acta {
 		
 		/* Solo las actas válidas */
 		$filtro_elim = new Gatuf_SQL ('eliminada=%s', 0);
+		$filtro = array();
 		
 		
 		$pag->action = array ('Titulacion_Views_Acta::index');
@@ -21,9 +22,17 @@ class Titulacion_Views_Acta {
 		/* Verificr filtro de materias por opcion */
 		$op = $request->session->getData('filtro_acta_opcion',null);
 		if(!is_null ($op) ){
-			$filtro['d'] = $op;
-			$sqlf = new Gatuf_SQL ('opcion=%s', $op);
-			$filtro_elim->SAnd($sqlf);
+			$filtro['o'] = $op;
+			$sqlo = new Gatuf_SQL ('opcion=%s', $op);
+			$filtro_elim->SAnd($sqlo);
+		}
+		
+		/* Verificr filtro de materias por opcion */
+		$pl = $request->session->getData('filtro_acta_plan',null);
+		if(!is_null ($pl) ){
+			$filtro['p'] = $pl;
+			$sqlp = new Gatuf_SQL ('plan=%s', $pl);
+			$filtro_elim->SAnd($sqlp);
 		}
 		$pag->forced_where = $filtro_elim;
 		
@@ -33,7 +42,7 @@ class Titulacion_Views_Acta {
 			array('alumno','Gatuf_Paginator_DisplayVal', 'Codigo del alumno'),
 			array('alumno_nombre','Gatuf_Paginator_DisplayVal', 'Nombre'),
 			array('alumno_apellido','Gatuf_Paginator_DisplayVal', 'Apellidos'),
-			array('plan', (is_null ($op) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra'),'Plan de estudios'),
+			array('plan', (is_null ($pl) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra'),'Plan de estudios'),
 			array('opcion',(is_null ($op) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra'), 'Opcion de titulacion'),
 			array('fechahora','Gatuf_Paginator_DateYMDHM','Fecha ceremonia'),
 			array('ingreso','Gatuf_Paginator_DisplayVal','Calendario de ingreso'),
@@ -52,7 +61,9 @@ class Titulacion_Views_Acta {
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/index.html',
 		                                         array('page_title' => 'Actas de titulacion',
 		                                               //'form' => $form,
-		                                               'paginador'  => $pag),
+		                                               'paginador'  => $pag,
+													   'filtro' => $filtro,
+													   ),
 		                                         $request);
 	}
 	public function porOpcion($request, $match){
@@ -67,17 +78,28 @@ class Titulacion_Views_Acta {
 		$url = Gatuf_HTTP_URL_urlForView('Titulacion_Views_Acta::index');
 		return new Gatuf_HTTP_Response_Redirect ($url);
 	}
-	
+	public function porPlan($request, $match){
+		$plan = new Titulacion_PlanEstudio ();
+		
+		if (false === ($plan->get ($match[1]))) {
+			throw new Gatuf_HTTP_Error404 ();
+		}
+		
+		$request->session->setData('filtro_acta_plan',$plan->id);
+		
+		$url = Gatuf_HTTP_URL_urlForView('Titulacion_Views_Acta::index');
+		return new Gatuf_HTTP_Response_Redirect ($url);
+	}
 		
 		public function eliminarFiltro($request, $match){
-		if($match[1] == 'p')
-			$request->session->setData('filtro_materia_departamento',null);
-		if($match[1] == 'c')
-			$request->session->setData('filtro_materia_carrera',null);
 		if($match[1] == 'o')
+			$request->session->setData('filtro_acta_opcion',null);
+		if($match[1] == 'p')
+			$request->session->setData('filtro_acta_plan',null);
+	/*	if($match[1] == 'o')
 			$request->session->setData('filtro_materia_carrera',null);
 		if($match[1] == 'a')
-			$request->session->setData('filtro_materia_carrera',null);
+			$request->session->setData('filtro_materia_carrera',null);*/
 		$url = Gatuf_HTTP_URL_urlForView('Titulacion_Views_Acta::index');
 		return new Gatuf_HTTP_Response_Redirect ($url);
 	}

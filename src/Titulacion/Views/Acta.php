@@ -27,18 +27,26 @@ class Titulacion_Views_Acta {
 			$filtro_elim->SAnd($sqlo);
 		}
 		
-		/* Verificr filtro de materias por opcion */
+		/* Verificr filtro de materias por plan de estudios */
 		$pl = $request->session->getData('filtro_acta_plan',null);
 		if(!is_null ($pl) ){
 			$filtro['p'] = $pl;
 			$sqlp = new Gatuf_SQL ('plan=%s', $pl);
 			$filtro_elim->SAnd($sqlp);
 		}
+		
+		/* Verificr filtro de materias por plan de estudios */
+		$car = $request->session->getData('filtro_acta_carrera',null);
+		if(!is_null ($car) ){
+			$filtro['c'] = $car;
+			$sqlc = new Gatuf_SQL ('carrera=%s', $car);
+			$filtro_elim->SAnd($sqlc);
+		}
 		$pag->forced_where = $filtro_elim;
 		
 		$list_display = array (
 			array('folio', 'Gatuf_Paginator_DisplayVal', 'Folio'),
-			array('carrera','Gatuf_Paginator_DisplayVal','Carrera'),
+			array('carrera',(is_null ($car) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra') ,'Carrera'),
 			array('alumno','Gatuf_Paginator_DisplayVal', 'Codigo del alumno'),
 			array('alumno_nombre','Gatuf_Paginator_DisplayVal', 'Nombre'),
 			array('alumno_apellido','Gatuf_Paginator_DisplayVal', 'Apellidos'),
@@ -65,6 +73,18 @@ class Titulacion_Views_Acta {
 													   'filtro' => $filtro,
 													   ),
 		                                         $request);
+	}
+	public function porCarrera($request, $match){
+		$carrera = new Titulacion_Carrera ();
+		
+		if (false === ($carrera->get ($match[1]))) {
+			throw new Gatuf_HTTP_Error404 ();
+		}
+		
+		$request->session->setData('filtro_acta_carrera',$carrera->clave);
+		
+		$url = Gatuf_HTTP_URL_urlForView('Titulacion_Views_Acta::index');
+		return new Gatuf_HTTP_Response_Redirect ($url);
 	}
 	public function porOpcion($request, $match){
 		$opcion = new Titulacion_Opcion ();
@@ -96,9 +116,9 @@ class Titulacion_Views_Acta {
 			$request->session->setData('filtro_acta_opcion',null);
 		if($match[1] == 'p')
 			$request->session->setData('filtro_acta_plan',null);
-	/*	if($match[1] == 'o')
-			$request->session->setData('filtro_materia_carrera',null);
-		if($match[1] == 'a')
+		if($match[1] == 'c')
+			$request->session->setData('filtro_acta_carrera',null);
+	/*	if($match[1] == 'a')
 			$request->session->setData('filtro_materia_carrera',null);*/
 		$url = Gatuf_HTTP_URL_urlForView('Titulacion_Views_Acta::index');
 		return new Gatuf_HTTP_Response_Redirect ($url);

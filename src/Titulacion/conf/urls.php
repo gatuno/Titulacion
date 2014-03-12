@@ -176,9 +176,15 @@ $ctl[] =array(
 	'model' => 'Titulacion_Views_Acta',
 	'method' => 'porPlan',
 );
+$ctl[] =array(
+	'regex' => '#^/acta/car/([a-zA-Z]{3})/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Acta',
+	'method' => 'porCarrera',
+);
 
 $ctl[] =array(
-	'regex' => '#^/acta/nofiltro/([op])/$#',
+	'regex' => '#^/acta/nofiltro/([opc])/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Acta',
 	'method' => 'eliminarFiltro',

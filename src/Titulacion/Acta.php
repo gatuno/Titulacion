@@ -232,7 +232,9 @@ class Titulacion_Acta extends Gatuf_Model {
 	}
 	
 	public function displaylinkedcarrera ($extra = null) {
-		return '<abbr title="'.$this->carrera.'">'.$this->carrera.'</abbr>';
+		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::porCarrera', array($this->carrera));
+		
+		return '<a href="'.$url.'">'.$this->carrera.'</a>';
 	}
 	
 	public function displaylinkedplan ($extra = null) {
@@ -248,7 +250,7 @@ class Titulacion_Acta extends Gatuf_Model {
 	public function displaylinkedopcion ($extra = null) {
 		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::porOpcion', array($this->opcion));
 		
-		return '<a href="'.$url.'">'.$this->opcion.'.-'.$this->opcion_descripcion.'</a>';
+		return '<a href="'.$url.'">'.$this->opcion_descripcion.'</a>';
 	}
 	
 	public function displayfolio ($extra = null) {
@@ -258,7 +260,7 @@ class Titulacion_Acta extends Gatuf_Model {
 	}
 	
 	public function displaycarrera ($extra = null) {
-		return '<abbr title="'.$this->carrera_descripcion.'">'.$this->carrera.'</abbr>';
+		return $this->carrera;
 	}
 	
 	public function displayplan ($extra = null) {

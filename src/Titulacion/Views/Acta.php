@@ -15,43 +15,43 @@ class Titulacion_Views_Acta {
 		$filtro_elim = new Gatuf_SQL ('eliminada=%s', 0);
 		$filtro = array();
 		
-		
 		$pag->action = array ('Titulacion_Views_Acta::index');
 		$pag->sumary = 'Lista de actas registradas';
 		
-		/* Verificr filtro de materias por opcion */
-		$op = $request->session->getData('filtro_acta_opcion',null);
-		if(!is_null ($op) ){
-			$filtro['o'] = $op;
-			$sqlo = new Gatuf_SQL ('opcion=%s', $op);
-			$filtro_elim->SAnd($sqlo);
+		/* Verificar filtro de materias por opcion */
+		$filtro['o'] = $request->session->getData('filtro_acta_opcion',null);
+		if (!is_null ($filtro['o']) ){
+			$sql = new Gatuf_SQL ('opcion=%s', $filtro['o']);
+			$filtro_elim->SAnd($sql);
+			$filtro['o'] = (new Titulacion_Opcion ($filtro['o']))->descripcion;
 		}
 		
-		/* Verificr filtro de materias por plan de estudios */
-		$pl = $request->session->getData('filtro_acta_plan',null);
-		if(!is_null ($pl) ){
-			$filtro['p'] = $pl;
-			$sqlp = new Gatuf_SQL ('plan=%s', $pl);
-			$filtro_elim->SAnd($sqlp);
+		/* Verificar filtro de materias por plan de estudios */
+		$filtro['p'] = $request->session->getData('filtro_acta_plan',null);
+		if(!is_null ($filtro['p']) ){
+			$sql = new Gatuf_SQL ('plan=%s', $filtro['p']);
+			$filtro_elim->SAnd($sql);
+			$filtro['p'] = (new Titulacion_PlanEstudio ($filtro['p']))->descripcion;
 		}
 		
-		/* Verificr filtro de materias por plan de estudios */
-		$car = $request->session->getData('filtro_acta_carrera',null);
-		if(!is_null ($car) ){
-			$filtro['c'] = $car;
-			$sqlc = new Gatuf_SQL ('carrera=%s', $car);
-			$filtro_elim->SAnd($sqlc);
+		/* Verificar filtro de materias por plan de estudios */
+		$filtro['c'] = $request->session->getData('filtro_acta_carrera',null);
+		if(!is_null ($filtro['c']) ){
+			$sql = new Gatuf_SQL ('carrera=%s', $filtro['c']);
+			$filtro_elim->SAnd($sql);
+			$filtro['c'] = (new Titulacion_Carrera ($filtro['c']))->descripcion;
 		}
+		
 		$pag->forced_where = $filtro_elim;
 		
 		$list_display = array (
+			array('plan', (is_null ($filtro['p']) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra'),'Plan de estudios'),
+			array('carrera',(is_null ($filtro['c']) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra') ,'Carrera'),
+			array('opcion',(is_null ($filtro['o']) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra'), 'Opcion de titulacion'),
 			array('folio', 'Gatuf_Paginator_DisplayVal', 'Folio'),
-			array('carrera',(is_null ($car) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra') ,'Carrera'),
 			array('alumno','Gatuf_Paginator_DisplayVal', 'Codigo del alumno'),
 			array('alumno_nombre','Gatuf_Paginator_DisplayVal', 'Nombre'),
 			array('alumno_apellido','Gatuf_Paginator_DisplayVal', 'Apellidos'),
-			array('plan', (is_null ($pl) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra'),'Plan de estudios'),
-			array('opcion',(is_null ($op) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra'), 'Opcion de titulacion'),
 			array('fechahora','Gatuf_Paginator_DateYMDHM','Fecha ceremonia'),
 			array('ingreso','Gatuf_Paginator_DisplayVal','Calendario de ingreso'),
 			array('egreso','Gatuf_Paginator_DisplayVal','Calendario de egreso')
@@ -61,7 +61,7 @@ class Titulacion_Views_Acta {
 		$pag->no_results_text = 'No hay actas de titulacion disponibles';
 		$pag->max_number_pages = 3;
 		$pag->configure ($list_display,
-			array ('alumno','folio','ingreso','egreso','carrera', 'alumno_nombre', 'alumno_apellido', 'opcion_descripcion'),
+			array ('alumno','folio','ingreso','egreso','carrera', 'alumno_nombre', 'alumno_apellido', 'opcion_descripcion', 'plan_descripcion', 'carrera_descripcion'),
 			array ('alumno','folio','ingreso','egreso','carrera')
 		);
 		$pag->setFromRequest($request);

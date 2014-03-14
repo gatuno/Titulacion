@@ -174,7 +174,7 @@ class Titulacion_Acta extends Gatuf_Model {
 			'paginador' => array (
 				'select' => $this->_con->pfx.'actas_view.*',
 				'from' => $this->_con->pfx.'actas_view',
-				'props' => array ('alumno_nombre', 'alumno_apellido', 'anio', 'opcion_descripcion'),
+				'props' => array ('alumno_nombre', 'alumno_apellido', 'anio', 'opcion_descripcion', 'plan_descripcion', 'carrera_descripcion'),
 			),
 		);
 	}
@@ -201,9 +201,7 @@ class Titulacion_Acta extends Gatuf_Model {
 		$this->modification_time = date ('Y-m-d H:i:s');
 	}
 	
-	
 	/*Funcion para que agregue en la participacion que tuvo el maestro en el cata actual*/
-	
 	function displayfunge ($extra = null){
 		
 		if ($extra['codigo'] == $this->secretario_division) {
@@ -218,33 +216,22 @@ class Titulacion_Acta extends Gatuf_Model {
 		}
 	}
 	
-	
-	
 	public function displaylinkedfolio ($extra = null) {
 		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $this->id);
 		
 		return '<a href="'.$url.'">'.$this->folio.'</a>/FIXME: poner A de filtro'.$this->anio.'/a';
 	}
 	
-	/*funcion para que despliegue segun el mes*/
-	public function displaylinkedfechahora ($extra = null){
-		return '<abbr title="'.$this->mes.'">'.$this->mes.'</abbr>';
-	}
-	
 	public function displaylinkedcarrera ($extra = null) {
 		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::porCarrera', array($this->carrera));
 		
-		return '<a href="'.$url.'">'.$this->carrera.'</a>';
+		return '<a href="'.$url.'">'.$this->carrera_descripcion.'</a>';
 	}
 	
 	public function displaylinkedplan ($extra = null) {
 		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::porPlan', array($this->plan));
 		
-		return '<a href="'.$url.'">'.$this->plan.'</a>';
-	}
-	
-	public function displaylinkedmodalidad ($extra = null) {
-		return $this->modalidad_descripcion;
+		return '<a href="'.$url.'">'.$this->plan_descripcion.'</a>';
 	}
 	
 	public function displaylinkedopcion ($extra = null) {
@@ -260,11 +247,11 @@ class Titulacion_Acta extends Gatuf_Model {
 	}
 	
 	public function displaycarrera ($extra = null) {
-		return $this->carrera;
+		return $this->carrera_descripcion;
 	}
 	
 	public function displayplan ($extra = null) {
-		return $this->plan;
+		return $this->plan_descripcion;
 	}
 	public function displayopcion ($extra = null) {
 			

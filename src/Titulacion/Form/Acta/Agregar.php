@@ -8,13 +8,9 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		
 		$choices_des = array ('Sobresaliente' => 'Sobresaliente', 'Satisfactorio' => 'Satisfactorio');
 		
-		$choices = array();
-		foreach($planes as $m){
-			$choices[$m->plan] = $m ->id;
-			$choices_planes = array();
-			foreach ($planes as $plan){
-				$choices_planes[$plan->plan] = $plan->id;
-			}
+		$choices_planes = array ();
+		foreach ($planes as $plan){
+			$choices_planes[$plan->descripcion] = $plan->id;
 		}
 		
 		$modalidaes = Gatuf::factory ('Titulacion_Modalidad')->getList ();
@@ -34,7 +30,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 			}
 		}
 		
-		$maestros = Gatuf::factory ('Titulacion_Maestro') ->getList ();
+		$maestros = Gatuf::factory ('Calif_Maestro') ->getList ();
 		$choices_maestros = array ();
 		foreach ($maestros as $maestro){
 			$choices_maestros[$maestro->apellido.' '.$maestro->nombre] = $maestro->codigo;
@@ -63,11 +59,11 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				)
 		));
 		
-		$this->fields['planEstudios'] = new Gatuf_Form_Field_Integer (
+		$this->fields['plan'] = new Gatuf_Form_Field_Integer (
 			array (
 				'required' => true,
 				'label' => 'Plan de estudios',
-				'initial' => 2,
+				'initial' => 1,
 				'help_text' => 'El plan de estudios',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
 				'widget_attrs' => array (
@@ -87,7 +83,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				),
 		));
 		
-		$this->fields['numeroActa']= new Gatuf_Form_Field_Integer (
+		$this->fields['acta']= new Gatuf_Form_Field_Integer (
 			array (
 				'required' => true,
 				'label' => 'Numero de acta',
@@ -99,7 +95,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				)
 		));
 		
-		$this->fields['opcTitulacion'] = new Gatuf_Form_Field_Integer (
+		$this->fields['opcion'] = new Gatuf_Form_Field_Integer (
 			array (
 				'required' => true,
 				'label' => 'Opcion de titulacion',
@@ -206,7 +202,8 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 				)
 		));
 		
-		$gconf = new Gatuf_GSetting ('Titulacion');
+		$gconf = new Gatuf_GSetting ();
+		$gconf->setApp ('Titulacion');
 		
 		$this->fields['director'] = new Gatuf_Form_Field_Integer (
 			array (
@@ -291,9 +288,8 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		
 		/* Las opciones de titulación que requieren desempeño, verificar que pongan un desempeño */
 		$opcion = new Titulacion_Opcion ();
-		$opcion->getOpcion ($this->cleaned_data['opcTitulacion']);
+		$opcion->get ($this->cleaned_data['opcion']);
 		
-		/* FIXME: No debería estar códificado manualmente */
 		if ($opcion->desempeno) {
 			/* Estos requiren desempeño */
 			if ($this->cleaned_data['desempeno'] == '') {
@@ -325,26 +321,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		
 		$acta = new Titulacion_Acta ();
 		
-		$acta->plan = $this->cleaned_data['planEstudios'];
-		$acta->calificacion = $this->cleaned_data['calificacion'];
-		$acta->acta = $this->cleaned_data['numeroActa'];
-		$acta->modalidad = $this->cleaned_data['opcTitulacion'];
-		$acta->carrera = $this->cleaned_data['carrera'];
-		$acta->fechaHora = $this->cleaned_data['fechaHora'];
-		$acta->ingreso = $this->cleaned_data['ingreso'];
-		$acta->egreso = $this->cleaned_data['egreso'];
-		$acta->secretario_division = $this->cleaned_data['secretario'];
-		$acta->director_division = $this->cleaned_data['director'];
-		$acta->jurado1 = $this->cleaned_data['jurado1'];
-		$acta->jurado2 = $this->cleaned_data['jurado2'];
-		$acta->jurado3 = $this->cleaned_data['jurado3'];
-		
-		/* Campos extras */
-		$acta->desempeno = $this->cleaned_data['desempeno'];
-		$acta->nombre_trabajo = $this->cleaned_data['nombre_trabajo'];
-		$acta->materias_maestria = $this->cleaned_data['cantidad_materias'];
-		$acta->nombre_maestria = $this->cleaned_data['nombre_maestria'];
-		$acta->escuela_maestria = $this->cleaned_data['escuela_maestria'];
+		$acta->setFromFormData ($this->cleaned_data);
 		
 		if ($commit) $acta->create ();
 		

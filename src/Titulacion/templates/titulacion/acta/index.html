@@ -4,7 +4,11 @@
 {aperm 'puede_agregar', $user, 'Titulacion.agregar-alumnos'}
 {aperm 'puede_generar', $user, 'Titulacion.generar-actas'}
 {if ($puede_generar && $puede_agregar && $puede_actualizar)}
-<p><a href="url 'Titulacion_Views_Acta::agregarAlumno'"><img src="{media '/img/list-add.png'}" alt="Agregar alumno/modificar domicilio" />FIXME: Restaurar el viejo formulario de selección de alumno. Atte. Félix.</a></p>
+	<h2>Generar nueva acta</h2>
+	<form action="." method="post">
+		{$form.render_p}
+		<input type="submit" value="Nueva acta" />
+	</form>
 {/if}
 <form action="." method="post">
 <H3>Filtrar lista por fecha</H3>

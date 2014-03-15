@@ -94,7 +94,7 @@ class Titulacion_Views_Modalidad {
 	public function jsonOpcion ($request, $match) {
 		$opcion = new Titulacion_Opcion ();
 		
-		if (false === ($opcion->getOpcion ($match[1]))) {
+		if (false === ($opcion->get ($match[1]))) {
 			return new Gatuf_HTTP_Response_Json (array ());
 		}
 		

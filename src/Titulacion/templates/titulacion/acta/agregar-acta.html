@@ -11,10 +11,10 @@
 <form action="." method="post">
 <table>
 	<tbody id="div_principal">
-		<tr><th><strong>{$form.f.planEstudios.labelTag}:</strong></th>
-		<td>{if $form.f.planEstudios.errors}{$form.f.planEstudios.fieldErrors}{/if}
-			{$form.f.planEstudios|safe}<br />
-			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.planEstudios.help_text}</span> -->
+		<tr><th><strong>{$form.f.plan.labelTag}:</strong></th>
+		<td>{if $form.f.plan.errors}{$form.f.plan.fieldErrors}{/if}
+			{$form.f.plan|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.plan.help_text}</span> -->
 		</td></tr>
 		<tr><th><strong>{$form.f.carrera.labelTag}:</strong></th>
 		<td>{if $form.f.carrera.errors}{$form.f.carrera.fieldErrors}{/if}
@@ -24,15 +24,15 @@
 		<tr><th><strong>Folio:</strong></th>
 		<td>(Generado automáticamente)</td>
 		</tr>
-		<tr><th><strong>{$form.f.numeroActa.labelTag}:</strong></th>
-		<td>{if $form.f.numeroActa.errors}{$form.f.numeroActa.fieldErrors}{/if}
-			{$form.f.numeroActa|safe}<br />
-			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.numeroActa.help_text}</span> -->
+		<tr><th><strong>{$form.f.acta.labelTag}:</strong></th>
+		<td>{if $form.f.acta.errors}{$form.f.acta.fieldErrors}{/if}
+			{$form.f.acta|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.acta.help_text}</span> -->
 		</td></tr>
-		<tr><th><strong>{$form.f.opcTitulacion.labelTag}:</strong></th>
-		<td>{if $form.f.opcTitulacion.errors}{$form.f.opcTitulacion.fieldErrors}{/if}
-			{$form.f.opcTitulacion|safe}<br />
-			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.opcTitulacion.help_text}</span> -->
+		<tr><th><strong>{$form.f.opcion.labelTag}:</strong></th>
+		<td>{if $form.f.opcion.errors}{$form.f.opcion.fieldErrors}{/if}
+			{$form.f.opcion|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.opcion.help_text}</span> -->
 		</td></tr>
 		<tr><th><strong>{$form.f.calificacion.labelTag}:</strong></th>
 		<td>{if $form.f.calificacion.errors}{$form.f.calificacion.fieldErrors}{/if}
@@ -143,7 +143,7 @@
 {literal}
 //<![CDATA[
 	function on_change_opcion () {
-		var opcion = document.getElementById ('id_opcTitulacion');
+		var opcion = document.getElementById ('id_opcion');
 		
 		var url = "/titulacion/modalidad/" + opcion.value + "/json/";
 		
@@ -168,7 +168,7 @@
 		});
 	}
 	
-	var opcion = document.getElementById ('id_opcTitulacion');
+	var opcion = document.getElementById ('id_opcion');
 	
 	opcion.onchange = on_change_opcion;
 	var url = "/titulacion/modalidad/" + opcion.value + "/json/";

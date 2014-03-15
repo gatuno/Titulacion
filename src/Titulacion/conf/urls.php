@@ -182,9 +182,15 @@ $ctl[] =array(
 	'model' => 'Titulacion_Views_Acta',
 	'method' => 'porCarrera',
 );
+$ctl[] =array(
+	'regex' => '#^/acta/a/(\d+)/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Acta',
+	'method' => 'porAnio',
+);
 
 $ctl[] =array(
-	'regex' => '#^/acta/nofiltro/([opc])/$#',
+	'regex' => '#^/acta/nofiltro/([opca])/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Acta',
 	'method' => 'eliminarFiltro',

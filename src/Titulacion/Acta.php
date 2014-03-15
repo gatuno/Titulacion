@@ -217,25 +217,26 @@ class Titulacion_Acta extends Gatuf_Model {
 	}
 	
 	public function displaylinkedfolio ($extra = null) {
-		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $this->id);
+		$url_folio = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $this->id);
+		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::porAnio', $this->anio);
 		
-		return '<a href="'.$url.'">'.$this->folio.'</a>/FIXME: poner A de filtro'.$this->anio.'/a';
+		return '<a href="'.$url_folio.'">'.$this->folio.'</a>/<a href="'.$url.'">'.$this->anio.'</a>';
 	}
 	
 	public function displaylinkedcarrera ($extra = null) {
-		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::porCarrera', array($this->carrera));
+		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::porCarrera', $this->carrera);
 		
 		return '<a href="'.$url.'">'.$this->carrera_descripcion.'</a>';
 	}
 	
 	public function displaylinkedplan ($extra = null) {
-		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::porPlan', array($this->plan));
+		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::porPlan', $this->plan);
 		
 		return '<a href="'.$url.'">'.$this->plan_descripcion.'</a>';
 	}
 	
 	public function displaylinkedopcion ($extra = null) {
-		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::porOpcion', array($this->opcion));
+		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::porOpcion', $this->opcion);
 		
 		return '<a href="'.$url.'">'.$this->opcion_descripcion.'</a>';
 	}

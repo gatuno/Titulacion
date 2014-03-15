@@ -15,7 +15,7 @@
 <p>FIXME: Poner un formulario para rangos de fechas, pero no debe hacer post hacia esta misma página, que haga un get hacia una vista que active los filtros y luego regrese a esta vista.</p>
 $form.render_p<tr><td>&nbsp;</td><td><input type="submit" value="Filtrar" /></td></tr>
 </form>
-{if $filtro['o'] || $filtro['p'] || $filtro['c']}
+{if $filtro['o'] || $filtro['p'] || $filtro['c'] || $filtro['a']}
 	<p>Filtros activos:
 	<ul style="list-style-type: none;">
 	{foreach $filtro as $key => $val}

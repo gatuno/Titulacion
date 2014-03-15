@@ -59,13 +59,21 @@ class Titulacion_Views_Acta {
 			$filtro['c'] = (new Titulacion_Carrera ($filtro['c']))->descripcion;
 		}
 		
+		/* Filtro por años */
+		$filtro['a'] = $request->session->getData ('filtro_acta_anio', null);
+		if (!is_null ($filtro['a'])) {
+			$sql = new Gatuf_SQL ('anio=%s', $filtro['a']);
+			$filtro_elim->SAnd ($sql);
+			$filtro['a'] = 'Por año: '.$filtro['a'];
+		}
+		
 		$pag->forced_where = $filtro_elim;
 		
 		$list_display = array (
 			array('plan', (is_null ($filtro['p']) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra'),'Plan de estudios'),
 			array('carrera',(is_null ($filtro['c']) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra') ,'Carrera'),
 			array('opcion',(is_null ($filtro['o']) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra'), 'Opcion de titulacion'),
-			array('folio', 'Gatuf_Paginator_DisplayVal', 'Folio'),
+			array('folio', (is_null ($filtro['a']) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra'), 'Folio'),
 			array('alumno','Gatuf_Paginator_DisplayVal', 'Codigo del alumno'),
 			array('alumno_nombre','Gatuf_Paginator_DisplayVal', 'Nombre'),
 			array('alumno_apellido','Gatuf_Paginator_DisplayVal', 'Apellidos'),
@@ -129,7 +137,20 @@ class Titulacion_Views_Acta {
 		$url = Gatuf_HTTP_URL_urlForView('Titulacion_Views_Acta::index');
 		return new Gatuf_HTTP_Response_Redirect ($url);
 	}
+	
+	public function porAnio ($request, $match) {
+		$num = (int) $match[1];
 		
+		if ($num < 1968 || $num > date ('Y')) {
+			throw new Gatuf_HTTP_Error404 ();
+		}
+		
+		$request->session->setData ('filtro_acta_anio', $num);
+		
+		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::index');
+		return new Gatuf_HTTP_Response_Redirect ($url);
+	}
+	
 	public function eliminarFiltro($request, $match){
 		if($match[1] == 'o')
 			$request->session->setData('filtro_acta_opcion',null);
@@ -137,6 +158,8 @@ class Titulacion_Views_Acta {
 			$request->session->setData('filtro_acta_plan',null);
 		if($match[1] == 'c')
 			$request->session->setData('filtro_acta_carrera',null);
+		if ($match[1] == 'a')
+			$request->session->setData ('filtro_acta_anio', null);
 		$url = Gatuf_HTTP_URL_urlForView('Titulacion_Views_Acta::index');
 		return new Gatuf_HTTP_Response_Redirect ($url);
 	}

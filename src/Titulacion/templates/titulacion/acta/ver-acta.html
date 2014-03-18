@@ -21,10 +21,10 @@
 	{$acta_eliminada.razon|unsafe}</p>
 {/if}
 <h2>Detalles</h2>
-<p><strong>Folio: </strong><tt>{$acta.folio}/{$acta.anio}</tt><br />
+<p><strong>Folio: </strong><tt>{$acta.folio}/{$acta.create_time|date:"%Y"}</tt><br />
 <strong>Número acta: </strong>{$acta.acta}</p>
 <p><strong>Alumno: </strong><tt>{$alumno.nombre} {$alumno.apellido} ({$alumno.codigo})</tt><br />
-<strong>Egresa de la carrera:</strong> <tt>{$carrera.descripcion}</tt>, <strong>del plan de estudio:</strong> <tt>{$plan.plan}</tt><br />
+<strong>Egresa de la carrera:</strong> <tt>{$carrera.descripcion}</tt>, <strong>del plan de estudio:</strong> <tt>{$plan.descripcion}</tt><br />
 <strong>Cursado desde:</strong> <tt>{$acta.ingreso}-{$acta.egreso}</tt><br />
 <strong>Se titula por: </strong> <tt>{$modalidad.descripcion},</tt> <strong>opción</strong> <tt>{$opcion.descripcion}</tt><br />
 {if $acta.calificacion > 0}

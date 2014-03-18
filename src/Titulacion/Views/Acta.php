@@ -218,7 +218,7 @@ class Titulacion_Views_Acta {
 	public function verActa($request, $match, $params = array ()){
 		$acta = new Titulacion_Acta ();
 
-		if (false === $acta->getActa ($match[1])) {
+		if (false === $acta->get ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();
 		}
 		
@@ -227,39 +227,20 @@ class Titulacion_Views_Acta {
 		if ($acta->eliminada) {
 			$acta_eliminada = new Titulacion_ActaEliminada ();
 			$acta_eliminada->get ($acta->id);
-			$eliminador = new Titulacion_Maestro ();
-			$eliminador->getMaestro ($acta_eliminada->usuario);
+			
+			$eliminador = $acta_eliminada->get_usuario ();
 		}
 		
-		$alumno = new Calif_Alumno ();
-		$alumno->get ($acta->alumno);
-
-		$opcion = new Titulacion_Opcion ();
-		$opcion->get ($acta->opcion);
-
-		$modalidad = new Titulacion_Modalidad ();
-		$modalidad->get ($opcion->modalidad);
-
-		$carrera = new Titulacion_Carrera ();
-		$carrera->getCarrera ($acta->carrera);
-
-		$plan = new Titulacion_PlanEstudio ();
-		$plan->get ($acta->plan);
-
-		$director = new Titulacion_Maestro ();
-		$director->get ($acta->director_division);
-
-		$secretario = new Titulacion_Maestro ();
-		$secretario->get ($acta->secretario_division);
-
-		$jurado1 = new Titulacion_Maestro ();
-		$jurado1->getMaestro ($acta->jurado1);
-
-		$jurado2 = new Titulacion_Maestro ();
-		$jurado2->getMaestro ($acta->jurado2);
-
-		$jurado3 = new Titulacion_Maestro ();
-		$jurado3->getMaestro ($acta->jurado3);
+		$alumno = $acta->get_alumno ();
+		$opcion = $acta->get_opcion ();
+		$modalidad = $opcion->get_modalidad ();
+		$carrera = $acta->get_carrera ();
+		$plan = $acta->get_plan ();
+		$director = $acta->get_director ();
+		$secretario = $acta->get_secretario ();
+		$jurado1 = $acta->get_jurado1 ();
+		$jurado2 = $acta->get_jurado2 ();
+		$jurado3 = $acta->get_jurado3 ();
 
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/ver-acta.html',
 		                                         array ('acta' => $acta,
@@ -284,7 +265,7 @@ class Titulacion_Views_Acta {
 	public function imprimirActa ($request, $match){
 		$acta = new Titulacion_Acta ();
 
-		if (false === $acta->getActa ($match[1])) {
+		if (false === $acta->get ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();
 		}
 
@@ -294,35 +275,16 @@ class Titulacion_Views_Acta {
 			return new Gatuf_HTTP_Response_Redirect ($url);
 		}
 
-		$alumno = new Calif_Alumno ();
-		$alumno->getAlumno ($acta->alumno);
-
-		$opcion = new Titulacion_Opcion ();
-		$opcion->getOpcion ($acta->modalidad);
-
-		$modalidad = new Titulacion_Modalidad ();
-		$modalidad->getModalidad ($opcion->modalidad);
-
-		$carrera = new Titulacion_Carrera ();
-		$carrera->getCarrera ($acta->carrera);
-
-		$plan = new Titulacion_PlanEstudio ();
-		$plan->getPlan ($acta->plan);
-
-		$director = new Titulacion_Maestro ();
-		$director->getMaestro ($acta->director_division);
-
-		$secretario = new Titulacion_Maestro ();
-		$secretario->getMaestro ($acta->secretario_division);
-
-		$jurado1 = new Titulacion_Maestro ();
-		$jurado1->getMaestro ($acta->jurado1);
-
-		$jurado2 = new Titulacion_Maestro ();
-		$jurado2->getMaestro ($acta->jurado2);
-
-		$jurado3 = new Titulacion_Maestro ();
-		$jurado3->getMaestro ($acta->jurado3);
+		$alumno = $acta->get_alumno ();
+		$opcion = $acta->get_opcion ();
+		$modalidad = $opcion->get_modalidad ();
+		$carrera = $acta->get_carrera ();
+		$plan = $acta->get_plan ();
+		$director = $acta->get_director ();
+		$secretario = $acta->get_secretario ();
+		$jurado1 = $acta->get_jurado1 ();
+		$jurado2 = $acta->get_jurado2 ();
+		$jurado3 = $acta->get_jurado3 ();
 
 		$pdf = new Titulacion_PDF_Acta ('P', 'mm','Legal');
 
@@ -339,7 +301,7 @@ class Titulacion_Views_Acta {
 		$pdf->renderBase ();
 
 		$pdf->Close ();
-		$nombre_pdf = $acta->alumno . '.pdf';
+		$nombre_pdf = 'Acta_'.$acta->alumno.'.pdf';
 
 		$pdf->Output ('/tmp/'.$nombre_pdf, 'F');
 
@@ -350,7 +312,7 @@ class Titulacion_Views_Acta {
 	public function imprimirProtesta($request, $match) {
 		$acta = new Titulacion_Acta();
 
-		if (false === $acta->getActa ($match[1])){
+		if (false === $acta->get ($match[1])){
 			throw new Gatuf_HTTP_Error404 ();
 		}
 
@@ -360,26 +322,13 @@ class Titulacion_Views_Acta {
 			return new Gatuf_HTTP_Response_Redirect ($url);
 		}
 
-		$alumno = new Calif_Alumno ();
-		$alumno->getAlumno ($acta->alumno);
-
-		$director = new Titulacion_Maestro ();
-		$director->getMaestro ($acta->director_division);
-
-		$secretario = new Titulacion_Maestro ();
-		$secretario->getMaestro ($acta->secretario_division);
-
-		$jurado1 = new Titulacion_Maestro ();
-		$jurado1->getMaestro ($acta->jurado1);
-
-		$jurado2 = new Titulacion_Maestro ();
-		$jurado2->getMaestro ($acta->jurado2);
-
-		$jurado3 = new Titulacion_Maestro ();
-		$jurado3->getMaestro ($acta->jurado3);
-
-		$carrera = new Titulacion_Carrera ();
-		$carrera->getCarrera ($acta->carrera);
+		$alumno = $acta->get_alumno ();
+		$carrera = $acta->get_carrera ();
+		$director = $acta->get_director ();
+		$secretario = $acta->get_secretario ();
+		$jurado1 = $acta->get_jurado1 ();
+		$jurado2 = $acta->get_jurado2 ();
+		$jurado3 = $acta->get_jurado3 ();
 
 		$protesta = new Titulacion_PDF_Protesta ('P', 'mm','Letter');
 
@@ -395,8 +344,7 @@ class Titulacion_Views_Acta {
 
 		$protesta->Close ();
 
-		$nombre_al = str_replace (' ', '_', $alumno->apellido.'_'.$alumno->nombre);
-		$nombre_pdf = 'Protesta_'.$nombre_al.'.pdf';
+		$nombre_pdf = 'Protesta_'.$acta->alumno.'.pdf';
 
 		$protesta->Output ('/tmp/'.$nombre_pdf, 'F');
 
@@ -407,33 +355,22 @@ class Titulacion_Views_Acta {
 	public function imprimirCitatorio ($request, $match) {
 		$acta = new Titulacion_Acta();
 
-		if (false === $acta->getActa ($match[1])){
-		throw new Gatuf_HTTP_Error404 ();
+		if (false === $acta->get ($match[1])){
+			throw new Gatuf_HTTP_Error404 ();
 		}
 
 		if ($acta->eliminada) {
-		$request->user->setMessage (3, 'No se puede imprimir la protesta. El acta con folio '.$acta->carrera.' '.$acta->folio.'/'.$acta->anio.' ha sido marcada como eliminada');
-		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $acta->id);
-		return new Gatuf_HTTP_Response_Redirect ($url);
+			$request->user->setMessage (3, 'No se puede imprimir la protesta. El acta con folio '.$acta->carrera.' '.$acta->folio.'/'.$acta->anio.' ha sido marcada como eliminada');
+			$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $acta->id);
+			return new Gatuf_HTTP_Response_Redirect ($url);
 		}
 
-		$alumno = new Calif_Alumno ();
-		$alumno->getAlumno ($acta->alumno);
-
-		$secretario = new Titulacion_Maestro ();
-		$secretario->getMaestro ($acta->secretario_division);
-
-		$jurado1 = new Titulacion_Maestro ();
-		$jurado1->getMaestro ($acta->jurado1);
-
-		$jurado2 = new Titulacion_Maestro ();
-		$jurado2->getMaestro ($acta->jurado2);
-
-		$jurado3 = new Titulacion_Maestro ();
-		$jurado3->getMaestro ($acta->jurado3);
-
-		$carrera = new Titulacion_Carrera ();
-		$carrera->getCarrera ($acta->carrera);
+		$alumno = $acta->get_alumno ();
+		$secretario = $acta->get_secretario ();
+		$jurado1 = $acta->get_jurado1 ();
+		$jurado2 = $acta->get_jurado2 ();
+		$jurado3 = $acta->get_jurado3 ();
+		$carrera = $acta->get_carrera ();
 
 		$citatorio = new Titulacion_PDF_Citatorio ('P', 'mm','Letter');
 
@@ -453,21 +390,21 @@ class Titulacion_Views_Acta {
 		$citatorio->Output ('/tmp/'.$nombre_pdf, 'F');
 
 		return new Gatuf_HTTP_Response_File ('/tmp/'.$nombre_pdf, $nombre_pdf, 'application/pdf', true);
-		}
+	}
 
-		public $actualizarActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.actualizar-actas'));
-		public function actualizarActa ($request, $match) {
+	public $actualizarActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.actualizar-actas'));
+	public function actualizarActa ($request, $match) {
 		Gatuf::loadFunction ('Titulacion_Utils_formatearDomicilio');
 		$acta = new Titulacion_Acta ();
 
 		if (false === $acta->getActa ($match[1])) {
-		throw new Gatuf_HTTP_Error404 ();
+			throw new Gatuf_HTTP_Error404 ();
 		}
 
 		if ($acta->eliminada) {
-		$request->user->setMessage (3, 'No se puede actualizar el acta. La acta con folio '.$acta->carrera.' '.$acta->folio.'/'.$acta->anio.' ha sido marcada como eliminada');
-		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $acta->id);
-		return new Gatuf_HTTP_Response_Redirect ($url);
+			$request->user->setMessage (3, 'No se puede actualizar el acta. La acta con folio '.$acta->carrera.' '.$acta->folio.'/'.$acta->anio.' ha sido marcada como eliminada');
+			$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $acta->id);
+			return new Gatuf_HTTP_Response_Redirect ($url);
 		}
 
 		$alumno = new Titulacion_Alumno ();
@@ -490,19 +427,19 @@ class Titulacion_Views_Acta {
 
 		$extra = array ('acta' => $acta);
 		if ($request->method == 'POST') {
-		$form = new Titulacion_Form_Acta_Editar ($request->POST, $extra);
+			$form = new Titulacion_Form_Acta_Editar ($request->POST, $extra);
 
-		if ($form->isValid ()){
-		$acta = $form->save (false);
-		$acta->modificador = $request->user->codigo;
+			if ($form->isValid ()){
+				$acta = $form->save (false);
+				$acta->modificador = $request->user->codigo;
 
-		$acta->update ();
+				$acta->update ();
 
-		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $acta->id);
-		return new Gatuf_HTTP_Response_Redirect ($url);
-		}
+				$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $acta->id);
+				return new Gatuf_HTTP_Response_Redirect ($url);
+			}
 		} else {
-		$form = new Titulacion_Form_Acta_Editar (null, $extra);
+			$form = new Titulacion_Form_Acta_Editar (null, $extra);
 		}
 
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/acta/edit-acta.html',

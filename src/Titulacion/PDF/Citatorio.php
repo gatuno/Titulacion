@@ -87,7 +87,7 @@ class Titulacion_PDF_Citatorio extends External_FPDF {
 		$this->Cell (156, 0, $cad, 0, 0, 'L');
 		
 		$this->SetY (136); $this->SetX (41);
-		$cad = 'La ceremonia tendrá lugar el '.strftime ('%A %e de %B de %Y, a las %H:%m horas', strtotime ($this->acta->fechaHora)).', en la Sala de Recepción de la División.';
+		$cad = 'La ceremonia tendrá lugar el '.strftime ('%A %e de %B de %Y, a las %H:%M horas', strtotime ($this->acta->fechahora.' GMT')).', en la Sala de Recepción de la División.';
 		$this->MultiCell (156, 6, $cad, 0, 'L');
 		
 		$this->SetY (154); $this->SetX (41);

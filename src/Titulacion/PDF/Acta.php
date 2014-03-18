@@ -11,7 +11,7 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		Gatuf::loadFunction ('Titulacion_Utils_numeroLetra');
 		setLocale(LC_ALL, 'es_MX.UTF-8');
 		
-		$nombreCompleto = mb_strtoupper($this->acta->alumno_nombre.' '.$this->acta->alumno_apellido);
+		$nombreCompleto = mb_strtoupper($this->alumno->nombre.' '.$this->alumno->apellido);
 		
 		$grado = Titulacion_Utils_grado ($this->jurado1->sexo, $this->jurado1->grado);
 		$nombreCompletoj1 = mb_strtoupper ($grado.' '.$this->jurado1->apellido.' '.$this->jurado1->nombre);
@@ -43,15 +43,15 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		
 		$this->SetY(85.5);
 		$this->SetX(35);
-		$this->Cell(0,0,$this->acta->folio.'/'.$this->acta->anio,0,0);
+		$this->Cell(0,0,$this->acta->folio.'/'.date ("Y", strtotime ($this->acta->create_time)),0,0);
 		
 		$this->SetY(93);
 		$this->SetX(35);
 		$this->Cell(0,0,$this->acta->alumno,0,0);
 		
-		$dia = strftime("%e", strtotime ($this->acta->fechaHora)); /* Extraer el día */
-		$mes = mb_strtoupper (strftime("%B", strtotime ($this->acta->fechaHora))); /* El nombre del mes */
-		$anio = strftime("%Y", strtotime ($this->acta->fechaHora)); /* El año */
+		$dia = strftime("%e", strtotime ($this->acta->fechahora)); /* Extraer el día */
+		$mes = mb_strtoupper (strftime("%B", strtotime ($this->acta->fechahora))); /* El nombre del mes */
+		$anio = strftime("%Y", strtotime ($this->acta->fechahora)); /* El año */
 		$diaLetra = Titulacion_Utils_numeroLetra((int) $dia);
 		
 		$diaCompleto = $dia.' '.'('.' '.$diaLetra.' '.')';

@@ -21,10 +21,10 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		$grado = Titulacion_Utils_grado ($this->director->sexo, $this->director->grado);
 		$director = mb_strtoupper ($grado.' '.$this->director->apellido.' '.$this->director->nombre);
 		
-		$dia = strftime("%e", strtotime ($this->acta->fechaHora)); /* Extraer el día */
-		$mes = (strftime("%B", strtotime ($this->acta->fechaHora))); /* El nombre del mes */
-		$anio = strftime("%Y", strtotime ($this->acta->fechaHora)); /* El año */
-		$diaSemana = (strftime("%A", strtotime ($this->acta->fechaHora)));
+		$dia = strftime("%e", strtotime ($this->acta->fechahora)); /* Extraer el día */
+		$mes = (strftime("%B", strtotime ($this->acta->fechahora))); /* El nombre del mes */
+		$anio = strftime("%Y", strtotime ($this->acta->fechahora)); /* El año */
+		$diaSemana = (strftime("%A", strtotime ($this->acta->fechahora)));
 		$diaLetra = Titulacion_Utils_numeroLetra((int) $dia);
 		
 		$fecha= $diaSemana.' '.$dia.' de '.$mes.' de '.$anio;
@@ -48,7 +48,7 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		
 		$primeraGrado = substr($grado,0,1);
 		$grado = Titulacion_Utils_grado ($this->alumno->sexo, $primeraGrado);
-		$sustentante = mb_strtoupper($grado.' '.$this->acta->alumno_nombre.' '.$this->acta->alumno_apellido);
+		$sustentante = mb_strtoupper($grado.' '.$this->alumno->nombre.' '.$this->alumno->apellido);
 		
 		$this->SetFont('Arial','B', 12);
 		$this->Addpage('P','Letter');

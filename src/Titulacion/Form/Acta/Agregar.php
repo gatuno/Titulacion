@@ -188,7 +188,7 @@ class Titulacion_Form_Acta_Agregar extends Gatuf_Form {
 		));
 		
 		
-		$this->fields['fechaHora'] = new Gatuf_Form_Field_Datetime (
+		$this->fields['fechahora'] = new Gatuf_Form_Field_Datetime (
 			array(
 				'required' => true,
 				'label' => 'Fecha y hora ceremonia',

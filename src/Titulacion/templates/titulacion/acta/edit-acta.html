@@ -12,18 +12,18 @@
 <table>
 	<tbody id="div_principal">
 		<tr><th><strong>Plan de estudios:</strong></th>
-			<td>{$plan.plan}</td>
+			<td>{$plan.descripcion}</td>
 		</tr>
 		<tr><th><strong>Carrera:</strong></th>
 			<td>{$carrera.descripcion}</td>
 		</tr>
 		<tr><th><strong>Folio:</strong></th>
-			<td>{$acta.folio}/{$acta.anio}</td>
+			<td>{$acta.folio}/{$acta.fechahora|date:"%Y"}</td>
 		</tr>
-		<tr><th><strong>{$form.f.numeroActa.labelTag}:</strong></th>
-		<td>{if $form.f.numeroActa.errors}{$form.f.numeroActa.fieldErrors}{/if}
-			{$form.f.numeroActa|safe}<br />
-			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.numeroActa.help_text}</span> -->
+		<tr><th><strong>{$form.f.acta.labelTag}:</strong></th>
+		<td>{if $form.f.acta.errors}{$form.f.acta.fieldErrors}{/if}
+			{$form.f.acta|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.acta.help_text}</span> -->
 		</td></tr>
 		<tr><th><strong>Opcion de titulación:</strong></th>
 			<td>{$opcion.descripcion}</td>
@@ -46,10 +46,10 @@
 	</tbody>
 	{if $opcion.maestria}
 	<tbody id="div_maestria">
-		<tr><th><strong>{$form.f.cantidad_materias.labelTag}:</strong></th>
-		<td>{if $form.f.cantidad_materias.errors}{$form.f.cantidad_materias.fieldErrors}{/if}
-			{$form.f.cantidad_materias|safe}<br />
-			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.cantidad_materias.help_text}</span> -->
+		<tr><th><strong>{$form.f.materias_maestria.labelTag}:</strong></th>
+		<td>{if $form.f.materias_maestria.errors}{$form.f.materias_maestria.fieldErrors}{/if}
+			{$form.f.materias_maestria|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.materias_maestria.help_text}</span> -->
 		</td></tr>
 		<tr><th><strong>{$form.f.nombre_maestria.labelTag}:</strong></th>
 		<td>{if $form.f.nombre_maestria.errors}{$form.f.nombre_maestria.fieldErrors}{/if}
@@ -95,10 +95,10 @@
 			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.egreso.help_text}</span> -->
 		</td></tr>
 	
-		<tr><th><strong>{$form.f.fechaHora.labelTag}:</strong></th>
-		<td>{if $form.f.fechaHora.errors}{$form.f.fechaHora.fieldErrors}{/if}
-			{$form.f.fechaHora|safe}<br />
-			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.fechaHora.help_text}</span> -->
+		<tr><th><strong>{$form.f.fechahora.labelTag}:</strong></th>
+		<td>{if $form.f.fechahora.errors}{$form.f.fechahora.fieldErrors}{/if}
+			{$form.f.fechahora|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.fechahora.help_text}</span> -->
 		</td></tr>
 	
 		<tr><th><strong>{$form.f.director.labelTag}:</strong></th>

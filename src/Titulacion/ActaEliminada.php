@@ -46,7 +46,7 @@ class Titulacion_ActaEliminada extends Gatuf_Model {
 	
 	function preSave ($create=false) {
 		if ($create) {
-			$this->timestamp = date ('Y-m-d H:i:s');
+			$this->timestamp = gmdate ('Y-m-d H:i:s');
 			$acta = new Titulacion_Acta ($this->acta);
 			
 			$acta->eliminada = true;

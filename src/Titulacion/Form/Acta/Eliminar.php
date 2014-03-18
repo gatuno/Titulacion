@@ -19,7 +19,7 @@ class Titulacion_Form_Acta_Eliminar extends Gatuf_Form {
 	public function save ($commit = true) {
 		$acta_eliminada = new Titulacion_ActaEliminada ();
 		
-		$acta_eliminada->acta = $this->acta->id;
+		$acta_eliminada->acta = $this->acta;
 		$acta_eliminada->razon = $this->cleaned_data['razon'];
 		
 		if ($commit) $acta_eliminada->create ();

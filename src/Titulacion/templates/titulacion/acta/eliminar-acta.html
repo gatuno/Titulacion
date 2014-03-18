@@ -8,13 +8,13 @@
 <form action="." method="post">
 <table>
 		<tr><th><strong>Plan de estudios:</strong></th>
-			<td>{$plan.plan}</td>
+			<td>{$plan.descripcion}</td>
 		</tr>
 		<tr><th><strong>Carrera:</strong></th>
 			<td>{$carrera.descripcion}</td>
 		</tr>
 		<tr><th><strong>Folio:</strong></th>
-			<td>{$acta.folio}/{$acta.anio}</td>
+			<td>{$acta.folio}/{$acta.fechahora|date:"%Y"}</td>
 		</tr>
 		<tr><th><strong>Opcion de titulación:</strong></th>
 			<td>{$opcion.descripcion}</td>

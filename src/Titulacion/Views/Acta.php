@@ -70,10 +70,10 @@ class Titulacion_Views_Acta {
 		$pag->forced_where = $filtro_elim;
 		
 		$list_display = array (
+			array('folio', (is_null ($filtro['a']) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra'), 'Folio'),
 			array('plan', (is_null ($filtro['p']) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra'),'Plan de estudios'),
 			array('carrera',(is_null ($filtro['c']) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra') ,'Carrera'),
 			array('opcion',(is_null ($filtro['o']) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra'), 'Opcion de titulacion'),
-			array('folio', (is_null ($filtro['a']) ? 'Gatuf_Paginator_FKLink' : 'Gatuf_Paginator_FKExtra'), 'Folio'),
 			array('alumno','Gatuf_Paginator_DisplayVal', 'Codigo del alumno'),
 			array('alumno_nombre','Gatuf_Paginator_DisplayVal', 'Nombre'),
 			array('alumno_apellido','Gatuf_Paginator_DisplayVal', 'Apellidos'),
@@ -225,10 +225,11 @@ class Titulacion_Views_Acta {
 		$acta_eliminada = null;
 		$eliminador = null;
 		if ($acta->eliminada) {
-			$acta_eliminada = new Titulacion_ActaEliminada ();
-			$acta_eliminada->get ($acta->id);
+			$sql = new Gatuf_SQL ('acta=%s', $acta->id);
+			$acta_eliminada = Gatuf::factory ('Titulacion_ActaEliminada')->getOne (array ('filter' => $sql->gen ()));
 			
-			$eliminador = $acta_eliminada->get_usuario ();
+			$usuario = $acta_eliminada->get_usuario ();
+			$eliminador = new Calif_Maestro ($usuario->login);
 		}
 		
 		$alumno = $acta->get_alumno ();
@@ -459,7 +460,7 @@ class Titulacion_Views_Acta {
 	public function eliminarActa ($request, $match) {
 		$acta = new Titulacion_Acta ();
 
-		if (false == $acta->getActa ($match[1])) {
+		if (false == $acta->get ($match[1])) {
 			throw new Gatuf_HTTP_Error404 ();
 		}
 
@@ -469,20 +470,11 @@ class Titulacion_Views_Acta {
 			return new Gatuf_HTTP_Response_Redirect ($url);
 		}
 
-		$alumno = new Calif_Alumno ();
-		$alumno->getAlumno ($acta->alumno);
-
-		$opcion = new Titulacion_Opcion ();
-		$opcion->getOpcion ($acta->modalidad);
-
-		$modalidad = new Titulacion_Modalidad ();
-		$modalidad->getModalidad ($opcion->modalidad);
-
-		$carrera = new Titulacion_Carrera ();
-		$carrera->getCarrera ($acta->carrera);
-
-		$plan = new Titulacion_PlanEstudio ();
-		$plan->getPlan ($acta->plan);
+		$alumno = $acta->get_alumno ();
+		$opcion = $acta->get_opcion ();
+		$modalidad = $opcion->get_modalidad ();
+		$carrera = $acta->get_carrera ();
+		$plan = $acta->get_plan ();
 
 		$extra = array ('acta' => $acta);
 
@@ -492,7 +484,7 @@ class Titulacion_Views_Acta {
 			if ($form->isValid ()) {
 				$acta_eliminada = $form->save (false);
 
-				$acta_eliminada->usuario = $request->user->codigo;
+				$acta_eliminada->usuario = $request->user;
 
 				$acta_eliminada->create ();
 

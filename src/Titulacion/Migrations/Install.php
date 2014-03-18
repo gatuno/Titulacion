@@ -65,7 +65,7 @@ function Titulacion_Migrations_Install_1Vistas_setup ($params = null) {
 	$carrera_tabla = Gatuf::factory ('Titulacion_Carrera')->getSqlTable ();
 	
 	$sql = 'CREATE VIEW '.$db->pfx.'opciones_view AS '."\n"
-	    .'SELECT '.$opcion_tabla.'.*, '.$modalidad_tabla.'.descripcion as carrera_desc'."\n"
+	    .'SELECT '.$opcion_tabla.'.*, '.$modalidad_tabla.'.descripcion as modalidad_desc'."\n"
 	    .'FROM '.$opcion_tabla."\n"
 	    .'LEFT JOIN '.$modalidad_tabla.' ON '.$opcion_tabla.'.modalidad = '.$modalidad_tabla.'.id';
 	$db->execute ($sql);

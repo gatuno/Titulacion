@@ -99,7 +99,7 @@ class Titulacion_Opcion extends Gatuf_Model {
 	}
 	
 	public function displaylinkeddescripcion ($extra = null) {
-		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::index', array (), array ('f_modalidad' => $this->id));
+		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::porOpcion', array ($this->id));
 		
 		return '<a href="'.$url.'">'.$this->descripcion.'</a>';
 	}

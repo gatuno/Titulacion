@@ -24,6 +24,12 @@ class Titulacion_PlanEstudio extends Gatuf_Model {
 		);
 	}
 	
+	public function displaylinkeddescripcion ($extra = null) {
+		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::porPlan', array ($this->id));
+		
+		return '<a href="'.$url.'">'.$this->descripcion.'</a>';
+	}
+	
 	function _getConnection () {
 		static $con = null;
 		if ($this->_con !== null) {

@@ -99,7 +99,7 @@ class Titulacion_Views_Acta {
 													   ),
 		                                         $request);
 	}
-	public function porCarrera($request, $match){
+	public function porCarrera ($request, $match){
 		$carrera = new Titulacion_Carrera ();
 		
 		if (false === ($carrera->get ($match[1]))) {
@@ -112,7 +112,7 @@ class Titulacion_Views_Acta {
 		return new Gatuf_HTTP_Response_Redirect ($url);
 	}
 	
-	public function porOpcion($request, $match){
+	public function porOpcion ($request, $match){
 		$opcion = new Titulacion_Opcion ();
 		
 		if (false === ($opcion->get ($match[1]))) {
@@ -125,7 +125,7 @@ class Titulacion_Views_Acta {
 		return new Gatuf_HTTP_Response_Redirect ($url);
 	}
 	
-	public function porPlan($request, $match){
+	public function porPlan ($request, $match){
 		$plan = new Titulacion_PlanEstudio ();
 		
 		if (false === ($plan->get ($match[1]))) {

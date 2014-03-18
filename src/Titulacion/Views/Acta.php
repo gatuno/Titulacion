@@ -514,22 +514,23 @@ class Titulacion_Views_Acta {
 		$pag = new Gatuf_Paginator($actas);
 		$pag->action = array ('Titulacion_Views_Acta::index');
 		$pag->sumary = 'Lista de actas eliminadas';
-
+		$pag->model_view = 'paginador';
+		
 		$list_display = array (
 			array('folio', 'Gatuf_Paginator_FKExtra', 'Folio'),
+			array('plan','Gatuf_Paginator_FKExtra','Plan de estudios'),
+			array('opcion_descripcion','Gatuf_Paginator_DisplayVal', 'Opcion de titulacion'),
 			array('carrera','Gatuf_Paginator_FKExtra','Carrera'),
 			array('alumno','Gatuf_Paginator_DisplayVal', 'Codigo del alumno'),
 			array('alumno_nombre','Gatuf_Paginator_DisplayVal', 'Nombre'),
 			array('alumno_apellido','Gatuf_Paginator_DisplayVal', 'Apellidos'),
-			array('plan','Gatuf_Paginator_FKExtra','Plan de estudios'),
-			array('modalidad_descripcion','Gatuf_Paginator_DisplayVal', 'Opcion de titulacion'),
 		);
 
 		$pag->items_per_page = 25;
 		$pag->no_results_text = 'No hay actas de titulacion disponibles';
 		$pag->max_number_pages = 3;
 		$pag->configure ($list_display,
-			array ('alumno','folio','ingreso','egreso','carrera', 'alumno_nombre', 'alumno_apellido', 'modalidad_descripcion'),
+			array ('alumno','folio','ingreso','egreso','carrera', 'alumno_nombre', 'alumno_apellido', 'opcion_descripcion'),
 			array ('alumno','folio','ingreso','egreso','carrera')
 		);
 		$pag->setFromRequest($request);

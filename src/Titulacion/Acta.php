@@ -168,7 +168,7 @@ class Titulacion_Acta extends Gatuf_Model {
 			),
 		);
 		
-		$this->default_order = 'plan ASC, carrera ASC, anio ASC, folio ASC, opcion ASC';
+		$this->default_order = 'plan ASC, carrera ASC, year(create_time) ASC, folio ASC, opcion ASC';
 		
 		$this->_a['views'] = array (
 			'paginador' => array (

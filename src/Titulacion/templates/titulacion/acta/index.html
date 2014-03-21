@@ -3,6 +3,7 @@
 {aperm 'puede_actualizar', $user, 'Titulacion.actualizar-alumnos'}
 {aperm 'puede_agregar', $user, 'Titulacion.agregar-alumnos'}
 {aperm 'puede_generar', $user, 'Titulacion.generar-actas'}
+<a href="{url 'Titulacion_Views_Acta::index_eliminadas'}">Ver actas eliminadas</a>
 {if ($puede_generar && $puede_agregar && $puede_actualizar)}
 	<h2>Generar nueva acta</h2>
 	<form action="." method="post">

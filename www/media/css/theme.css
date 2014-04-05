@@ -26,8 +26,7 @@ td .icon {
 	margin: 0;
 }
 
-.advertencia, .error, .info, .pregunta
-{
+.advertencia, .error, .info, .pregunta {
 	padding-left:52px;
 	padding-top:16px;
 	min-height:52px;
@@ -35,49 +34,102 @@ td .icon {
 	clear: both;
 }
 
-.advertencia
-{
+.advertencia {
 	border:2px solid #f69724;
 	background:url('../img/warning.png') no-repeat 10px 10px;
 }
 
-.error
-{
+.error {
 	border:2px solid #d93b30;
 	background:url('../img/error.png') no-repeat 10px 10px;
 }
 
-.pregunta
-{
+.pregunta {
 	border:2px solid #395e90;
 	background:url('../img/question.png') no-repeat 10px 10px;
 }
 
-.info
-{
+.info {
 	border:2px solid #dce5f6;
 	background:url('../img/info.png') no-repeat 10px 10px;
 }
 
-.advertencia p, .error p, .pregunta p, .info p
-{
+.advertencia p, .error p, .pregunta p, .info p {
 	margin-top:0;
 }
 
-.menu {
-	list-style-type: none;
-	display: inline;
-	float:left;
+/* Para la barra de menus */
+.topnavbar {
+	position: fixed;
+	top: 0px;
+	min-height: 40px;
+	left: 0px;
+	right: 0px;
+	z-index: 1000;
+	background: #ffffff;
+	border-bottom: 5px solid rgb(108, 51, 109);
+	box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.75);
 }
 
-.menu li {
-	display: inline;
+.navbar-container {
+	position: relative;
+	display: block;
+	padding-right: 20px;
+	padding-left: 20px;
+	margin: 0px auto;
+}
+
+.sitelogo {
+	float: left;
+	display: block;
+	margin: 10px 20px;
+	line-height: 20px;
+}
+
+.topnavbar ul {
+	float: left;
+	padding: 0px;
+	margin: 0px 60px;
+}
+
+.topnavbar ul li {
+	display: inline-block;
+	float: left;
+	list-style: none outside none;
+	line-height: 20px;
+}
+
+.topnavbar ul li a {
+	display: block;
+	padding: 10px 15px;
+	text-decoration: none;
+	background-position: center center;
+	background-repeat: no-repeat;
+	text-transform: uppercase;
+}
+
+.topnavbar ul li.principal a {
+	background-color: rgb(108, 51, 109);
+}
+
+.topnavbar ul li.tipo1 a:hover {
+	background-color: rgb(110, 171, 46);
 }
 
 .userinfo {
-	float: right;
+	float:right;
 }
 
-.body {
-	clear: both;
+.userinfo p.logged {
+	margin: 5px 20px;
+	line-height: 20px;
+}
+
+.userinfo p.login {
+	margin: 10px 20px;
+	line-height: 20px;
+}
+
+.userinfo a {
+	text-decoration: none;
 }

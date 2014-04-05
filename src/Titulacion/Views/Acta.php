@@ -151,6 +151,26 @@ class Titulacion_Views_Acta {
 		return new Gatuf_HTTP_Response_Redirect ($url);
 	}
 	
+	public function porFecha ($request, $match) {
+		if ($request->method == 'POST') {
+			$form = new Titulacion_Form_Acta_Filtrar ($request->POST, $extra);
+			
+			if ($form->isValid ()) {
+				$fechas = $form->save ();
+				
+				if ($fechas [0] != '') {
+					$request->session->setData ('filtro_acta_fechainicio', $fechas[0]);
+				}
+				if ($fechas [1] != '') {
+					$request->session->setData ('filtro_acta_fechafin', $fechas[1]);
+				}
+			}
+		}
+		
+		$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::index');
+		return new Gatuf_HTTP_Response_Redirect ($url);
+	}
+	
 	public function eliminarFiltro($request, $match){
 		if($match[1] == 'o')
 			$request->session->setData('filtro_acta_opcion',null);

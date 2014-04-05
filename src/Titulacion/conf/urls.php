@@ -165,28 +165,34 @@ $ctl[] =array(
 );
 
 $ctl[] =array(
-	'regex' => '#^/acta/op/(\d+)/$#',
+	'regex' => '#^/actas/op/(\d+)/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Acta',
 	'method' => 'porOpcion',
 );
 $ctl[] =array(
-	'regex' => '#^/acta/plan/(\d+)/$#',
+	'regex' => '#^/actas/plan/(\d+)/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Acta',
 	'method' => 'porPlan',
 );
 $ctl[] =array(
-	'regex' => '#^/acta/car/([a-zA-Z]{3})/$#',
+	'regex' => '#^/actas/car/([a-zA-Z]{3})/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Acta',
 	'method' => 'porCarrera',
 );
 $ctl[] =array(
-	'regex' => '#^/acta/a/(\d+)/$#',
+	'regex' => '#^/actas/a/(\d+)/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Acta',
 	'method' => 'porAnio',
+);
+$ctl[] =array(
+	'regex' => '#^/actas/f/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Acta',
+	'method' => 'porFecha',
 );
 
 $ctl[] =array(

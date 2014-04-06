@@ -219,14 +219,23 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 			throw new Exception ('El formulario no tiene datos validos');
 		}
 		$alumno = new Calif_Alumno ();
+		$user = new Calif_User ();
 		
 		$alumno->nombre = $this->cleaned_data['nombre'];
 		$alumno->apellido = $this->cleaned_data['apellido'];
 		$alumno->codigo = $this->cleaned_data['codigo'];
 		$alumno->sexo = $this->cleaned_data['sexo'];
-		$alumno->setFromFormData (array ('carrera' => 'TEST'));
 		
-		if ($commit) $alumno->create ();
+		$user->login = $this->cleaned_data['codigo'];
+		$user->email = '';
+		$user->type = 'a';
+		$user->administrator = false;
+		$alumno->user = $user;
+		
+		if ($commit) {
+			$alumno->create();
+			$user->create ();
+		}
 		
 		$domicilio = new Titulacion_Domicilio ();
 		
@@ -241,7 +250,7 @@ class Titulacion_Form_Alumno_Agregar extends Gatuf_Form {
 		
 		$domicilio->alumno = $alumno;
 		
-		$domicilio->create ();
+		if ($commit) $domicilio->create ();
 		
 		return $domicilio;
 	}

@@ -1,7 +1,6 @@
 <?php
-$base = Gatuf::config('titulacion_base');
 $ctl = array ();
-
+if (!isset ($base)) $base = Gatuf::config ('titulacion_base');
 /* Bloque base:
 $ctl[] = array (
 	'regex' => '#^/ /$#',

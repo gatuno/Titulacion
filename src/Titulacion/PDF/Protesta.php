@@ -55,7 +55,7 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		
 		$this->SetY(18);
 		$this->SetX(18.1);
-		$this->Multicell(181,4,$leyenda,0);
+		$this->Multicell(181,4,$leyenda,0,'J');
 		
 		$this->SetFont('Arial','',14);
 		$this->SetY(45);
@@ -68,27 +68,27 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		
 		$this->SetY(60);
 		$this->SetX(19);
-		$this->Multicell(181,4,$punto1,0,'L');
+		$this->Multicell(181,4,$punto1,0,'J');
 		
 		$this->SetY(70);
 		$this->SetX(19);
-		$this->Multicell(181,4,$punto2,0,'L');
+		$this->Multicell(181,4,$punto2,0,'J');
 		
 		$this->SetY(86);
 		$this->SetX(19);
-		$this->Multicell(181,4,$punto3,0,'L');
+		$this->Multicell(181,4,$punto3,0,'J');
 		
 		$this->SetY(96);
 		$this->SetX(19);
-		$this->Multicell(181,4,$punto4,0,'L');
+		$this->Multicell(181,4,$punto4,0,'J');
 		
 		$this->SetY(112);
 		$this->SetX(19);
-		$this->Multicell(181,4,$punto5,0,'L');
+		$this->Multicell(181,4,$punto5,0,'J');
 		
 		$this->SetY(123);
 		$this->SetX(19);
-		$this->Multicell(181,4,$punto6,0,'L');
+		$this->Multicell(181,4,$punto6,0,'J');
 		
 		/*aqui van los nombres de el Titulado y las de los mienmbros del jurado*/
 		

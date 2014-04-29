@@ -1,5 +1,28 @@
 <?php
 
+function Titulacion_Utils_grado ($sexo, $grado) {
+	switch ($grado) {
+		case 'I':
+			return 'Ing.';
+			break;
+		case 'L':
+			return 'Lic.';
+			break;
+		case 'D':
+			if ($sexo == 'F') { 
+				return 'Dra.';}
+			else return 'Dr.';
+			break;
+		case 'M':
+			 if ($sexo == 'F'){
+				return 'Mtra.';}
+			else return 'Mtro.';
+			break;
+		default: throw new Exception ('No implementado');
+	}
+}
+
+
 function Titulacion_Utils_numeroLetra($numero, $decimales = 1) {
 	$flotante = number_format($numero,$decimales);
 	

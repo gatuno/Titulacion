@@ -22,7 +22,7 @@ $form.render_p<tr><td>&nbsp;</td><td><input type="submit" value="Filtrar" /></td
 	{foreach $filtro as $key => $val}
 		{if $val}
 			<li><a href="{url 'Titulacion_Views_Acta::eliminarFiltro', array($key)}"><img class="icon" src="{media '/img/list-remove.png'}" alt="Eliminar filtro" /></a>{$val}</li>
-		{/if}
+		{/if} <p>algo</p>
 	{/foreach}
 	</ul>
 {/if}

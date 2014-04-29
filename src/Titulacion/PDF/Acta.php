@@ -14,19 +14,19 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		$nombreCompleto = mb_strtoupper($this->alumno->nombre.' '.$this->alumno->apellido);
 		
 		$grado = Titulacion_Utils_grado ($this->jurado1->sexo, $this->jurado1->grado);
-		$nombreCompletoj1 = mb_strtoupper ($grado.' '.$this->jurado1->apellido.' '.$this->jurado1->nombre);
+		$nombreCompletoj1 = mb_strtoupper ($grado.' '.$this->jurado1->nombre.' '.$this->jurado1->apellido);
 		
 		$grado = Titulacion_Utils_grado ($this->jurado2->sexo, $this->jurado2->grado);
-		$nombreCompletoj2 = mb_strtoupper ($grado.' '.$this->jurado2->apellido.' '.$this->jurado2->nombre);
+		$nombreCompletoj2 = mb_strtoupper ($grado.' '.$this->jurado2->nombre.' '.$this->jurado2->apellido);
 		
 		$grado = Titulacion_Utils_grado ($this->jurado3->sexo, $this->jurado3->grado);
-		$nombreCompletoj3 = mb_strtoupper ($grado.' '.$this->jurado3->apellido.' '.$this->jurado3->nombre);
+		$nombreCompletoj3 = mb_strtoupper ($grado.' '.$this->jurado3->nombre.' '.$this->jurado3->apellido);
 		
 		$grado = Titulacion_Utils_grado ($this->secretario->sexo, $this->secretario->grado);
-		$secretario = mb_strtoupper ($grado.' '.$this->secretario->apellido.' '.$this->secretario->nombre);
+		$secretario = mb_strtoupper ($grado.' '.$this->secretario->nombre.' '.$this->secretario->apellido);
 		
 		$grado = Titulacion_Utils_grado ($this->director->sexo, $this->director->grado);
-		$director = mb_strtoupper ($grado.' '.$this->director->apellido.' '.$this->director->nombre);
+		$director = mb_strtoupper ($grado.' '.$this->director->nombre.' '.$this->director->apellido);
 		
 		$leyenda = $this->opcion->leyenda;
 		

@@ -9,4 +9,5 @@ $m['Titulacion_Opcion'] = array ('relate_to' => array ('Titulacion_Modalidad'));
 $m['Titulacion_Acta'] = array ('relate_to' => array ('Titulacion_PlanEstudio', 'Titulacion_Carrera', 'Calif_Alumno', 'Titulacion_Opcion', 'Calif_Maestro', 'Titulacion_Domicilio', $user_model));
 
 /* Conexión de señales aquí */
+Gatuf_Signal::connect('Calif_Context::menus', array('Titulacion_Middleware_Menu', 'constructMenu'));
 return $m;

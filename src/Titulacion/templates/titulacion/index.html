@@ -1,5 +1,4 @@
 {extends 'titulacion/base.html'}
 {block body}
-<p>Bienvenido al sistema de titulación</p>
-<p>Le solicitamos <a href="{url 'login_view'}">ingresar</a> para poder acceder a las vistas</p>
+{if $user.isAnonymous ()}<p>Le solicitamos <a href="{url 'login_view', array (), array ('_redirect_after' => $uri)}">ingresar</a> para poder acceder a las vistas</p>{else}<p>Bienvenido</p>{/if}
 {/block}

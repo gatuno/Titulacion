@@ -4,36 +4,6 @@ Gatuf::loadFunction('Gatuf_Shortcuts_RenderToResponse');
 Gatuf::loadFunction('Gatuf_HTTP_URL_urlForView');
 
 class Titulacion_Views_Alumno {
-	
-	public function index ($request, $match) {
-		$alumnos = new Calif_Alumno ();
-		
-		$pag = new Gatuf_Paginator ($alumnos);
-		$pag->action = array ('Titulacion_Views_Alumno::index');
-		$pag->sumary = 'Lista de alumnos registrados';
-		
-		$list_display = array (
-			array ('codigo', 'Gatuf_Paginator_DisplayVal', 'Codigo'),
-			array ('apellido', 'Gatuf_Paginator_DisplayVal', 'Apellido'),
-			array ('nombre', 'Gatuf_Paginator_DisplayVal', 'Nombre'),
-		);
-		
-		$pag->items_per_page = 25;
-		$pag->no_results_tex = 'No se encontro ningun alumno';
-		$pag->max_number_pages = 3;
-		$pag->configure ($list_display,
-			array('codigo', 'apellido', 'nombre'),
-			array('codigo', 'apellido', 'nombre')
-		);
-		
-		$pag->setFromRequest($request);
-		
-		return Gatuf_Shortcuts_renderToResponse ('titulacion/alumno/index.html',
-		                                         array('page_title'=> 'Alumnos',
-		                                               'paginador' => $pag),
-		                                         $request);
-	}
-	
 	public $agregarAlumno_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.agregar-alumnos'));
 	public function agregarAlumno ($request, $match) {
 		if (isset ($request->REQUEST['acta']) && $request->REQUEST['acta'] == 1) {
@@ -102,21 +72,6 @@ class Titulacion_Views_Alumno {
 		                                         array ('page_title' => 'Actualizar alumno',
 		                                         'alumno' => $alumno,
 		                                         'form' => $form),
-		                                         $request);
-	}
-		
-	public function verAlumno ($request, $match) {
-		$title = 'Perfil escolar del alumno';
-		 
-		$alumno = new Calif_Alumno ();
-		
-		if (false === $alumno-> getAlumno($match[1])) {
-			throw new Gatuf_HTTP_Error404 ();
-		}
-		
-		return Gatuf_Shortcuts_RenderToResponse ('titulacion/alumno/ver-alumno.html',
-		                                         array ('alumno' => $alumno,
-		                                         'page_title' => $title),
 		                                         $request);
 	}
 }

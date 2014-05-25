@@ -58,7 +58,7 @@ class Titulacion_Form_Carrera_Actualizar extends Gatuf_Form {
 				'required' => true,
 				'label' => 'Grado (Masculino)',
 				'initial' => $this->carrera->grado_m,
-				'help_text' => 'El grado que esta carrera genera, en masculino',
+				'help_text' => 'El nombre del profesionista en masculino (ej. Ingeniero en Computación)',
 				'max_length' => 100,
 				'widget_attrs' => array(
 					'maxlength' => 100,
@@ -71,7 +71,7 @@ class Titulacion_Form_Carrera_Actualizar extends Gatuf_Form {
 				'required' => true,
 				'label' => 'Grado (Femenino)',
 				'initial' => $this->carrera->grado_f,
-				'help_text' => 'El grado que esta carrera genera, en femenino',
+				'help_text' => 'El nombre del profesionista en femenino (ej. Licenciada en Informática)',
 				'max_length' => 100,
 				'widget_attrs' => array(
 					'maxlength' => 100,

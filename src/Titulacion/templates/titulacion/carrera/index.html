@@ -1,20 +1,14 @@
 {extends 'titulacion/base.html'}
 {block body}
-{aperm 'puede_agregar', $user, 'Titulacion.agregar-carreras'}
-{if $puede_agregar}
-<a href="{url 'Titulacion_Views_Carrera::agregarCarrera'}"><img src="{media '/img/list-add.png'}" alt="Agregar carrera" />Agregar nueva carrera</a>
-{/if}
+<p>Las carreras aquí listadas solo aplican para su sistema de Titulación y son independientes del sistema de Calificaciones</p>
+{aperm 'puede_agregar', $user, 'Titulacion.agregar-carreras'}{if $puede_agregar}
+<p><a href="{url 'Titulacion_Views_Carrera::agregarCarrera'}"><img class="icon" src="{media '/img/list-add.png'}" alt="Agregar carrera" />Agregar nueva carrera</a></p>{/if}
 {if count ($divisiones) != 0}
-	{foreach $divisiones as $division}
-		{if count ($carreras[$division.id]) != 0}
-			<h3>{$division}</h3>
-			<ol>
-			{foreach $carreras[$division.id] as $carrera}
-				<li>{$carrera.clave} - {$carrera.descripcion}</li>
-			{/foreach}
-			</ol>
-		{/if}
-	{/foreach}
+	{foreach $divisiones as $division}{if count ($carreras[$division.id]) != 0}<h3>{$division}</h3>
+			<ol>{foreach $carreras[$division.id] as $carrera}
+				<li><a href="{url 'Titulacion_Views_Carrera::verCarrera', $carrera.clave}">{$carrera.clave} {$carrera.descripcion}</a></li>
+			{/foreach}</ol>
+	{/if}{/foreach}
 {else}
 	<p>No hay divisiones registradas</p>
 {/if}

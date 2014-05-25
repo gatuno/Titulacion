@@ -5,7 +5,6 @@ Gatuf::loadFunction('Gatuf_HTTP_URL_urlForView');
 
 class Titulacion_Views_Carrera {
 	function index ($request, $match) {
-		$carrera = new Calif_Carrera ();
 		# Listar las carreras aquí, por división
 		$divisiones = Gatuf::factory ('Calif_Division')->getList ();
 		
@@ -20,6 +19,26 @@ class Titulacion_Views_Carrera {
 		                                         array('page_title' => 'Carreras',
 		                                               'divisiones' => $divisiones,
 		                                               'carreras' => $carreras),
+		                                         $request);
+	}
+	
+	public function verCarrera ($request, $match) {
+		/* Ver si esta carrera es válida */
+		$carrera = new Titulacion_Carrera ();
+		if (false === ($carrera->get ($match[1]))) {
+			throw new Gatuf_HTTP_Error404();
+		}
+		
+		/* Verificar que la carrera esté en mayúsculas */
+		$nueva_clave = mb_strtoupper ($match[1]);
+		if ($match[1] != $nueva_clave) {
+			$url = Gatuf_HTTP_URL_urlForView('Titulacion_Views_Carrera::verCarrera', array ($nueva_clave));
+			return new Gatuf_HTTP_Response_Redirect ($url);
+		}
+		
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/carrera/ver-carrera.html',
+		                                         array ('carrera' => $carrera,
+		                                                'page_title' => $carrera->descripcion),
 		                                         $request);
 	}
 	

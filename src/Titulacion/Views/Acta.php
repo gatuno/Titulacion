@@ -82,7 +82,7 @@ class Titulacion_Views_Acta {
 			array('egreso','Gatuf_Paginator_DisplayVal','Calendario de egreso')
 		);
 		
-		$pag->items_per_page = 25;
+		$pag->items_per_page = 60;
 		$pag->no_results_text = 'No hay actas de titulacion disponibles';
 		$pag->max_number_pages = 3;
 		$pag->configure ($list_display,
@@ -172,14 +172,15 @@ class Titulacion_Views_Acta {
 	}
 	
 	public function eliminarFiltro($request, $match){
-		if($match[1] == 'o')
+		if ($match[1] == 'o') {
 			$request->session->setData('filtro_acta_opcion',null);
-		if($match[1] == 'p')
+		} else if ($match[1] == 'p') {
 			$request->session->setData('filtro_acta_plan',null);
-		if($match[1] == 'c')
+		} else if ($match[1] == 'c') {
 			$request->session->setData('filtro_acta_carrera',null);
-		if ($match[1] == 'a')
+		} else if ($match[1] == 'a') {
 			$request->session->setData ('filtro_acta_anio', null);
+		}
 		$url = Gatuf_HTTP_URL_urlForView('Titulacion_Views_Acta::index');
 		return new Gatuf_HTTP_Response_Redirect ($url);
 	}

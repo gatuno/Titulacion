@@ -33,6 +33,13 @@ $ctl_t[] = array (
 );
 
 $ctl_t[] = array(
+	'regex' => '#^/carrera/([A-Za-z]{3,5})/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Carrera',
+	'method' => 'verCarrera',
+);
+
+$ctl_t[] = array(
 	'regex' => '#^/carrera/([A-Za-z]{3,5})/update/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Carrera',
@@ -113,43 +120,46 @@ $ctl_t[] =array(
 );
 
 $ctl_t[] =array(
-	'regex' => '#^/actas/op/(\d+)/$#',
+	'regex' => '#^/actas/f/o/(\d+)/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Acta',
 	'method' => 'porOpcion',
 );
+
 $ctl_t[] =array(
-	'regex' => '#^/actas/plan/(\d+)/$#',
+	'regex' => '#^/actas/f/p/(\d+)/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Acta',
 	'method' => 'porPlan',
 );
+
 $ctl_t[] =array(
-	'regex' => '#^/actas/car/([a-zA-Z]{3})/$#',
+	'regex' => '#^/actas/f/c/([a-zA-Z]{3})/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Acta',
 	'method' => 'porCarrera',
 );
+
 $ctl_t[] =array(
-	'regex' => '#^/actas/a/(\d+)/$#',
+	'regex' => '#^/actas/f/a/(\d+)/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Acta',
 	'method' => 'porAnio',
 );
+
 $ctl_t[] =array(
-	'regex' => '#^/actas/f/$#',
+	'regex' => '#^/actas/f/t/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Acta',
 	'method' => 'porFecha',
 );
 
 $ctl_t[] =array(
-	'regex' => '#^/acta/nofiltro/([opca])/$#',
+	'regex' => '#^/acta/nofiltro/([opcat])/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Acta',
 	'method' => 'eliminarFiltro',
 );
-
 
 $ctl_t[] =array(
 	'regex' => '#^/acta/(\d+)/update/$#',

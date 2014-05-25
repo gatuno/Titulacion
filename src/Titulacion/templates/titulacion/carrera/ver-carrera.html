@@ -1,0 +1,19 @@
+{extends 'titulacion/base.html'}
+{block body}
+<p>Puede ver la parte académica de esta carrera en el sistema de <a href="{url 'Calif_Views_Carrera::verCarrera', $carrera.clave}">Calificaciones</a></p>
+<p>TODO: FIXME: Poner un permiso aquí</p>
+<p><a href="{url 'Titulacion_Views_Carrera::actualizarCarrera', $carrera.clave}">Actualizar carrera</a></p>
+
+<p><a href="{url 'Titulacion_Views_Acta::porCarrera', $carrera.clave}">Ver actas de titulación de esta carrera</a></p>
+<p>Clave: {$carrera.clave}</p>
+<p>División: {$carrera.get_division}</p>
+<p>Descripcion: {$carrera.descripcion}</p>
+{if $carrera.grado == 'L'}<p>Genera el grado de Licenciatura</p>
+{elseif $carrera.grado == 'I'}<p>Genera el grado de Ingeniería</p>
+{elseif $carrera.grado == 'M'}<p>Genera el grado de Maestría</p>
+{elseif $carrera.grado == 'D'}<p>Genera el grado de Doctorado</p>
+{else}<p>Desconocido el grado que genera. Llame al administrador</p>{/if}
+<p>Profesionista en masculino: {$carrera.grado_m}</p>
+<p>Profesionista en femenino: {$carrera.grado_f}</p>
+<p>Nombre largo de la carrera: {$carrera.nombre_largo}</p>
+{/block}

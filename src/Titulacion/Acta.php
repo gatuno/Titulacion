@@ -254,8 +254,8 @@ class Titulacion_Acta extends Gatuf_Model {
 	public function displayplan ($extra = null) {
 		return $this->plan_descripcion;
 	}
+	
 	public function displayopcion ($extra = null) {
-			
 		return $this->opcion_descripcion;
 	}
 	

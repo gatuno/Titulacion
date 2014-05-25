@@ -1,0 +1,15 @@
+{extends 'titulacion/base.html'}
+{block body}
+<p>TODO: FIXME: Poner un permiso aquí</p>
+<p><a href="{url 'Titulacion_Views_Acta::porOpcion', $opcion.id}">Ver actas por esta opción de titulación</a></p>
+<p><a href="{url 'Titulacion_Views_Modalidad::actualizarOpcion', $opcion.id}">Actualizar esta opción de titulación</a></p>
+<p>Modalidad: <strong>{$modalidad.descripcion}</strong></p>
+<p>Opción: <strong>{$opcion.descripcion}</strong></p>
+{if $opcion.tipo == 'C'}
+<p>Tipo: <strong>Comité</strong></p>
+{elseif $opcion.tipo == 'J'}
+<p>Tipo: <strong>Jurado</strong></p>
+{/if}
+<p>Articulo y fracción UDG: <strong>{$opcion.displayudg ()}</strong></p>
+<p>Articulo y fracción CUCEI: <strong>{$opcion.displaycucei ()}</strong></p>
+{/block}

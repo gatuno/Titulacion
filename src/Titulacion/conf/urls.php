@@ -70,28 +70,35 @@ $ctl_t[] = array (
 
 /* Modalidades de titulacion */
 $ctl_t[] = array (
-	'regex' => '#^/modalidades/$#',
+	'regex' => '#^/opciones/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Modalidad',
 	'method' => 'index',
 );
 
 $ctl_t[] = array (
-	'regex' => '#^/modalidades/add/$#',
+	'regex' => '#^/opciones/add/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Modalidad',
 	'method' => 'agregarOpcion',
 );
 
 $ctl_t[] = array (
-	'regex' => '#^/modalidad/(\d+)/update/$#',
+	'regex' => '#^/opcion/(\d+)/update/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Modalidad',
 	'method' => 'actualizarOpcion',
 );
 
 $ctl_t[] = array (
-	'regex' => '#^/modalidad/(\d+)/json/$#',
+	'regex' => '#^/opcion/(\d+)/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Modalidad',
+	'method' => 'verOpcion',
+);
+
+$ctl_t[] = array (
+	'regex' => '#^/opcion/(\d+)/json/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Modalidad',
 	'method' => 'jsonOpcion',

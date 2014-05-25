@@ -31,8 +31,23 @@ class Titulacion_Views_Modalidad {
 		$pag->setFromRequest ($request);
 		
 		return Gatuf_Shortcuts_RenderToResponse ('titulacion/modalidad/index.html',
-		                                         array('page_title' => 'Modalidades de titulación',
+		                                         array('page_title' => 'Opciones de titulación',
 		                                               'paginador' => $pag),
+		                                         $request);
+	}
+	
+	public function verOpcion ($request, $match) {
+		$opcion = new Titulacion_Opcion ();
+		
+		if (false === ($opcion->get ($match[1]))) {
+			throw new Gatuf_HTTP_Error404 ();
+		}
+		
+		$modalidad = $opcion->get_modalidad ();
+		return Gatuf_Shortcuts_RenderToResponse ('titulacion/modalidad/ver-opcion.html',
+		                                         array ('page_title' => 'Opción '.$opcion->descripcion,
+		                                                'opcion' => $opcion,
+		                                                'modalidad' => $modalidad),
 		                                         $request);
 	}
 	
@@ -61,12 +76,11 @@ class Titulacion_Views_Modalidad {
 	public function actualizarOpcion ($request, $match) {
 		$opcion = new Titulacion_Opcion ();
 		
-		if (false === ($opcion->getOpcion ($match[1]))) {
+		if (false === ($opcion->get ($match[1]))) {
 			throw new Gatuf_HTTP_Error404 ();
 		}
 		
-		$modalidad = new Titulacion_Modalidad ();
-		$modalidad->getModalidad ($opcion->modalidad);
+		$modalidad = $opcion->get_modalidad ();
 		
 		$extra = array ('opcion' => $opcion);
 		

@@ -1,17 +1,12 @@
 {extends 'titulacion/base.html'}
 {block body}
 {if $form.errors}
-<div class="errors">
-<p>El formulario contiene algunos errores:</p>
-</div>
+	<div class="errors"><p>El formulario contiene algunos errores:</p></div>
 {/if}
 <form action="." method="post">
-<table>
-{$form.render_table}
-<tr>
-<td>&nbsp;</td>
-<td><input type="submit" value="Nueva opción" /></td>
-</tr>
-</table>
+	<table>
+		{$form.render_table}
+		<tr><td>&nbsp;</td><td><input type="submit" value="Nueva opción" /></td></tr>
+	</table>
 </form>
 {/block}

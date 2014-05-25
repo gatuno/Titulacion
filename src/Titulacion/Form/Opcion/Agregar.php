@@ -29,7 +29,22 @@ class Titulacion_Form_Opcion_Agregar extends Gatuf_Form {
 				'help_text' => 'Un nombre descriptivo de esta opción de titulación',
 				'max_length' => 150,
 				'widget_attrs' => array (
-					'maxlength' => 150
+					'maxlength' => 150,
+					'size' => 100,
+				)
+		));
+		
+		$choices = array ('Comité' => 'C', 'Jurado' => 'J');
+		
+		$this->fields['tipo'] = new Gatuf_Form_Field_Varchar (
+			array (
+				'required' => true,
+				'label' => 'Tipo',
+				'initial' => 'C',
+				'help_text' => 'Si esta opcion utiliza comité o jurado',
+				'widget' => 'Gatuf_Form_Widget_SelectInput',
+				'widget_attrs' => array (
+					'choices' => $choices,
 				)
 		));
 		
@@ -39,7 +54,10 @@ class Titulacion_Form_Opcion_Agregar extends Gatuf_Form {
 				'label' => 'Articulo (U de G)',
 				'initial' => '',
 				'help_text' => 'El artículo que describe esta opción de titulación',
-				'min' => 0
+				'min' => 0,
+				'widget_attrs' => array (
+					'size' => 5,
+				)
 		));
 		
 		$this->fields['fraccion'] = new Gatuf_Form_Field_Varchar (
@@ -50,7 +68,8 @@ class Titulacion_Form_Opcion_Agregar extends Gatuf_Form {
 				'help_text' => 'La fracción del artículo que describe esta opción de titulación',
 				'max_length' => 10,
 				'widget_attrs' => array (
-					'maxlength' => 10
+					'maxlength' => 10,
+					'size' => 5,
 				)
 		));
 				
@@ -60,7 +79,10 @@ class Titulacion_Form_Opcion_Agregar extends Gatuf_Form {
 				'label' => 'Articulo (CUCEI)',
 				'initial' => '',
 				'help_text' => 'El artículo que describe esta opción de titulación',
-				'min' => 0
+				'min' => 0,
+				'widget_attrs' => array (
+					'size' => 5,
+				)
 		));
 		
 		$this->fields['fraccion_cucei'] = new Gatuf_Form_Field_Varchar (
@@ -71,7 +93,8 @@ class Titulacion_Form_Opcion_Agregar extends Gatuf_Form {
 				'help_text' => 'La fracción del artículo que describe esta opción de titulación',
 				'max_length' => 10,
 				'widget_attrs' => array (
-					'maxlength' => 10
+					'maxlength' => 10,
+					'size' => 5,
 				)
 		));
 		
@@ -106,6 +129,10 @@ class Titulacion_Form_Opcion_Agregar extends Gatuf_Form {
 				'initial' => '',
 				'help_text' => 'La leyenda que va abajo en el acta',
 				'widget' => 'Gatuf_Form_Widget_TextareaInput',
+				'widget_attrs' => array (
+					'cols' => 100,
+					'rows' => 16,
+				)
 		));
 	}
 	
@@ -136,17 +163,7 @@ class Titulacion_Form_Opcion_Agregar extends Gatuf_Form {
 		
 		$opcion = new Titulacion_Opcion ();
 		
-		$opcion->modalidad = $this->cleaned_data['modalidad'];
-		$opcion->descripcion = $this->cleaned_data['descripcion'];
-		$opcion->articulo = $this->cleaned_data['articulo'];
-		$opcion->articulo_cucei = $this->cleaned_data['articulo_cucei'];
-		$opcion->fraccion = $this->cleaned_data['fraccion'];
-		$opcion->fraccion_cucei = $this->cleaned_data['fraccion_cucei'];
-		$opcion->maestria = $this->cleaned_data['maestria'];
-		$opcion->desempeno = $this->cleaned_data['desempeno'];
-		$opcion->trabajo = $this->cleaned_data['trabajo'];
-		
-		$opcion->leyenda = $this->cleaned_data['leyenda'];
+		$opcion->setFromFormData ($this->cleaned_data);
 		
 		if ($commit) $opcion->create ();
 		

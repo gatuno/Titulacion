@@ -22,13 +22,13 @@ class Titulacion_Middleware_Menu {
 		$m->sub[] = $sub;
 		
 		$sub = new stdClass ();
-		$sub->nombre = 'Planes de Estudios';
+		$sub->nombre = 'Opciones y Modalidades';
 		$sub->href = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Modalidad::index');
 		
 		$m->sub[] = $sub;
 		
 		$sub = new stdClass ();
-		$sub->nombre = 'Modalidad';
+		$sub->nombre = 'Planes de estudio';
 		$sub->href = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_PlanEstudio::index');
 		
 		$m->sub[] = $sub;

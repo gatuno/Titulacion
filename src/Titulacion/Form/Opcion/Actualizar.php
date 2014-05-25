@@ -13,7 +13,22 @@ class Titulacion_Form_Opcion_Actualizar extends Gatuf_Form {
 				'help_text' => 'Un nombre descriptivo de esta opción de titulación',
 				'max_length' => 150,
 				'widget_attrs' => array (
-					'maxlength' => 150
+					'maxlength' => 150,
+					'size' => 100,
+				)
+		));
+		
+		$choices = array ('Comité' => 'C', 'Jurado' => 'J');
+		
+		$this->fields['tipo'] = new Gatuf_Form_Field_Varchar (
+			array (
+				'required' => true,
+				'label' => 'Tipo',
+				'initial' => $this->opcion->tipo,
+				'help_text' => 'Si esta opcion utiliza comité o jurado',
+				'widget' => 'Gatuf_Form_Widget_SelectInput',
+				'widget_attrs' => array (
+					'choices' => $choices,
 				)
 		));
 		
@@ -23,7 +38,10 @@ class Titulacion_Form_Opcion_Actualizar extends Gatuf_Form {
 				'label' => 'Articulo (U de G)',
 				'initial' => $this->opcion->articulo,
 				'help_text' => 'El artículo que describe esta opción de titulación',
-				'min' => 0
+				'min' => 0,
+				'widget_attrs' => array (
+					'size' => 5,
+				)
 		));
 		
 		$this->fields['fraccion'] = new Gatuf_Form_Field_Varchar (
@@ -34,7 +52,8 @@ class Titulacion_Form_Opcion_Actualizar extends Gatuf_Form {
 				'help_text' => 'La fracción del artículo que describe esta opción de titulación',
 				'max_length' => 10,
 				'widget_attrs' => array (
-					'maxlength' => 10
+					'maxlength' => 10,
+					'size' => 5,
 				)
 		));
 				
@@ -44,7 +63,10 @@ class Titulacion_Form_Opcion_Actualizar extends Gatuf_Form {
 				'label' => 'Articulo (CUCEI)',
 				'initial' => $this->opcion->articulo_cucei,
 				'help_text' => 'El artículo que describe esta opción de titulación',
-				'min' => 0
+				'min' => 0,
+				'widget_attrs' => array (
+					'size' => 5,
+				)
 		));
 		
 		$this->fields['fraccion_cucei'] = new Gatuf_Form_Field_Varchar (
@@ -55,7 +77,8 @@ class Titulacion_Form_Opcion_Actualizar extends Gatuf_Form {
 				'help_text' => 'La fracción del artículo que describe esta opción de titulación',
 				'max_length' => 10,
 				'widget_attrs' => array (
-					'maxlength' => 10
+					'maxlength' => 10,
+					'size' => 5,
 				)
 		));
 		
@@ -90,6 +113,10 @@ class Titulacion_Form_Opcion_Actualizar extends Gatuf_Form {
 				'initial' => $this->opcion->leyenda,
 				'help_text' => 'La leyenda que va abajo en el acta',
 				'widget' => 'Gatuf_Form_Widget_TextareaInput',
+				'widget_attrs' => array (
+					'cols' => 100,
+					'rows' => 16,
+				)
 		));
 	}
 	
@@ -118,16 +145,7 @@ class Titulacion_Form_Opcion_Actualizar extends Gatuf_Form {
 			throw new Exception ('Cannot save the model from and invalid form.');
 		}
 		
-		$this->opcion->descripcion = $this->cleaned_data['descripcion'];
-		$this->opcion->articulo = $this->cleaned_data['articulo'];
-		$this->opcion->articulo_cucei = $this->cleaned_data['articulo_cucei'];
-		$this->opcion->fraccion = $this->cleaned_data['fraccion'];
-		$this->opcion->fraccion_cucei = $this->cleaned_data['fraccion_cucei'];
-		$this->opcion->maestria = $this->cleaned_data['maestria'];
-		$this->opcion->desempeno = $this->cleaned_data['desempeno'];
-		$this->opcion->trabajo = $this->cleaned_data['trabajo'];
-		
-		$this->opcion->leyenda = $this->cleaned_data['leyenda'];
+		$this->opcion->setFromFormData ($this->cleaned_data);
 		
 		if ($commit) $this->opcion->update ();
 		

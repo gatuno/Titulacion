@@ -84,6 +84,8 @@ class Titulacion_Views_Acta {
 													   ),
 		                                         $request);
 	}
+	
+	public $porCarrera_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-actas'));
 	public function porCarrera ($request, $match){
 		$carrera = new Titulacion_Carrera ();
 		
@@ -97,6 +99,7 @@ class Titulacion_Views_Acta {
 		return new Gatuf_HTTP_Response_Redirect ($url);
 	}
 	
+	public $porOpcion_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-actas'));
 	public function porOpcion ($request, $match){
 		$opcion = new Titulacion_Opcion ();
 		
@@ -110,6 +113,7 @@ class Titulacion_Views_Acta {
 		return new Gatuf_HTTP_Response_Redirect ($url);
 	}
 	
+	public $porPlan_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-actas'));
 	public function porPlan ($request, $match){
 		$plan = new Titulacion_PlanEstudio ();
 		
@@ -123,6 +127,7 @@ class Titulacion_Views_Acta {
 		return new Gatuf_HTTP_Response_Redirect ($url);
 	}
 	
+	public $porAnio_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-actas'));
 	public function porAnio ($request, $match) {
 		$num = (int) $match[1];
 		
@@ -136,6 +141,7 @@ class Titulacion_Views_Acta {
 		return new Gatuf_HTTP_Response_Redirect ($url);
 	}
 	
+	public $porFecha_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-actas'));
 	public function porFecha ($request, $match) {
 		if ($request->method == 'POST') {
 			$form = new Titulacion_Form_Acta_Filtrar ($request->POST, $extra);
@@ -156,6 +162,7 @@ class Titulacion_Views_Acta {
 		return new Gatuf_HTTP_Response_Redirect ($url);
 	}
 	
+	public $eliminarFiltro_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-actas'));
 	public function eliminarFiltro($request, $match){
 		if ($match[1] == 'o') {
 			$request->session->setData('filtro_acta_opcion',null);
@@ -171,7 +178,7 @@ class Titulacion_Views_Acta {
 	}
 	
 	
-	public $agregarActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-actas'));
+	public $agregarActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.manejar-actas'));
 	public function agregarActa ($request, $match) {
 		Gatuf::loadFunction ('Titulacion_Utils_formatearDomicilio');
 		$alumno = new Calif_Alumno ();
@@ -400,7 +407,7 @@ class Titulacion_Views_Acta {
 		return new Gatuf_HTTP_Response_File ('/tmp/'.$nombre_pdf, $nombre_pdf, 'application/pdf', true);
 	}
 
-	public $actualizarActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.actualizar-actas'));
+	public $actualizarActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.manejar-actas'));
 	public function actualizarActa ($request, $match) {
 		Gatuf::loadFunction ('Titulacion_Utils_formatearDomicilio');
 		$acta = new Titulacion_Acta ();

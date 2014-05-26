@@ -42,7 +42,7 @@ class Titulacion_Views_Carrera {
 		                                         $request);
 	}
 	
-	public $agregarCarrera_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.agregar-carreras'));
+	public $agregarCarrera_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.manejar-carreras'));
 	public function agregarCarrera ($request, $match) {
 		if ($request->method == 'POST') {
 			$form = new Titulacion_Form_Carrera_Agregar ($request->POST);
@@ -61,7 +61,7 @@ class Titulacion_Views_Carrera {
 		                                         $request);
 	}
 	
-	public $actualizarCarrera_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.agregar-carreras'));
+	public $actualizarCarrera_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.manejar-carreras'));
 	public function actualizarCarrera ($request, $match) {
 		$carrera = new Titulacion_Carrera ();
 		

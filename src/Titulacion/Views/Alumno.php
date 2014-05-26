@@ -4,7 +4,7 @@ Gatuf::loadFunction('Gatuf_Shortcuts_RenderToResponse');
 Gatuf::loadFunction('Gatuf_HTTP_URL_urlForView');
 
 class Titulacion_Views_Alumno {
-	
+	public $seleccionarAlumno_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.manejar-actas'));
 	public function seleccionarAlumno ($request, $match) {
 		if ($request->method == 'POST') {
 			$form = new Titulacion_Form_Alumno_Seleccionar ($request->POST, array ());
@@ -26,7 +26,7 @@ class Titulacion_Views_Alumno {
 		return new Gatuf_HTTP_Response_Redirect ($url);
 	}
 	
-	public $agregarAlumno_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.agregar-alumnos'));
+	public $agregarAlumno_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.manejar-actas'));
 	public function agregarAlumno ($request, $match) {
 		if (isset ($request->REQUEST['acta']) && $request->REQUEST['acta'] == 1) {
 			$extra = array ('acta' => 1);
@@ -60,7 +60,7 @@ class Titulacion_Views_Alumno {
 		                                         $request);
 	}
 	
-	public $editarAlumno_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.actualizar-alumnos'));
+	public $editarAlumno_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.manejar-actas'));
 	public function editarAlumno ($request, $match) {
 		$alumno = new Calif_Alumno ();
 		if (false === ($alumno->get ($match[1]))) {

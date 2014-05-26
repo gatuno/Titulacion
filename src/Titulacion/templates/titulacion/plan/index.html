@@ -1,8 +1,7 @@
 {extends 'titulacion/base.html'}
 {block body}
-<ul>
-{foreach $planes as $plan}
-<li>{$plan.displaylinkeddescripcion ()|safe}</a></li>
-{/foreach}
-</ul>
+{aperm 'puede_visualizar', $user, 'Titulacion.visualizar-actas'}
+<ul>{foreach $planes as $plan}
+	<li>{if $puede_visualizar}{$plan.displaylinkeddescripcion ()|safe}{else}{$plan.descripcion}{/if}</a></li>
+{/foreach}</ul>
 {/block}

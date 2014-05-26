@@ -1,8 +1,8 @@
 {extends 'titulacion/base.html'}
 {block body}
 <p>Las carreras aquí listadas solo aplican para su sistema de Titulación y son independientes del sistema de Calificaciones</p>
-{aperm 'puede_agregar', $user, 'Titulacion.agregar-carreras'}{if $puede_agregar}
-<p><a href="{url 'Titulacion_Views_Carrera::agregarCarrera'}"><img class="icon" src="{media '/img/list-add.png'}" alt="Agregar carrera" />Agregar nueva carrera</a></p>{/if}
+{aperm 'puede_agregar', $user, 'Titulacion.manejar-carreras'}{if $puede_agregar}
+<p><a href="{url 'Titulacion_Views_Carrera::agregarCarrera'}"><img class="icon" src="{media '/img/list-add.png'}" alt="Agregar carrera" />Agregar nueva carrera</a> disponible para Titulación</p>{/if}
 {if count ($divisiones) != 0}
 	{foreach $divisiones as $division}{if count ($carreras[$division.id]) != 0}<h3>{$division}</h3>
 			<ol>{foreach $carreras[$division.id] as $carrera}

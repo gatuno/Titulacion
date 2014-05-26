@@ -9,8 +9,8 @@ class Titulacion_Views {
 		                                         array ('page_title' => 'Titulación'),
 		                                         $request);
 	}
-		
-	public $preferences_precond = array ('Gatuf_Precondition::loginRequired');
+	
+	public $preferences_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.administrator'));
 	function preferences ($request, $match) {
 		if ($request->method == 'POST') {
 			$form = new Titulacion_Form_Preferences ($request->POST, array ());

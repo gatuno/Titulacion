@@ -1,19 +1,19 @@
 {extends 'titulacion/base.html'}
 {block body}
 {if !$acta.eliminada}
-{aperm 'puede_imprimir', $user, 'Titulacion.imprimir-actas'}
-{aperm 'puede_actualizar', $user, 'Titulacion.actualizar-actas'}
-{aperm 'puede_eliminar', $user, 'Titulacion.eliminar-actas'}
-<ul style="list-style-type: none;">
-<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::verActa', array ($acta.id)}">Detalles</a></li>
-{if $puede_actualizar}<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::actualizarActa', array ($acta.id)}"> Editar</a></li>{/if}
-{if $puede_imprimir}
-<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::imprimirCitatorio', array ($acta.id)}"> Citatorio</a></li>
-<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::imprimirActa', array ($acta.id)}"> Imprimir Acta</a></li>
-<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::imprimirProtesta', array ($acta.id)}"> Protesta</a></li>
-{/if}
-{if $puede_eliminar}<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::eliminarActa', array ($acta.id)}"> Eliminar</a></li>{/if}
-</ul>
+	{aperm 'puede_imprimir', $user, 'Titulacion.imprimir-actas'}
+	{aperm 'puede_actualizar', $user, 'Titulacion.manejar-actas'}
+	{aperm 'puede_eliminar', $user, 'Titulacion.eliminar-actas'}
+	<ul style="list-style-type: none;">
+	<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::verActa', array ($acta.id)}">Detalles</a></li>
+	{if $puede_actualizar}<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::actualizarActa', array ($acta.id)}"> Editar</a></li>{/if}
+	{if $puede_imprimir}
+	<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::imprimirCitatorio', array ($acta.id)}"> Citatorio</a></li>
+	<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::imprimirActa', array ($acta.id)}"> Imprimir Acta</a></li>
+	<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::imprimirProtesta', array ($acta.id)}"> Protesta</a></li>
+	{/if}
+	{if $puede_eliminar}<li style="display: inline;"><a href="{url 'Titulacion_Views_Acta::eliminarActa', array ($acta.id)}"> Eliminar</a></li>{/if}
+	</ul>
 {/if}
 {if $acta.eliminada}
 	<h2>Acta Eliminada</h2>

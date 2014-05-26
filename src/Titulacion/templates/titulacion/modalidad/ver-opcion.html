@@ -1,15 +1,31 @@
 {extends 'titulacion/base.html'}
 {block body}
-<p>TODO: FIXME: Poner un permiso aquí</p>
-<p><a href="{url 'Titulacion_Views_Acta::porOpcion', $opcion.id}">Ver actas por esta opción de titulación</a></p>
+{aperm 'puede_agregar', $user, 'Titulacion.manejar-opciones'}{if $puede_agregar}
 <p><a href="{url 'Titulacion_Views_Modalidad::actualizarOpcion', $opcion.id}">Actualizar esta opción de titulación</a></p>
-<p>Modalidad: <strong>{$modalidad.descripcion}</strong></p>
-<p>Opción: <strong>{$opcion.descripcion}</strong></p>
-{if $opcion.tipo == 'C'}
-<p>Tipo: <strong>Comité</strong></p>
-{elseif $opcion.tipo == 'J'}
-<p>Tipo: <strong>Jurado</strong></p>
 {/if}
-<p>Articulo y fracción UDG: <strong>{$opcion.displayudg ()}</strong></p>
-<p>Articulo y fracción CUCEI: <strong>{$opcion.displaycucei ()}</strong></p>
+{aperm 'puede_visualizar', $user, 'Titulacion.visualizar-actas'}{if $puede_visualizar}
+<p><a href="{url 'Titulacion_Views_Acta::porOpcion', $opcion.id}">Ver actas por esta opción de titulación</a></p>
+{/if}
+<p><strong>Modalidad: </strong>{$modalidad.descripcion}</p>
+<p><strong>Opción: </strong>{$opcion.descripcion}</p>
+{if $opcion.tipo == 'C'}
+<p><strong>Tipo: </strong>Comité</p>
+{elseif $opcion.tipo == 'J'}
+<p><strong>Tipo: </strong>Jurado</p>
+{/if}
+<p><strong>Estatuto UDG: </strong>{$opcion.displayudg ()}</p>
+<p><strong>Estatuto CUCEI: </strong>{$opcion.displaycucei ()}</p>
+<p>Diccionario de reemplazos:
+<ul>
+	<li>%% =&gt; %</li>
+	<li>%c =&gt; Calificación numérica</li>
+	<li>%C =&gt; Calificación con letra</li>
+	<li>%d =&gt; Desempeño</li>
+	<li>%L =&gt; Nombre de la carrera</li>
+	<li>%t =&gt; Nombre del trabajo</li>
+	<li>%m =&gt; Número de materias que estudia en el posgrado</li>
+	<li>%M =&gt; Nombre del posgrado que estudia</li>
+	<li>%U =&gt; Nombre de la Universidad donde estudia el posgrado</li>
+</ul></p>
+<p><strong>Leyenda en el acta: </strong>{$opcion.leyenda}</p>
 {/block}

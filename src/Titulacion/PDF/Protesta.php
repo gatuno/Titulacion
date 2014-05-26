@@ -98,7 +98,7 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		$this->SetX(19);
 		$this->Cell(78.2,3,$sustentante ,'B',0,'C');
 		
-		$this->SetY(173.9);
+		$this->SetY(170);
 		$this->SetX(19);
 		$this->Cell(78.2,3,'Firma del sustentante',0,0,'C');
 		
@@ -106,7 +106,7 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		$this->SetX(128.3);
 		$this->Cell(78.2,3,$nombreCompletoj1,'B',0,'C');
 		
-		$this->SetY(173.9);
+		$this->SetY(170);
 		$this->SetX(128.3);
 		$this->Cell(78.2,3,'Comité de titulación',0,0,'C');
 		

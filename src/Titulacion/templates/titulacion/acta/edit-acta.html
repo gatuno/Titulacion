@@ -138,7 +138,7 @@
 	function on_change_opcion () {
 		var opcion = document.getElementById ('id_opcTitulacion');
 		
-		var url = "/titulacion/modalidad/" + opcion.value + "/json/";
+		var url = "/titulacion/opcion/" + opcion.value + "/json/";
 		
 		$.getJSON (url, {}, function (data) {
 			if (data.desempeno == 1) {
@@ -164,7 +164,7 @@
 	var opcion = document.getElementById ('id_opcTitulacion');
 	
 	opcion.onchange = on_change_opcion;
-	var url = "/titulacion/modalidad/" + opcion.value + "/json/";
+	var url = "/titulacion/opcion/" + opcion.value + "/json/";
 	
 	$.getJSON (url, {}, function (data) {
 		if (data.desempeno == 1) {
@@ -194,6 +194,6 @@
 <link rel="stylesheet" media="all" type="text/css" href="{media '/css/timepicker.css'}" />
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
-<script type="text/javascript" src="{media '/scripts/jquery-ui-timepicker-addon.js'}"></script>
-<script type="text/javascript" src="{media '/scripts/ui-timepicker-es.js'}"></script>
+<script type="text/javascript" src="{media '/js/jquery-ui-timepicker-addon.js'}"></script>
+<script type="text/javascript" src="{media '/js/ui-timepicker-es.js'}"></script>
 {/block}

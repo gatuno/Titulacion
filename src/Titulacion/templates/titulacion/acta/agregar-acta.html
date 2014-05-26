@@ -108,15 +108,15 @@
 			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.fechahora.help_text}</span> -->
 		</td></tr>
 	
-		<tr><th><strong>{$form.f.secretario.labelTag}:</strong></th>
-		<td>{if $form.f.secretario.errors}{$form.f.secretario.fieldErrors}{/if}
-			{$form.f.secretario|safe}<br />
-			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.secretario.help_text}</span> -->
-		</td></tr>
 		<tr><th><strong>{$form.f.director.labelTag}:</strong></th>
 		<td>{if $form.f.director.errors}{$form.f.director.fieldErrors}{/if}
 			{$form.f.director|safe}<br />
 			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.director.help_text}</span> -->
+		</td></tr>
+		<tr><th><strong>{$form.f.secretario.labelTag}:</strong></th>
+		<td>{if $form.f.secretario.errors}{$form.f.secretario.fieldErrors}{/if}
+			{$form.f.secretario|safe}<br />
+			<!-- TODO: Hacer algo con el help text: <span class="helptext">{$form.f.secretario.help_text}</span> -->
 		</td></tr>
 		<tr><th><strong>{$form.f.jurado1.labelTag}:</strong></th>
 		<td>{if $form.f.jurado1.errors}{$form.f.jurado1.fieldErrors}{/if}
@@ -145,7 +145,7 @@
 	function on_change_opcion () {
 		var opcion = document.getElementById ('id_opcion');
 		
-		var url = "/titulacion/modalidad/" + opcion.value + "/json/";
+		var url = "/titulacion/opcion/" + opcion.value + "/json/";
 		
 		$.getJSON (url, {}, function (data) {
 			if (data.desempeno == 1) {
@@ -171,7 +171,7 @@
 	var opcion = document.getElementById ('id_opcion');
 	
 	opcion.onchange = on_change_opcion;
-	var url = "/titulacion/modalidad/" + opcion.value + "/json/";
+	var url = "/titulacion/opcion/" + opcion.value + "/json/";
 	
 	$.getJSON (url, {}, function (data) {
 		if (data.desempeno == 1) {
@@ -201,6 +201,6 @@
 <link rel="stylesheet" media="all" type="text/css" href="{media '/css/timepicker.css'}" />
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
-<script type="text/javascript" src="{media '/scripts/jquery-ui-timepicker-addon.js'}"></script>
-<script type="text/javascript" src="{media '/scripts/ui-timepicker-es.js'}"></script>
+<script type="text/javascript" src="{media '/js/jquery-ui-timepicker-addon.js'}"></script>
+<script type="text/javascript" src="{media '/js/ui-timepicker-es.js'}"></script>
 {/block}

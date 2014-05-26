@@ -62,6 +62,13 @@ $ctl_t[] = array (
 );
 
 $ctl_t[] = array (
+	'regex' => '#^/alumno/seleccionar/$#',
+	'base' => $base,
+	'model' => 'Titulacion_Views_Alumno',
+	'method' => 'seleccionarAlumno',
+);
+
+$ctl_t[] = array (
 	'regex' => '#^/alumno/(\w\d{8})/update/$#',
 	'base' => $base,
 	'model' => 'Titulacion_Views_Alumno',

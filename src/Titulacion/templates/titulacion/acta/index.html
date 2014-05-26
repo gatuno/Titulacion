@@ -6,7 +6,7 @@
 <a href="{url 'Titulacion_Views_Acta::index_eliminadas'}">Ver actas eliminadas</a>
 {if ($puede_generar && $puede_agregar && $puede_actualizar)}
 	<h2>Generar nueva acta</h2>
-	<form action="." method="post">
+	<form action="{url 'Titulacion_Views_Alumno::seleccionarAlumno'}" method="post">
 		{$form.render_p}
 		<input type="submit" value="Nueva acta" />
 	</form>
@@ -22,7 +22,7 @@ $form.render_p<tr><td>&nbsp;</td><td><input type="submit" value="Filtrar" /></td
 	{foreach $filtro as $key => $val}
 		{if $val}
 			<li><a href="{url 'Titulacion_Views_Acta::eliminarFiltro', array($key)}"><img class="icon" src="{media '/img/list-remove.png'}" alt="Eliminar filtro" /></a>{$val}</li>
-		{/if} <p>algo</p>
+		{/if}
 	{/foreach}
 	</ul>
 {/if}

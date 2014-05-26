@@ -6,23 +6,8 @@ Gatuf::loadFunction('Gatuf_HTTP_URL_urlForView');
 class Titulacion_Views_Acta {
 	public $index_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.visualizar-actas'));
 	public function index($request, $match) {
-		if ($request->method == 'POST') {
-			$form = new Titulacion_Form_Alumno_Seleccionar ($request->POST, array ());
-			if ($form->isValid ()) {
-				$codigo = $form->save ();
-
-				$alumno = new Calif_Alumno ();
-				if (false === ($alumno->get ($codigo))) {
-					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::agregarAlumno', array (), array ('acta' => 1, 'alumno' => $codigo), false);
-				} else {
-					$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Alumno::editarAlumno', array ($alumno->codigo), array ('acta' => 1), false);
-				}
-
-				return new Gatuf_HTTP_Response_Redirect ($url);
-			}
-		} else {
-			$form = new Titulacion_Form_Alumno_Seleccionar (null, array ());
-		}
+		$form = new Titulacion_Form_Alumno_Seleccionar (null, array ());
+		
 		$acta = new Titulacion_Acta ();
 		
 		$pag = new Gatuf_Paginator($acta);
@@ -184,7 +169,8 @@ class Titulacion_Views_Acta {
 		$url = Gatuf_HTTP_URL_urlForView('Titulacion_Views_Acta::index');
 		return new Gatuf_HTTP_Response_Redirect ($url);
 	}
-
+	
+	
 	public $agregarActa_precond = array (array ('Gatuf_Precondition::hasPerm', 'Titulacion.generar-actas'));
 	public function agregarActa ($request, $match) {
 		Gatuf::loadFunction ('Titulacion_Utils_formatearDomicilio');
@@ -221,7 +207,7 @@ class Titulacion_Views_Acta {
 				$acta->modification_user = $request->user;
 				$acta->create ();
 
-				$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::index');
+				$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views_Acta::verActa', $acta->id);
 				return new Gatuf_HTTP_Response_Redirect($url);
 			}
 		} else {

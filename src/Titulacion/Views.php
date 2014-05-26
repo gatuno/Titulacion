@@ -16,6 +16,7 @@ class Titulacion_Views {
 			$form = new Titulacion_Form_Preferences ($request->POST, array ());
 			
 			if ($form->isValid ()) {
+				$form->save ();
 				$request->user->setMessage (1, 'Las preferencias han sido guardadas');
 				$url = Gatuf_HTTP_URL_urlForView ('Titulacion_Views::index');
 				

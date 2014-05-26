@@ -33,6 +33,12 @@ class Titulacion_Middleware_Menu {
 		
 		$m->sub[] = $sub;
 		
+		$sub = new stdClass ();
+		$sub->nombre = 'Preferencias';
+		$sub->href = Gatuf_HTTP_URL_urlForView ('Titulacion_Views::preferences');
+		
+		$m->sub[] = $sub;
+		
 		$menus[] = $m;
 	}
 };

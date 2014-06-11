@@ -7,25 +7,24 @@ class Titulacion_PDF_Acta extends External_FPDF{
 	public $director, $secretario, $alumno;
 	
 	function renderBase(){
-		Gatuf::loadFunction ('Titulacion_Utils_grado');
 		Gatuf::loadFunction ('Titulacion_Utils_numeroLetra');
 		setLocale(LC_ALL, 'es_MX.UTF-8');
 		
 		$nombreCompleto = mb_strtoupper($this->alumno->nombre.' '.$this->alumno->apellido);
 		
-		$grado = Titulacion_Utils_grado ($this->jurado1->sexo, $this->jurado1->grado);
+		$grado = $this->jurado1->displaygrado ();
 		$nombreCompletoj1 = mb_strtoupper ($grado.' '.$this->jurado1->nombre.' '.$this->jurado1->apellido);
 		
-		$grado = Titulacion_Utils_grado ($this->jurado2->sexo, $this->jurado2->grado);
+		$grado = $this->jurado2->displaygrado ();
 		$nombreCompletoj2 = mb_strtoupper ($grado.' '.$this->jurado2->nombre.' '.$this->jurado2->apellido);
 		
-		$grado = Titulacion_Utils_grado ($this->jurado3->sexo, $this->jurado3->grado);
+		$grado = $this->jurado3->displaygrado ();
 		$nombreCompletoj3 = mb_strtoupper ($grado.' '.$this->jurado3->nombre.' '.$this->jurado3->apellido);
 		
-		$grado = Titulacion_Utils_grado ($this->secretario->sexo, $this->secretario->grado);
+		$grado = $this->secretario->displaygrado ();
 		$secretario = mb_strtoupper ($grado.' '.$this->secretario->nombre.' '.$this->secretario->apellido);
 		
-		$grado = Titulacion_Utils_grado ($this->director->sexo, $this->director->grado);
+		$grado = $this->director->displaygrado ();
 		$director = mb_strtoupper ($grado.' '.$this->director->nombre.' '.$this->director->apellido);
 		
 		$leyenda = $this->opcion->leyenda;
@@ -136,7 +135,17 @@ class Titulacion_PDF_Acta extends External_FPDF{
 		if (($this->acta->calificacion)) {
 			$this->SetY(203.5);
 			$this->SetX(185);
-			$this->Cell(19,0,$this->acta->calificacion,0,0,'C');
+			
+			$explote = explode (".", $this->acta->calificacion);
+			$parte_entera = (int) $explote[0];
+			$parte_flotante = (int) $explote[1];
+			if ((int) $parte_flotante == 0) {
+				$calif = $parte_entera;
+			} else {
+				$calif = $this->acta->calificacion;
+			}
+			
+			$this->Cell(19,0,$calif,0,0,'C');
 			
 			$calificacionLetra = Titulacion_Utils_numeroLetra($this->acta->calificacion);
 			$this->SetY(209);

@@ -144,6 +144,16 @@ class Titulacion_Form_Acta_Editar extends Gatuf_Form {
 			));
 		}
 		
+		$gconf = new Gatuf_GSetting ();
+		$gconf->setApp ('Titulacion');
+		
+		$director_pre = $gconf->getVal ('director', '');
+		$modificar_director = $gconf->getVal ('modificar_director', true);
+		
+		if ($director_pre != '' && !$modificar_director) {
+			$director = new Calif_Maestro ($director_pre);
+		}
+		
 		$this->fields['director'] = new Gatuf_Form_Field_Integer (
 			array (
 				'required' => true,
@@ -152,9 +162,16 @@ class Titulacion_Form_Acta_Editar extends Gatuf_Form {
 				'help_text' => 'Director de la división',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
 				'widget_attrs' => array (
-					'choices' => $choices_maestros,
+					'choices' => $modificar_director ? $choices_maestros : array ($director->apellido.' '.$director->nombre => $director->codigo),
 				),
 		));
+		
+		$secretario_pre = $gconf->getVal ('secretario', '');
+		$modificar_secretario = $gconf->getVal ('modificar_secretario', true);
+		
+		if ($secretario_pre != '' && !$modificar_secretario) {
+			$secretario = new Calif_Maestro ($secretario_pre);
+		}
 		
 		$this->fields['secretario'] = new Gatuf_Form_Field_Integer (
 			array (
@@ -164,7 +181,7 @@ class Titulacion_Form_Acta_Editar extends Gatuf_Form {
 				'help_text' => 'Secretario de la división',
 				'widget' => 'Gatuf_Form_Widget_SelectInput',
 				'widget_attrs' => array (
-					'choices' => $choices_maestros,
+					'choices' => $modificar_secretario ? $choices_maestros : array ($secretario->apellido.' '.$secretario->nombre => $secretario->codigo),
 				),
 		));
 		

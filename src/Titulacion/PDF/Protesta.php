@@ -2,23 +2,22 @@
 
 class Titulacion_PDF_Protesta extends External_FPDF{
 	function renderBase(){
-		Gatuf::loadFunction ('Titulacion_Utils_grado');
 		Gatuf::loadFunction ('Titulacion_Utils_numeroLetra');
 		setLocale(LC_ALL, 'es_MX.UTF-8');
 		
-		$grado = Titulacion_Utils_grado ($this->jurado1->sexo, $this->jurado1->grado);
+		$grado = $this->jurado1->displaygrado ();
 		$nombreCompletoj1 = mb_strtoupper ($grado.' '.$this->jurado1->nombre.' '.$this->jurado1->apellido);
 		
-		$grado = Titulacion_Utils_grado ($this->jurado2->sexo, $this->jurado2->grado);
+		$grado = $this->jurado2->displaygrado ();
 		$nombreCompletoj2 = mb_strtoupper ($grado.' '.$this->jurado2->nombre.' '.$this->jurado2->apellido);
 		
-		$grado = Titulacion_Utils_grado ($this->jurado3->sexo, $this->jurado3->grado);
+		$grado = $this->jurado3->displaygrado ();
 		$nombreCompletoj3 = mb_strtoupper ($grado.' '.$this->jurado3->nombre.' '.$this->jurado3->apellido);
 		
-		$grado = Titulacion_Utils_grado ($this->secretario->sexo, $this->secretario->grado);
+		$grado = $this->secretario->displaygrado ();
 		$secretario = mb_strtoupper ($grado.' '.$this->secretario->nombre.' '.$this->secretario->apellido);
 		
-		$grado = Titulacion_Utils_grado ($this->director->sexo, $this->director->grado);
+		$grado = $this->director->displaygrado ();
 		$director = mb_strtoupper ($grado.' '.$this->director->nombre.' '.$this->director->apellido);
 		
 		$dia = strftime("%e", strtotime ($this->acta->fechahora)); /* Extraer el día */
@@ -29,13 +28,7 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		
 		$fecha= $diaSemana.' '.$dia.' de '.$mes.' de '.$anio;
 		
-		if(($this->alumno->sexo) == 'F'){
-			$grado = mb_strtoupper($this->carrera->grado_f);
-		} else {
-			$grado = mb_strtoupper($this->carrera->grado_m);
-		}
-		
-		$leyenda1 = 'En la división de Electrónica y Computación del Centro Universitario de Ciencias Exactas e Ingenierías de la Universidad de Guadalajara, hoy día ';
+		$leyenda1 = 'En la División de Electrónica y Computación del Centro Universitario de Ciencias Exactas e Ingenierías de la Universidad de Guadalajara, hoy día ';
 		$leyenda2 = 'ante el honorable Comité de Titulación que ha tenido a bien emitir el veredicto aprobatorio a mi examen profesional para obtener el título de';
 		$leyenda3 = 'ante el público que me ha honrado con su presencia en este acto solemne:';
 		$leyenda = $leyenda1.' '.$fecha.', '.$leyenda2.' '.$grado.', '.$leyenda3;
@@ -46,8 +39,25 @@ class Titulacion_PDF_Protesta extends External_FPDF{
 		$punto5 ='V.- Ofrecer cooperación, cordialidad y fraternidad a mis compañeros de profesión.';
 		$punto6 ='VI.- Actualizar mis conocimientos y superarme profesionalmente para cooperar en la tarea de formar una patria mejor con justa retribución a la sociedad que proporcionó los medios para mi preparación.';
 		
-		$primeraGrado = substr($grado,0,1);
-		$grado = Titulacion_Utils_grado ($this->alumno->sexo, $primeraGrado);
+		switch ($this->carrera->grado) {
+			case 'I':
+				$grado = 'Ing.';
+				break;
+			case 'L':
+				$grado = 'Lic.';
+				break;
+			case 'D':
+				if ($this->alumno->sexo == 'F') $grado = 'Dra.';
+				else $grado = 'Dr.';
+				break;
+			case 'M':
+				if ($this->alumno->sexo == 'F') $grado = 'Mtra.';
+				else $grado = 'Mtro.';
+				break;
+			default:
+				throw new Exception ('No implementado');
+		}
+		
 		$sustentante = mb_strtoupper($grado.' '.$this->alumno->nombre.' '.$this->alumno->apellido);
 		
 		$this->SetFont('Arial','B', 12);

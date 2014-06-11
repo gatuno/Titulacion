@@ -6,16 +6,15 @@ class Titulacion_PDF_Citatorio extends External_FPDF {
 	public $jurado1, $jurado2, $jurado3;
 	
 	function renderBase () {
-		Gatuf::loadFunction ('Titulacion_Utils_grado');
 		setLocale(LC_ALL, 'es_MX.UTF-8');
 		
-		$grado = Titulacion_Utils_grado ($this->jurado1->sexo, $this->jurado1->grado);
+		$grado = $this->jurado1->displaygrado ();
 		$nombreCompletoj1 = mb_convert_case ($grado.' '.$this->jurado1->nombre.' '.$this->jurado1->apellido, MB_CASE_TITLE);
 		
-		$grado = Titulacion_Utils_grado ($this->jurado2->sexo, $this->jurado2->grado);
+		$grado = $this->jurado2->displaygrado ();
 		$nombreCompletoj2 = mb_convert_case ($grado.' '.$this->jurado2->nombre.' '.$this->jurado2->apellido, MB_CASE_TITLE);
 		
-		$grado = Titulacion_Utils_grado ($this->jurado3->sexo, $this->jurado3->grado);
+		$grado = $this->jurado3->displaygrado ();
 		$nombreCompletoj3 = mb_convert_case ($grado.' '.$this->jurado3->nombre.' '.$this->jurado3->apellido, MB_CASE_TITLE);
 		
 		$this->AddFont ('Georgia');
@@ -105,7 +104,7 @@ class Titulacion_PDF_Citatorio extends External_FPDF {
 		$this->Cell (156, 0, $cad, 0, 0, 'C');
 		
 		$this->SetY (206); $this->SetX (41);
-		$grado = Titulacion_Utils_grado ($this->secretario->sexo, $this->secretario->grado);
+		$grado = $this->secretario->displaygrado ();
 		$cad = mb_convert_case ($grado.' '.$this->secretario->nombre.' '.$this->secretario->apellido, MB_CASE_TITLE);
 		$this->Cell (156, 0, $cad, 0, 0, 'C');
 		
